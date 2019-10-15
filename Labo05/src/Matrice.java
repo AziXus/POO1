@@ -10,19 +10,17 @@ public class Matrice {
         this.colonne = colonne;
         this.ligne = ligne;
         this.modulo = modulo;
-        int[colonne][ligne] matrice2;
-        this.matrice = matrice2;
+        this.matrice = new int[ligne][colonne];
         //TODO: Check que le modulo la colonne ou la ligne soit correcte
         generate();
     }
 
     private void generate(){
-        int nombre;
         for(int i = 0; i < ligne; i++) {
-            for (int j = 0; i < colonne; j++) {
-                nombre = (int)Math.round(Math.random());
-                nombre = nombre % modulo;
-                matrice[i][j] = nombre;
+            for (int j = 0; j < colonne; j++) {
+                //Math.random() génère un double entre 0.0 et 1.0
+                //On multiplie par le modulo pour obtenir une valeur entre 0 à modulo - 1
+                matrice[i][j] = (int)(Math.random() * modulo);
             }
         }
     }
@@ -31,7 +29,7 @@ public class Matrice {
     public String toString() {
         String str = "";
         for(int i = 0; i < ligne; i++) {
-            for (int j = 0; i < colonne; j++) {
+            for (int j = 0; j < colonne; j++) {
                 str += matrice[i][j] + " ";
             }
             str += "\n";
