@@ -1,17 +1,22 @@
 import java.lang.*;
 
 public class Matrice {
-    private int colonne;
-    private int ligne;
     private int modulo;
     private int[][] matrice;
     private Operation add = new Addition();
     private Operation sub = new Soustraction();
     private Operation mult = new Multiplication();
 
+    private int getColonne(){
+        return matrice[0].length;
+    }
+
+    private int getLigne(){
+        return matrice.length;
+    }
+
     Matrice(int colonne, int ligne, int modulo){
-        this.colonne = colonne;
-        this.ligne = ligne;
+        //TODO: Check que le modulo ne soit pas négatif
         this.modulo = modulo;
         this.matrice = new int[ligne][colonne];
         //TODO: Check que le modulo la colonne ou la ligne soit correcte
@@ -19,8 +24,7 @@ public class Matrice {
     }
 
     Matrice(int modulo, int[][] matrice){
-        this.colonne = matrice[0].length;
-        this.ligne = matrice.length;
+        //TODO: Check que le modulo ne soit pas négatif
         this.modulo = modulo;
         //TODO: vérifie les dimensions de la matrice
         this.matrice = matrice;
@@ -29,8 +33,8 @@ public class Matrice {
     }
 
     private void generate(){
-        for(int i = 0; i < ligne; i++) {
-            for (int j = 0; j < colonne; j++) {
+        for(int i = 0; i < getLigne(); i++) {
+            for (int j = 0; j < getColonne(); j++) {
                 //Math.random() génère un double entre 0.0 et 1.0
                 //On multiplie par le modulo pour obtenir une valeur entre 0 à modulo - 1
                 matrice[i][j] = (int)(Math.random() * modulo);
@@ -40,14 +44,25 @@ public class Matrice {
 
     private Matrice operation(Matrice m2, Operation op){
         //TODO: vérfier que les 2 modulo soit identique
-        int[][] matrice = new int[Math.max(this.ligne, m2.ligne)][Math.max(this.colonne, m2.colonne)];
-        for(int i = 0; i < Math.min(this.ligne, m2.ligne); i++) {
-            for (int j = 0; j < Math.min(this.colonne, m2.colonne); j++) {
+        int[][] matrice = new int[Math.max(this.getLigne(), m2.getLigne())][Math.max(this.getColonne(), m2.getColonne())];
+        for(int i = 0; i < Math.max(this.getLigne(), m2.getLigne()); i++) {
+            for (int j = 0; j < Math.max(this.getColonne(), m2.getColonne()); j++) {
                 //Un modulo peut être négatif en java
-                matrice[i][j] = (op.calcul(this.matrice[i][j], m2.matrice[i][j]) % modulo + modulo) % modulo;
+                int result = op.calcul(this.getElement(i,j), m2.getElement(i,j)) % modulo;
+                if(result < 0){
+                    result += modulo;
+                }
+                matrice[i][j] = result;
             }
         }
         return new Matrice(this.modulo, matrice);
+    }
+
+    int getElement(int posLigne, int posColonne){
+        if(posLigne >= this.getLigne() || posColonne >= this.getColonne()){
+            return 0;
+        }
+        return matrice[posLigne][posColonne];
     }
 
     Matrice addition(Matrice m2){
@@ -65,8 +80,8 @@ public class Matrice {
     @Override
     public String toString() {
         String str = "";
-        for(int i = 0; i < ligne; i++) {
-            for (int j = 0; j < colonne; j++) {
+        for(int i = 0; i < getLigne(); i++) {
+            for (int j = 0; j < getColonne(); j++) {
                 str += matrice[i][j] + " ";
             }
             str += "\n";
