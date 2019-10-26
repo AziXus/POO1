@@ -23,8 +23,8 @@ public class Matrice {
      */
     Matrice(int colonne, int ligne, int modulo){
         //Check que le modulo ne soit pas négatif sinon erreur
-        if(modulo < 0)
-            throw new RuntimeException("Modulo négatif impossible de créer la matrice");
+        if(modulo <= 0)
+            throw new RuntimeException("Modulo négatif ou égal à 0 impossible de créer la matrice");
         //Check que la ligne ou la colonne ne soit pas négative ou égale à 0 sinon dimension incorrecte
         if(ligne <= 0 || colonne <= 0)
             throw new RuntimeException("Dimension de matrice incorrecte( > 0)");
