@@ -37,10 +37,10 @@ public class Matrice {
     /**
      * Constructeur spécifique de la classe Matrice. Les éléments de la matrice auront la valeur de la matrice passée en paramètre
      * @param modulo entier étant le module de la matrice
-     * @param matrice tableau en 2 dimensions étant la matrcie de laquelle reprendre les éléments
+     * @param matrice tableau en 2 dimensions étant la matrice de laquelle reprendre les éléments
      * @throws RuntimeException si le modulo est négatif ou égal à 0
      * Si la ligne ou la colonne de la matrice a une valeur négative ou égale à 0 une RuntimeException est également retournée
-     * Si un élément dans la matrice ne respecte pas la condtion avec le modulo(entre 0 et le modulo - 1) on retourne une RuntimeException
+     * Si un élément dans la matrice ne respecte pas la condition avec le modulo(entre 0 et le modulo - 1) on retourne une RuntimeException
      */
     Matrice(int modulo, int[][] matrice){
         //Check que le modulo ne soit pas négatif
@@ -70,8 +70,8 @@ public class Matrice {
     }
 
     /**
-     * Retourne le nombre de colonnes de la mctrice
-     * @return un entier indiuant le nombre de colonne
+     * Retourne le nombre de colonnes de la matrice
+     * @return un entier indiquant le nombre de colonne de la matrice
      */
     private int getColonne(){
         return matrice[0].length;
@@ -89,11 +89,11 @@ public class Matrice {
      * Retourne l'élément donné d'une Matrice
      * @param posLigne entier étant la position de l'éléments sur la ligne
      * @param posColonne entier étant la position de l'élément sur la colonne
-     * @return -1 si la position donnée est erronée, sinon il retourne l'élément
+     * @return 0 si la position donnée est erronée, sinon il retourne l'élément
      */
     private int getElement(int posLigne, int posColonne){
-        if(posLigne >= this.getLigne() || posLigne <= 0 || posColonne >= this.getColonne() || posColonne <= 0 ){
-            return -1;
+        if(posLigne >= this.getLigne() || posLigne < 0 || posColonne >= this.getColonne() || posColonne < 0 ){
+            return 0;
         }
         return matrice[posLigne][posColonne];
     }
@@ -104,7 +104,7 @@ public class Matrice {
     private void generate(){
         for(int i = 0; i < getLigne(); i++) {
             for (int j = 0; j < getColonne(); j++) {
-                //Math.random() génère un double entre 0.0 et 1.0
+                //Math.random() génère un double entre 0.0 (inclus) et 1.0 (non-inclus)
                 //On multiplie par le modulo pour obtenir une valeur entre 0 à modulo - 1
                 matrice[i][j] = (int)(Math.random() * modulo);
             }
@@ -129,7 +129,7 @@ public class Matrice {
             for (int j = 0; j < matrice[0].length; j++) {
                 //Le résultat d'un modulo peut être négatif en java
                 int result = op.calcul(this.getElement(i,j), m2.getElement(i,j)) % modulo;
-                if(result < 0){
+                if(result < 0){ //Si le résultat du modulo est négatif, on ajoute une fois le modulo
                     result += modulo;
                 }
                 matrice[i][j] = result;
@@ -139,7 +139,7 @@ public class Matrice {
     }
 
     /**
-     * Effetcue une addition entre deux matrice
+     * Effectue une addition entre deux matrice
      * @param m2 Matrice passée en paramètre étant la deuxième matrice pour l'addition
      * @return un objet Matrice étant la matrice contenant les résultats
      */
@@ -148,7 +148,7 @@ public class Matrice {
     }
 
     /**
-     * Effetcue une soustraction entre deux matrice
+     * Effectue une soustraction entre deux matrice
      * @param m2 Matrice passée en paramètre étant la deuxième matrice pour la soustraction
      * @return un objet Matrice étant la matrice contenant les résultats
      */
@@ -157,7 +157,7 @@ public class Matrice {
     }
 
     /**
-     * Effetcue une multiplication entre deux matrice
+     * Effectue une multiplication entre deux matrice
      * @param m2 Matrice passée en paramètre étant la deuxième matrice pour la multiplication
      * @return un objet Matrice étant la matrice contenant les résultats
      */
@@ -166,7 +166,7 @@ public class Matrice {
     }
 
     /**
-     * Réecriture de éa fonction toString pour afficher une Matrice
+     * Réecriture de la fonction toString pour afficher une Matrice
      * @return string contenant l'affichage de la Matrice
      */
     @Override
