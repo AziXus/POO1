@@ -1,3 +1,7 @@
+/**
+ * Classe abstraite effectuant un calcul sur des entiers
+ * @author Müller Robin, Teixeira Carvalho Stéphane
+ */
 abstract class Operation {
     /**
      * Effetcue un calcul entre deux éléments

@@ -1,3 +1,7 @@
+/**
+ * Classe héritant d'opération effectuant une addition sur des entiers
+ * @author Müller Robin, Teixeira Carvalho Stéphane
+ */
 class Addition extends Operation {
     /**
      * Réecriture de la fonction calcul. Heritée de Opération

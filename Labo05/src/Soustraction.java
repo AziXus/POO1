@@ -1,3 +1,7 @@
+/**
+ * Classe héritant d'opération effectuant une soustraction sur des entiers
+ * @author Müller Robin, Teixeira Carvalho Stéphane
+ */
 class Soustraction extends Operation{
     /**
      * Réecriture de la fonction calcul. Heritée de Opération

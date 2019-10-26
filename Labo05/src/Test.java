@@ -1,3 +1,7 @@
+/**
+ * Classe Test permettant d'effectuer des tests avec des opérations sur des matrices
+ * @author Müller Robin, Teixeira Carvalho Stéphane
+ */
 public class Test {
     public static void main(String[] args){
         int modulo = 5;
