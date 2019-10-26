@@ -12,25 +12,6 @@ public class Matrice {
     private Operation sub = new Soustraction();
     private Operation mult = new Multiplication();
 
-    int getModulo(){
-        return modulo;
-    }
-    /**
-     * Retourne le nombre de colonnes de la mctrice
-     * @return un entier indiuant le nombre de colonne
-     */
-    private int getColonne(){
-        return matrice[0].length;
-    }
-
-    /**
-     * Retourne le nombre de lignes de la matrice
-     * @return un entier indiquant le nombre de ligne de la matrice
-     */
-    private int getLigne(){
-        return matrice.length;
-    }
-
     /**
      * Constructeur spécifique de la classe matrice. Les éléments à l'intérieure de la matrice sont générés en fonction du modulo.
      * Aucun nombres générés ne dépassera le modulo
@@ -81,6 +62,43 @@ public class Matrice {
     }
 
     /**
+     * Retourne le modulo d'une matrice
+     * @return un entier étant le modulo d'une matrice
+     */
+    int getModulo(){
+        return modulo;
+    }
+
+    /**
+     * Retourne le nombre de colonnes de la mctrice
+     * @return un entier indiuant le nombre de colonne
+     */
+    private int getColonne(){
+        return matrice[0].length;
+    }
+
+    /**
+     * Retourne le nombre de lignes de la matrice
+     * @return un entier indiquant le nombre de ligne de la matrice
+     */
+    private int getLigne(){
+        return matrice.length;
+    }
+
+    /**
+     * Retourne l'élément donné d'une Matrice
+     * @param posLigne entier étant la position de l'éléments sur la ligne
+     * @param posColonne entier étant la position de l'élément sur la colonne
+     * @return -1 si la position donnée est erronée, sinon il retourne l'élément
+     */
+    private int getElement(int posLigne, int posColonne){
+        if(posLigne >= this.getLigne() || posLigne <= 0 || posColonne >= this.getColonne() || posColonne <= 0 ){
+            return -1;
+        }
+        return matrice[posLigne][posColonne];
+    }
+
+    /**
      * Génère les éléments d'une matrice
      */
     private void generate(){
@@ -118,19 +136,6 @@ public class Matrice {
             }
         }
         return new Matrice(this.modulo, matrice);
-    }
-
-    /**
-     * Retourne l'élément donné d'une Matrice
-     * @param posLigne entier étant la position de l'éléments sur la ligne
-     * @param posColonne entier étant la position de l'élément sur la colonne
-     * @return -1 si la position donnée est erronée, sinon il retourne l'élément
-     */
-    private int getElement(int posLigne, int posColonne){
-        if(posLigne >= this.getLigne() || posLigne <= 0 || posColonne >= this.getColonne() || posColonne <= 0 ){
-            return -1;
-        }
-        return matrice[posLigne][posColonne];
     }
 
     /**
