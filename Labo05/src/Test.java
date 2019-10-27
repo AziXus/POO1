@@ -8,7 +8,7 @@ public class Test {
         int[][] matrice2 = {{1,4,2,3,2},{0,1,0,4,2},{0,0,2,0,2}};
         int[][] matriceInvalide = {{10000,4,2,3,2},{0,1,0,4,2},{0,0,2,0,2}};
 
-        System.out.println("Test en utilisant la matrice de la donnee");
+        System.out.println("Test en utilisant les matrices de la donnee");
         testMatrice(matrice1, matrice2, 5);
         System.out.println("----------");
 

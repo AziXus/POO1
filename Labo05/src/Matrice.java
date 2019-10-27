@@ -54,7 +54,7 @@ public class Matrice {
         //Check que le modulo des éléments des colonnes ou des lignes soit corrects
         for(int i = 0; i < getLigne(); i++) {
             for (int j = 0; j < getColonne(); j++) {
-                if(this.matrice[i][j] % modulo != this.matrice[i][j])
+                if(this.matrice[i][j] < 0 || this.matrice[i][j] % modulo != this.matrice[i][j])
                     //Retourne un message d'erreur avec l'élément qui ne respecte pas la condition du modulo
                     throw new RuntimeException("l'élément (" + i + ", " + j + ") de la matrice ne respecte pas la condition du modulo");
             }
