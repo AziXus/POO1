@@ -56,7 +56,7 @@ public class Matrice {
             for (int j = 0; j < getColonne(); j++) {
                 if(this.matrice[i][j] % modulo != this.matrice[i][j])
                     //Retourne un message d'erreur avec l'élément qui ne respecte pas la condition du modulo
-                    throw new RuntimeException("l'élément en position ligne = " + i + " colonne = "+ j +" de la matrice ne respecte pas la condition du modulo");
+                    throw new RuntimeException("l'élément (" + i + ", " + j + ") de la matrice ne respecte pas la condition du modulo");
             }
         }
     }
@@ -105,7 +105,7 @@ public class Matrice {
         for(int i = 0; i < getLigne(); i++) {
             for (int j = 0; j < getColonne(); j++) {
                 //Math.random() génère un double entre 0.0 (inclus) et 1.0 (non-inclus)
-                //On multiplie par le modulo pour obtenir une valeur entre 0 à modulo - 1
+                //On multiplie par le modulo pour obtenir une valeur entre 0 à (modulo - 1)
                 matrice[i][j] = (int)(Math.random() * modulo);
             }
         }
