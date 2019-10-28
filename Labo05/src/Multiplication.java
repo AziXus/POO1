@@ -12,7 +12,7 @@ class Multiplication extends Operation {
      * @throws ArithmeticException en cas d'overflow par Math.multiplyExact
      */
     @Override
-    int calcul(int element1, int element2) {
+    public int calcul(int element1, int element2) {
         return Math.multiplyExact(element1, element2);
     }
 }

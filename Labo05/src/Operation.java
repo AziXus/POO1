@@ -9,5 +9,5 @@ abstract class Operation {
      * @param element2 entier étant le deuxième élément
      * @return un entier le résultat du calcul
      */
-    abstract int calcul(int element1, int element2);
+    abstract public int calcul(int element1, int element2);
 }
