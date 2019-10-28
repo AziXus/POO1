@@ -12,8 +12,12 @@ public class Test {
         testMatrice(matrice1, matrice2, 5);
         System.out.println("----------");
 
-        System.out.println("Test en utilisant une matrice invalide");
+        System.out.println("Test en utilisant un element invalide");
         testMatrice(matriceInvalide, matrice2, 5);
+        System.out.println("----------");
+
+        System.out.println("Test en utilisant une matrice de dimension invalide");
+        testMatriceAleatoire(-3, 4, 3, 5, 5);
         System.out.println("----------");
 
         testMatriceAleatoire(3, 4, 3, 5, 5);
@@ -33,12 +37,12 @@ public class Test {
      */
     private static void testMatriceAleatoire(int n1, int m1, int n2, int m2, int mod) {
         System.out.println("Test en utilisant deux matrices aleatoires");
-        System.out.println("The modulus is " + mod);
 
         try {
-            Matrice matrice1 = new Matrice(m1, n1, mod);
-            Matrice matrice2 = new Matrice(m2, n2, mod);
+            Matrice matrice1 = new Matrice(n1, m1, mod);
+            Matrice matrice2 = new Matrice(n2, m2, mod);
 
+            System.out.println("The modulus is " + mod);
             System.out.println("one : \n" + matrice1);
             System.out.println("two : \n" + matrice2);
 

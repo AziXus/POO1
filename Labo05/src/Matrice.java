@@ -15,13 +15,13 @@ public class Matrice {
     /**
      * Constructeur spécifique de la classe matrice. Les éléments à l'intérieure de la matrice sont générés en fonction du modulo.
      * Aucun nombres générés ne dépassera le modulo
-     * @param colonne entier représentant le nombre de colonne de la matrice
      * @param ligne entier représentant le nombre de ligne de la matrice
+     * @param colonne entier représentant le nombre de colonne de la matrice
      * @param modulo entier réprésentant le modulo de la matrice
      * @throws RuntimeException si le modulo est négatif et
      * si la ligne ou la colonne de la matrice est négative ou égale à 0 une RuntimeException est également retournée
      */
-    Matrice(int colonne, int ligne, int modulo){
+    public Matrice(int ligne, int colonne, int modulo){
         //Check que le modulo ne soit pas négatif sinon erreur
         if(modulo <= 0)
             throw new RuntimeException("Modulo négatif ou égal à 0 impossible de créer la matrice");
@@ -42,7 +42,7 @@ public class Matrice {
      * Si la ligne ou la colonne de la matrice a une valeur négative ou égale à 0 une RuntimeException est également retournée
      * Si un élément dans la matrice ne respecte pas la condition avec le modulo(entre 0 et le modulo - 1) on retourne une RuntimeException
      */
-    Matrice(int modulo, int[][] matrice){
+    public Matrice(int modulo, int[][] matrice){
         //Check que le modulo ne soit pas négatif
         if(modulo <= 0)
             throw new RuntimeException("modulo négatif ou égal à 0 impossible de créer la matrice");
@@ -65,7 +65,7 @@ public class Matrice {
      * Retourne le modulo d'une matrice
      * @return un entier étant le modulo d'une matrice
      */
-    int getModulo(){
+    public int getModulo(){
         return modulo;
     }
 
@@ -73,7 +73,7 @@ public class Matrice {
      * Retourne le nombre de colonnes de la matrice
      * @return un entier indiquant le nombre de colonne de la matrice
      */
-    private int getColonne(){
+    int getColonne(){
         return matrice[0].length;
     }
 
@@ -81,7 +81,7 @@ public class Matrice {
      * Retourne le nombre de lignes de la matrice
      * @return un entier indiquant le nombre de ligne de la matrice
      */
-    private int getLigne(){
+    int getLigne(){
         return matrice.length;
     }
 
@@ -143,7 +143,7 @@ public class Matrice {
      * @param m2 Matrice passée en paramètre étant la deuxième matrice pour l'addition
      * @return un objet Matrice étant la matrice contenant les résultats
      */
-    Matrice addition(Matrice m2){
+    public Matrice addition(Matrice m2){
         return operation(m2,add);
     }
 
@@ -152,7 +152,7 @@ public class Matrice {
      * @param m2 Matrice passée en paramètre étant la deuxième matrice pour la soustraction
      * @return un objet Matrice étant la matrice contenant les résultats
      */
-    Matrice soustraction(Matrice m2){
+    public Matrice soustraction(Matrice m2){
         return operation(m2,sub);
     }
 
@@ -161,7 +161,7 @@ public class Matrice {
      * @param m2 Matrice passée en paramètre étant la deuxième matrice pour la multiplication
      * @return un objet Matrice étant la matrice contenant les résultats
      */
-    Matrice multiplication(Matrice m2){
+    public Matrice multiplication(Matrice m2){
         return operation(m2,mult);
     }
 
