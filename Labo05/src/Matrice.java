@@ -20,7 +20,8 @@ public class Matrice {
      * @param colonne entier représentant le nombre de colonne de la matrice
      * @param modulo entier réprésentant le modulo de la matrice
      * @throws RuntimeException si le modulo est négatif
-     * Si la ligne ou la colonne de la matrice est négative ou égale à 0 une RuntimeException est également retournée
+     * Si la ligne ou la colonne de la matrice est négative ou égale à 0 une RuntimeException est
+     * également retournée
      */
     public Matrice(int ligne, int colonne, int modulo){
         //Check que le modulo ne soit pas négatif sinon erreur
@@ -59,8 +60,10 @@ public class Matrice {
         for(int i = 0; i < getLigne(); i++) {
             for (int j = 0; j < getColonne(); j++) {
                 if(this.matrice[i][j] < 0 || this.matrice[i][j] % modulo != this.matrice[i][j])
-                    //Retourne un message d'erreur avec l'élément qui ne respecte pas la condition du modulo
-                    throw new RuntimeException("l'élément (" + i + ", " + j + ") de la matrice ne respecte pas la condition du modulo");
+                    //Retourne un message d'erreur avec l'élément qui ne respecte pas la condition
+                    // du modulo
+                    throw new RuntimeException("l'élément (" + i + ", " + j + ") de la matrice ne" +
+                                               " respecte pas la condition du modulo");
             }
         }
     }
@@ -96,7 +99,8 @@ public class Matrice {
      * @return 0 si la position donnée est erronée, sinon il retourne l'élément
      */
     private int getElement(int posLigne, int posColonne){
-        if(posLigne >= this.getLigne() || posLigne < 0 || posColonne >= this.getColonne() || posColonne < 0 ){
+        if(posLigne   >= this.getLigne()   || posLigne < 0 ||
+           posColonne >= this.getColonne() || posColonne < 0 ){
             return 0;
         }
         return matrice[posLigne][posColonne];
@@ -120,17 +124,21 @@ public class Matrice {
      * @param m2 objet Matrice étant la deuxième matrice avec laquelle effectuer une opération
      * @param op objet Opération étant l'opération à effectuer entre les 2 matrices
      * @return un objet matrice étant contenant les éléments resultants de l'opérations
-     * @throws RuntimeException si le modulo de la première Matrice n'est pas égal à celui de la seconde(passée en paramètre)
+     * @throws RuntimeException si le modulo de la première Matrice n'est pas égal à celui de la
+     * seconde(passée en paramètre)
      */
     private Matrice operation(Matrice m2, Operation op){
         //Vérfie que les 2 modulo soit identiques
         if(modulo != m2.modulo)
             throw new RuntimeException("Modulo non équivalent");
-        //La matrice contenant le résultat va prendre la ligne et la colonne la plus grande entre les deux matrices
-        int[][] matrice = new int[Math.max(this.getLigne(), m2.getLigne())][Math.max(this.getColonne(), m2.getColonne())];
-        //Parcours de la matrice conteant les résulats et ajout des résultats des opérations entre les éléments des 2 matrices
-        for(int i = 0; i < matrice.length; i++) {
-            for (int j = 0; j < matrice[0].length; j++) {
+        //La matrice va prendre la ligne et la colonne la plus grande entre les deux matrices
+        int ligne = Math.max(this.getLigne(), m2.getLigne());
+        int colonne = Math.max(getColonne(), m2.getColonne());
+        int[][] matrice = new int[ligne][colonne];
+        //Parcours de la matrice contenant les résultats et ajout des résultats des opérations entre
+        //les éléments des 2 matrices
+        for(int i = 0; i < ligne; i++) {
+            for (int j = 0; j < colonne; j++) {
                 //Le résultat d'un modulo peut être négatif en java
                 int result = op.calcul(this.getElement(i,j), m2.getElement(i,j)) % modulo;
                 if(result < 0){ //Si le résultat du modulo est négatif, on ajoute une fois le modulo
