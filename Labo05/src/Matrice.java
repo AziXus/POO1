@@ -13,13 +13,14 @@ public class Matrice {
     private Operation mult = new Multiplication();
 
     /**
-     * Constructeur spécifique de la classe matrice. Les éléments à l'intérieure de la matrice sont générés en fonction du modulo.
-     * Aucun nombres générés ne dépassera le modulo
+     * Constructeur spécifique de la classe matrice
+     * Les éléments à l'intérieure de la matrice sont générés en fonction du modulo
+     * Aucun nombre générés ne dépassera le modulo
      * @param ligne entier représentant le nombre de ligne de la matrice
      * @param colonne entier représentant le nombre de colonne de la matrice
      * @param modulo entier réprésentant le modulo de la matrice
-     * @throws RuntimeException si le modulo est négatif et
-     * si la ligne ou la colonne de la matrice est négative ou égale à 0 une RuntimeException est également retournée
+     * @throws RuntimeException si le modulo est négatif
+     * Si la ligne ou la colonne de la matrice est négative ou égale à 0 une RuntimeException est également retournée
      */
     public Matrice(int ligne, int colonne, int modulo){
         //Check que le modulo ne soit pas négatif sinon erreur
@@ -27,7 +28,7 @@ public class Matrice {
             throw new RuntimeException("Modulo négatif ou égal à 0 impossible de créer la matrice");
         //Check que la ligne ou la colonne ne soit pas négative ou égale à 0 sinon dimension incorrecte
         if(ligne <= 0 || colonne <= 0)
-            throw new RuntimeException("Dimension de matrice incorrecte( > 0)");
+            throw new RuntimeException("Dimension de matrice incorrecte(ligne et colonne > 0)");
         this.modulo = modulo;
         this.matrice = new int[ligne][colonne];
         //Génération des éléments de la matrice
@@ -35,12 +36,15 @@ public class Matrice {
     }
 
     /**
-     * Constructeur spécifique de la classe Matrice. Les éléments de la matrice auront la valeur de la matrice passée en paramètre
+     * Constructeur spécifique de la classe Matrice.
+     * Les éléments de la matrice auront la valeur de la matrice passée en paramètre
      * @param modulo entier étant le module de la matrice
      * @param matrice tableau en 2 dimensions étant la matrice de laquelle reprendre les éléments
      * @throws RuntimeException si le modulo est négatif ou égal à 0
-     * Si la ligne ou la colonne de la matrice a une valeur négative ou égale à 0 une RuntimeException est également retournée
-     * Si un élément dans la matrice ne respecte pas la condition avec le modulo(entre 0 et le modulo - 1) on retourne une RuntimeException
+     * Si la ligne ou la colonne de la matrice a une valeur négative ou égale à 0
+     * une RuntimeException est également retournée
+     * Si un élément dans la matrice ne respecte pas la condition
+     * avec le modulo(entre 0 et le modulo - 1) une RuntimeException est levée
      */
     public Matrice(int modulo, int[][] matrice){
         //Check que le modulo ne soit pas négatif
@@ -48,7 +52,7 @@ public class Matrice {
             throw new RuntimeException("modulo négatif ou égal à 0 impossible de créer la matrice");
         //Vérifie les dimensions de la matrice. Ligne et colonne inférieure ou égale 0
         if(matrice.length <= 0 || matrice[0].length <= 0)
-            throw new RuntimeException("Dimension de matrice incorrecte( > 0)");
+            throw new RuntimeException("Dimension de matrice incorrecte(ligne et colonne > 0)");
         this.modulo = modulo;
         this.matrice = matrice;
         //Check que le modulo des éléments des colonnes ou des lignes soit corrects
@@ -73,7 +77,7 @@ public class Matrice {
      * Retourne le nombre de colonnes de la matrice
      * @return un entier indiquant le nombre de colonne de la matrice
      */
-    int getColonne(){
+    private int getColonne(){
         return matrice[0].length;
     }
 
@@ -81,7 +85,7 @@ public class Matrice {
      * Retourne le nombre de lignes de la matrice
      * @return un entier indiquant le nombre de ligne de la matrice
      */
-    int getLigne(){
+    private int getLigne(){
         return matrice.length;
     }
 
