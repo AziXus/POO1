@@ -12,7 +12,7 @@ class Soustraction extends Operation{
      * @throws ArithmeticException en cas d'overflow par Math.subtractExact
      */
     @Override
-    int calcul(int element1, int element2) {
+    public int calcul(int element1, int element2) {
         return Math.subtractExact(element1, element2);
     }
 }

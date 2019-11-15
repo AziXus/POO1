@@ -12,7 +12,7 @@ class Addition extends Operation {
      * @throws ArithmeticException en cas d'overflow par Math.addExact
      */
     @Override
-    int calcul(int element1, int element2) {
+    public int calcul(int element1, int element2) {
         return Math.addExact(element1, element2);
     }
 }
