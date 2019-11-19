@@ -1,6 +1,5 @@
 package hanoi;
 
-import java.util.Arrays;
 import util.*;
 
 public class Hanoi {
@@ -24,13 +23,13 @@ public class Hanoi {
         this.displayer = displayer;
     }
 
-    private void solveRecursif(Pile O, Pile D, Pile I, int n){
+    private void solveRecursif(Pile O, Pile I, Pile D, int n){
         if(n > 0) {
-            solveRecursif(O, I, D, n - 1);
+            solveRecursif(O, D, I, n - 1);
             displayer.display(this);
             nbDeplacement++;
             D.push(O.pop());
-            solveRecursif(I, D, O, n - 1);
+            solveRecursif(I, O, D, n - 1);
         }
     }
 
@@ -43,7 +42,7 @@ public class Hanoi {
     }
 
     public void solve(){
-        solveRecursif(pile[0], pile[2], pile[1], nbDisks);
+        solveRecursif(pile[0], pile[1], pile[2], nbDisks);
         displayer.display(this);
     }
 
