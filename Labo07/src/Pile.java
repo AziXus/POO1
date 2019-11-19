@@ -1,5 +1,15 @@
 import java.util.*;
 
+class Element{
+    Object data;
+    Element next;
+
+    protected Element(Object o, Element next){
+        this.data = o;
+        this.next = next;
+    }
+}
+
 public class Pile {
     private LinkedList<Object> elements;
 
