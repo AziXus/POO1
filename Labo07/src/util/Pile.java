@@ -1,5 +1,4 @@
-import java.util.*;
-//sjahsd
+package util;
 class Element {
     Object data;
     Element next;
@@ -46,7 +45,7 @@ public class Pile {
         Object[] elements = new Object[size];
 
         int i = 0;
-        for (Element e = head; e.next != null; e = e.next, ++i) {
+        for (Element e = head; e != null; e = e.next, ++i) {
             elements[i] = e.data;
         }
 
@@ -66,7 +65,7 @@ public class Pile {
         while (it.possedeSuivant()) {
             sb.append("<").append(it.suivant()).append("> ");
         }
-        sb.append("]");
+        sb.append("]\n");
 
         return sb.toString();
     }

@@ -1,3 +1,5 @@
+package util;
+
 public class Iterateur {
     private Element current;
 
