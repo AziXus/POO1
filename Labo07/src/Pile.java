@@ -1,5 +1,5 @@
 import java.util.*;
-
+//sjahsd
 class Element {
     Object data;
     Element next;
