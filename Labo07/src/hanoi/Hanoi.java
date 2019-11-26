@@ -1,13 +1,20 @@
 package hanoi;
 
 import util.*;
-
+/**
+ * Classe de gestion des matrices
+ * @author Müller Robin, Teixeira Carvalho Stéphane
+ */
 public class Hanoi {
     private int nbDisks;
     private HanoiDisplayer displayer;
     private Pile[] pile = new Pile[3];
     private int nbDeplacement;
 
+    /**
+     *
+     * @param disks
+     */
     public Hanoi(int disks){
         this.nbDisks = disks;
         pile[0] = new Pile();

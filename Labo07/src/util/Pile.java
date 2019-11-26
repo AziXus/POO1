@@ -1,18 +1,34 @@
 package util;
+/**
+ * Classe permettant la gestion d'élément de type Object
+ * @author Müller Robin, Teixeira Carvalho Stéphane
+ */
 class Element {
     Object data;
     Element next;
 
+    /**
+     * Constructeur de la classe Element
+     * @param data object répresentant la valeur de l'élément
+     */
     Element(Object data) {
         this.data = data;
     }
 
+    /**
+     *
+     * @param data
+     * @param next
+     */
     Element(Object data, Element next) {
         this(data);
         this.next = next;
     }
 }
-
+/**
+ * Classe de gestion des matrices
+ * @author Müller Robin, Teixeira Carvalho Stéphane
+ */
 public class Pile {
     private Element head;
     private int size;

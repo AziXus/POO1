@@ -6,7 +6,7 @@ public class Main {
 
     public static void main(String[] args) {
         HanoiDisplayer hDisplay = new HanoiDisplayer();
-        Hanoi h = new Hanoi(4, hDisplay);
+        Hanoi h = new Hanoi(3, hDisplay);
         h.solve();
 
         new JHanoi();

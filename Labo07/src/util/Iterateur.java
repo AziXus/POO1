@@ -1,5 +1,8 @@
 package util;
-
+/**
+ * Classe de gestion des matrices
+ * @author Müller Robin, Teixeira Carvalho Stéphane
+ */
 public class Iterateur {
     private Element current;
 
