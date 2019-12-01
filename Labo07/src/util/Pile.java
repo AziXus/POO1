@@ -66,7 +66,7 @@ public class Pile {
     public Object pop() {
         if (isEmpty())
             return null;
-        //Pour renvoyer l'objet supprimer affectation à une variable avant d'enlever le lien de l'élément avec la pile
+        //Pour renvoyer l'objet supprimer, affectation à une variable avant d'enlever le lien de l'élément avec la pile
         Object top = head.data;
         head = head.next;
         --size;
@@ -83,15 +83,10 @@ public class Pile {
 
         //Entier permettant de parcourir le tableau contenant les objets
         int index = 0;
-        //Parcours la pile tant que le prochain élément n'est pas null
-        for (Element e = head; e != null; e = e.next, ++index) {
-            elements[index] = e.data;
+        //Parcours la pile tant qu'un element possède un suivant
+        for (Iterateur it = iterateur(); it.possedeSuivant(); ++index) {
+            elements[index] = it.suivant();
         }
-        /*
-        for (Iterateur it = new Iterateur(head); it.possedeSuivant(); it.suivant(), ++index) {
-            elements[index] = it.data;
-        }
-        * */
 
         return elements;
     }
@@ -112,7 +107,7 @@ public class Pile {
     public String toString() {
         StringBuilder sb = new StringBuilder();
 
-        Iterateur it = this.iterateur();
+        Iterateur it = iterateur();
         sb.append("[ ");
         while (it.possedeSuivant()) {
             sb.append("<").append(it.suivant()).append("> ");

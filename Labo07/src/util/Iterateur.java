@@ -20,7 +20,6 @@ public class Iterateur {
      */
     boolean possedeSuivant() {
         return current != null;
-        //return current.next != null;
     }
 
     /**

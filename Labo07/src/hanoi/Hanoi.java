@@ -19,6 +19,8 @@ public class Hanoi {
      * @throws RuntimeException si le nombre de disque est négatif
      */
     public Hanoi(int disks){
+        if(disks <= 0)
+            throw new RuntimeException("Nombre de disque incorrecte la valeur doit être supérieure à 0");
         this.nbDisks = disks;
         this.tours[0] = new Pile();
         this.tours[1] = new Pile();
