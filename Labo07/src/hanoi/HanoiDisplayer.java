@@ -1,9 +1,14 @@
 package hanoi;
 /**
- * Classe de gestion des matrices
+ * Classe gérant l'affichage de la classe Hanoi
  * @author Müller Robin, Teixeira Carvalho Stéphane
  */
 public class HanoiDisplayer{
+
+    /**
+     * Affiche l'état du tour courant.
+     * @param h tours de Hanoi à utiliser
+     */
     public void display(Hanoi h){
         StringBuilder str = new StringBuilder();
         str.append("-- Turn: ").append(h.turn()).append("\n");
