@@ -16,6 +16,7 @@ public class Hanoi {
      * Initialise les tours de Hanoi et place les disques dans un ordre
      * croissant sur la première tour.
      * @param disks le nombre de disques à placer sur la première tour.
+     * @throws RuntimeException si le nombre de disque est négatif
      */
     public Hanoi(int disks){
         this.nbDisks = disks;
