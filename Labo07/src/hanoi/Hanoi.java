@@ -6,7 +6,7 @@ import util.*;
  * @author Müller Robin, Teixeira Carvalho Stéphane
  */
 public class Hanoi {
-    private int nbDisks;
+    private final int NB_DISKS;
     private HanoiDisplayer displayer;
     private Pile[] tours = new Pile[3];
     private int nbDeplacement;
@@ -19,20 +19,7 @@ public class Hanoi {
      * @throws RuntimeException si le nombre de disque est négatif
      */
     public Hanoi(int disks){
-        if(disks <= 0)
-            throw new RuntimeException("Nombre de disque incorrecte la valeur doit être supérieure à 0");
-        this.nbDisks = disks;
-        this.tours[0] = new Pile();
-        this.tours[1] = new Pile();
-        this.tours[2] = new Pile();
-
-        //place les disques dans un ordre croissant sur la première tour.
-        for(int i = disks; i > 0; i--){
-            this.tours[0].push(i);
-        }
-
-        // public Hanoi(int disks) : Constructeur pour l’affichage à la console.
-        //this.displayer = new HanoiDisplayer();
+        this(disks, new HanoiDisplayer());
     }
 
     /**
@@ -43,7 +30,18 @@ public class Hanoi {
      * @param displayer instance HanoiDisplayer à utiliser pour l'affichage
      */
     public Hanoi(int disks, HanoiDisplayer displayer){
-        this(disks);
+        if(disks <= 0)
+            throw new RuntimeException("Nombre de disque incorrecte la valeur doit être supérieure à 0");
+        this.NB_DISKS = disks;
+        this.tours[0] = new Pile();
+        this.tours[1] = new Pile();
+        this.tours[2] = new Pile();
+
+        //place les disques dans un ordre croissant sur la première tour.
+        for(int i = disks; i > 0; i--){
+            this.tours[0].push(i);
+        }
+
         this.displayer = displayer;
     }
 
@@ -83,7 +81,7 @@ public class Hanoi {
      * Déplace tous les disques de la première aiguille à la troisième
      */
     public void solve(){
-        solveRecursif(tours[0], tours[1], tours[2], nbDisks);
+        solveRecursif(tours[0], tours[1], tours[2], NB_DISKS);
         displayer.display(this);
     }
 
@@ -102,10 +100,10 @@ public class Hanoi {
 
     /**
      * Retourne si la partie est finie ou non.
-     * @return true si la dernière tour contient tous les disques, false sinon
+     * @return true si la solution du problème a été atteinte, false sinon.
      */
     public boolean finished(){
-        return tours[2].getElements().length == nbDisks;
+        return tours[2].getElements().length == NB_DISKS;
     }
 
     /**
