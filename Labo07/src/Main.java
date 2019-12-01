@@ -6,19 +6,16 @@ public class Main {
 
     public static void main(String[] args) {
         if(args.length == 0){
-            System.out.println("Veuillez entrez un nombre de disque");
-            return;
+            testHanoiApplication();
         }
-        int nbDisks = 0;
-
-        try {
-            nbDisks = Integer.parseInt(args[0]);
-        }catch (NumberFormatException num) {
-            System.out.println("Le nombre passé en paramètre est incorrecte");
+        else {
+            try {
+                int nbDisks = Integer.parseInt(args[0]);
+                testHanoiInviteCommande(nbDisks);
+            } catch (NumberFormatException num) {
+                System.out.println("La valeur passée en paramètre n'est pas un nombre");
+            }
         }
-
-        testHanoiInviteCommande(nbDisks);
-        testHanoiApplication();
     }
 
     /**
