@@ -1,4 +1,4 @@
-package util;//permet d'inclure les classes Element et Pile dans la package util
+package util;//permet d'inclure la classe Pile dans la package util
 /**
  * Classe permettant de représenter une pile générique (capable de stocker un nombre quelconque
  * d’objets)

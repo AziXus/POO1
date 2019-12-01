@@ -1,10 +1,28 @@
 import hanoi.Hanoi;
 import hanoi.HanoiDisplayer;
 import hanoi.gui.JHanoi;
+import util.Iterateur;
+import util.Pile;
 
 public class Main {
 
     public static void main(String[] args) {
+        Pile list = new Pile();
+
+        list.push("A");
+        list.push("B");
+        list.push("C");
+        list.push("D");
+        list.push("E");
+
+        // ListIterator to traverse the list
+        Iterateur iterator = list.iterateur();
+
+        // Traversing the list in forward direction
+        System.out.println("Displaying list elements : ");
+
+        while (iterator.possedeSuivant())
+            System.out.print(iterator.suivant() + " ");
         if(args.length == 0){
             testHanoiApplication();
         }
