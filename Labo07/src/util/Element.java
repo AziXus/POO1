@@ -8,7 +8,7 @@ class Element {
     Element next;
 
     /**
-     * Constructeur de la classe Element
+     * Constructeur spécifique de la classe Element
      * @param data object répresentant la valeur de l'élément
      */
     Element(Object data) {
@@ -16,7 +16,8 @@ class Element {
     }
 
     /**
-     * Deuxième constructeur de la classe object permettant d'ajouter un élément en depuis de pile
+     * Deuxième constructeur spécifique de la classe object
+     * permettant de donner l'adresse de l'élément suivant dans la pile
      * @param data object représentant la valeur de l'élément
      * @param next objet représentant la valeur de l'élément suivant dans la pile
      */

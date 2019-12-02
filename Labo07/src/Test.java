@@ -4,6 +4,11 @@ import hanoi.gui.JHanoi;
 import util.Iterateur;
 import util.Pile;
 
+/**
+ * Classe Test permettant d'effectuer des tests pour les fonctionnalités d'une pile
+ * ainsi que la résolution d'une tour de Hanoi
+ * @author Müller Robin, Teixeira Carvalho Stéphane
+ */
 public class Test {
 
     public static void main(String[] args) {
@@ -11,12 +16,13 @@ public class Test {
         System.out.println("Test de la création d'une pile\n");
         testPile(nbElementPile);
 
-        System.out.println("Test lancement Hanoi");
+        System.out.println("Test tour de Hanoi");
         //Si aucun paramètre n'est passée l'application graphique est lancée
         if(args.length == 0){
             testHanoiApplication();
         }
         else {
+            //Essaye de convertir le paramètre passée en entier
             try {
                 int nbDisks = Integer.parseInt(args[0]);
                 testHanoiInviteCommande(nbDisks);

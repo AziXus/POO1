@@ -16,7 +16,9 @@ public class Iterateur {
 
     /**
      * Permet de savoir si l'itérateur possède un élément suivant
-     * @return vrai si un élément suivant existe sinon faux
+     * Si l'élément courant n'est pas nul cela veut dire que nous ne sommes pas en fin de pile
+     * et donc qu'il existe encore un élément suivant
+     * @return vrai si un élément courant est différent de null, sinon faux
      */
     public boolean possedeSuivant() {
         return current != null;
@@ -24,7 +26,8 @@ public class Iterateur {
 
     /**
      * Permet de connaître la valeur de l'élément suivant
-     * @return un object étant la valeur de l'élément suivant
+     * @return un object étant la valeur de l'élément suivant et
+     * s'il ne possède pas d'élément suivant il retourne null
      */
     public Object suivant() {
         if(possedeSuivant()) {

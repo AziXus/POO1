@@ -2,7 +2,7 @@ package hanoi;
 
 import util.*;
 /**
- * Classe représentant les tours d'Hanoi et leurs disques
+ * Classe représentant la tour de Hanoi avec ses 3 piles et leurs disques
  * @author Müller Robin, Teixeira Carvalho Stéphane
  */
 public class Hanoi {
@@ -15,6 +15,7 @@ public class Hanoi {
      * Constructeur spécifique de la classe Hanoi
      * Initialise les tours de Hanoi et place les disques dans un ordre
      * croissant sur la première tour.
+     * Utilise le conctsructeur par défaut pour l'affichage d'une tour de Hanoi
      * @param disks le nombre de disques à placer sur la première tour.
      * @throws RuntimeException si le nombre de disque est est plus petit ou égal à 0
      */
@@ -84,6 +85,7 @@ public class Hanoi {
      */
     public void solve(){
         solveRecursif(tours[0], tours[1], tours[2], NB_DISKS);
+        //Permet d'afficher l'état final des tours
         displayer.display(this);
     }
 
@@ -102,6 +104,7 @@ public class Hanoi {
 
     /**
      * Retourne si la partie est finie ou non.
+     * Une partie est finie lorsque la troisième tour contient la totalité des disques
      * @return true si la solution du problème a été atteinte, false sinon.
      */
     public boolean finished(){
@@ -110,7 +113,7 @@ public class Hanoi {
 
     /**
      * Retourne le nombre de déplacements effectués
-     * @return nombre de déplacements effectués
+     * @return un entier représentant le nombre de déplacements effectués
      */
     public int turn(){
         return nbDeplacement;

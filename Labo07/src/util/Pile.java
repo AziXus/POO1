@@ -29,6 +29,7 @@ public class Pile {
      * @param o Object à ajouter à la pile
      */
     public void push(Object o) {
+        //L'objet créer devient le nouveau élément en tête de la pile
         head = new Element(o, head);
         ++size;
     }
@@ -40,7 +41,8 @@ public class Pile {
     public Object pop() {
         if (isEmpty())
             return null;
-        //Pour renvoyer l'objet supprimer, affectation à une variable avant d'enlever le lien de l'élément avec la pile
+        //Pour renvoyer l'objet supprimer,
+        //affectation à une variable avant d'enlever le lien de l'élément avec la pile
         Object top = head.data;
         head = head.next;
         --size;
