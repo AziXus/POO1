@@ -75,9 +75,8 @@ public class Main {
      * @param nbDisks nombre de disque qu'aura la tour de hanoi
      */
     private static void testHanoiInviteCommande(int nbDisks) {
-        HanoiDisplayer hDisplay = new HanoiDisplayer();
         try {
-            Hanoi h = new Hanoi(nbDisks, hDisplay);
+            Hanoi h = new Hanoi(nbDisks);
             h.solve();
         }catch(RuntimeException erreur){
             System.out.println(erreur);
