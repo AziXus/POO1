@@ -4,11 +4,13 @@ import hanoi.gui.JHanoi;
 import util.Iterateur;
 import util.Pile;
 
-public class Main {
+public class Test {
 
     public static void main(String[] args) {
-        testPile(4);
-        System.out.println("Test lancment Hanoi");
+        int nbElementPile = 4;
+        System.out.println("Test de la création d'une pile\n");
+        testPile(nbElementPile);
+        System.out.println("Test lancement Hanoi");
         if(args.length == 0){
             testHanoiApplication();
         }
@@ -23,8 +25,8 @@ public class Main {
     }
 
     /**
-     * Test le programme de résolution de tour de hanoi en invite de commande
-     * @param nbElement nombre de disque qu'aura la tour de hanoi
+     * Test les fonctionnalités de la classe pile
+     * @param nbElement nombre d'éléments à créer dans la pile
      */
     private static void testPile(int nbElement) {
         Pile p = new Pile();
@@ -41,33 +43,42 @@ public class Main {
         Object[] elements = p.getElements();
         StringBuilder sb = new StringBuilder();
         sb.append("[ ");
-        for(int i = 0; i < elements.length; i++){
-            sb.append(elements[i] + " ");
+        for(Object element : elements){
+            sb.append(element).append(" ");
         }
         sb.append("]");
         System.out.println(sb.toString());
 
         System.out.println("Supression d'un élément : " + p.pop());
-        System.out.println("Taille    : " + p.size());
+        System.out.println("Taille                  : " + p.size());
 
         System.out.println("Affichage des éléments de la pile sous forme du tableau : ");
         elements = p.getElements();
         sb = new StringBuilder();
         sb.append("[ ");
-        for(int i = 0; i < elements.length; i++){
-            sb.append(elements[i] + " ");
+        for(Object element : elements){
+            sb.append(element).append(" ");
         }
         sb.append("]");
         System.out.println(sb.toString());
 
-        System.out.println("Parcours de la pile avec un Iterateur");
+        System.out.println("Parcours de la pile avec un Iterateur : ");
         Iterateur it = p.iterateur();
         sb = new StringBuilder();
         while(it.possedeSuivant())
-            sb.append(it.suivant() + " ");
+            sb.append(it.suivant()).append(" ");
         System.out.println(sb.toString());
-
+        System.out.println("Affichage de la pile à l'aide de la méthode ToString() : ");
         System.out.println(p.toString());
+
+        System.out.println("Suppression des éléments de la pile : ");
+        System.out.println(p.pop());
+        System.out.println(p.pop());
+        System.out.println(p.pop());
+        System.out.println("Suppression dans une pile vide : ");
+        System.out.println("Pile vide ? " + p.isEmpty());
+        System.out.println("Taille    : " + p.size());
+        System.out.println(p.pop() + "\n");
     }
 
     /**
