@@ -4,6 +4,7 @@ package hanoi;
  * @author Müller Robin, Teixeira Carvalho Stéphane
  */
 public class HanoiDisplayer{
+
     /**
      * Affiche l'état du tour courant.
      * @param h instance de la classe Hanoi à afficher

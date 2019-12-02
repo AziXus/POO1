@@ -1,5 +1,4 @@
-package util;
-
+package util;//permet d'inclure la classe Element dans la package util
 /**
  * Classe permettant la gestion d'élément de type Object dans une pile
  * @author Müller Robin, Teixeira Carvalho Stéphane

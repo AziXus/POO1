@@ -1,4 +1,4 @@
-package util;
+package util;//permet d'inclure la classe Iterateur dans la package util
 /**
  * Classe de création d'iterateur
  * @author Müller Robin, Teixeira Carvalho Stéphane
@@ -18,7 +18,7 @@ public class Iterateur {
      * Permet de savoir si l'itérateur possède un élément suivant
      * @return vrai si un élément suivant existe sinon faux
      */
-    boolean possedeSuivant() {
+    public boolean possedeSuivant() {
         return current != null;
     }
 
@@ -26,7 +26,7 @@ public class Iterateur {
      * Permet de connaître la valeur de l'élément suivant
      * @return un object étant la valeur de l'élément suivant
      */
-    Object suivant() {
+    public Object suivant() {
         if(possedeSuivant()) {
             Object o = current.data;
             current = current.next;
