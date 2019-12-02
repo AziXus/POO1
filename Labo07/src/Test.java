@@ -10,7 +10,9 @@ public class Test {
         int nbElementPile = 4;
         System.out.println("Test de la création d'une pile\n");
         testPile(nbElementPile);
+
         System.out.println("Test lancement Hanoi");
+        //Si aucun paramètre n'est passée l'application graphique est lancée
         if(args.length == 0){
             testHanoiApplication();
         }

@@ -16,7 +16,7 @@ public class Hanoi {
      * Initialise les tours de Hanoi et place les disques dans un ordre
      * croissant sur la première tour.
      * @param disks le nombre de disques à placer sur la première tour.
-     * @throws RuntimeException si le nombre de disque est négatif
+     * @throws RuntimeException si le nombre de disque est est plus petit ou égal à 0
      */
     public Hanoi(int disks){
         this(disks, new HanoiDisplayer());
@@ -28,16 +28,18 @@ public class Hanoi {
      * croissant sur la première tour.
      * @param disks le nombre de disques à placer sur la première tour.
      * @param displayer instance HanoiDisplayer à utiliser pour l'affichage
+     * @throws RuntimeException si le nombre de disque est est plus petit ou égal à 0
      */
     public Hanoi(int disks, HanoiDisplayer displayer){
         if(disks <= 0)
-            throw new RuntimeException("Nombre de disque incorrecte la valeur doit être supérieure à 0");
+            throw new RuntimeException("Nombre de disque incorrect la valeur doit être supérieure à 0");
         this.NB_DISKS = disks;
+        //Initialisation des différentes Piles
         this.tours[0] = new Pile();
         this.tours[1] = new Pile();
         this.tours[2] = new Pile();
 
-        //place les disques dans un ordre croissant sur la première tour.
+        //Place les disques dans un ordre croissant sur la première tour.
         for(int i = disks; i > 0; i--){
             this.tours[0].push(i);
         }
@@ -58,7 +60,7 @@ public class Hanoi {
             solveRecursif(O, D, I, n - 1);
             displayer.display(this);
             nbDeplacement++;
-            // Déplace le disque du sommet de la tour d'origine vers la destination
+            //Déplace le disque du sommet de la tour d'origine vers la destination
             D.push(O.pop());
             solveRecursif(I, O, D, n - 1);
         }
