@@ -1,6 +1,6 @@
 import hanoi.Hanoi;
 import hanoi.HanoiDisplayer;
-import hanoi.gui.JHanoi;
+import hanoi.gui.*;
 import util.Iterateur;
 import util.Pile;
 

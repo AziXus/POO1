@@ -13,6 +13,10 @@ public abstract class Piece {
         this.playerColor = playerColor;
     }
 
+    public void setFirstMove(boolean firstMove) {
+        this.firstMove = firstMove;
+    }
+
     public LinkedList<Square> validMoves(int fromX, int fromY) {
         // Eventuellement throws
         return new LinkedList<>();

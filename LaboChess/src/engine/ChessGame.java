@@ -86,7 +86,8 @@ public class ChessGame implements ChessController {
                 view.putPiece(PieceType.PAWN, PlayerColor.WHITE, toX, toY);
                 board[toX][toY] = board[fromX][fromY];
                 board[fromX][fromY] = null;
-                return true;
+                srcPiece.setFirstMove(false);
+            return true;
             }
         }
 
