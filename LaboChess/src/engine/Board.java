@@ -17,7 +17,7 @@ public class Board {
         board[7][0] = new Rook(PlayerColor.WHITE, 7, 0);
 
         for(int i = 0; i < 8; i++){
-            board[i][1] = new Rook(PlayerColor.WHITE, i, 1);
+            board[i][1] = new Pawn(PlayerColor.WHITE, i, 1);
         }
 
 
@@ -31,7 +31,7 @@ public class Board {
         board[7][7] = new Rook(PlayerColor.BLACK, 7, 7);
 
         for(int i = 0; i < 8; i++){
-            board[i][6] = new Rook(PlayerColor.BLACK, i, 6);
+            board[i][6] = new Pawn(PlayerColor.BLACK, i, 6);
         }
     }
 
@@ -46,8 +46,13 @@ public class Board {
     public boolean movePiece(int oldX, int oldY, int newX, int newY){
         if(board[oldX][oldY] == null)
             return false;
-        board[newX][newY] = board[oldX][oldY];
-        board[oldX][oldY] = null;
-        return true;
+
+        if (board[oldX][oldY].move(this, newX, newY)) {
+            board[newX][newY] = board[oldX][oldY];
+            board[oldX][oldY] = null;
+            return true;
+        }
+
+        return false;
     }
 }

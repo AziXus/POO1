@@ -70,7 +70,7 @@ public class ChessGame implements ChessController {
 
                 if(board.movePiece(fromX, fromY, toX, toY)) {
                     view.removePiece(fromX, fromY);
-                    view.putPiece(PieceType.PAWN, PlayerColor.WHITE, toX, toY);
+                    view.putPiece(PieceType.PAWN, board.getPiece(toX, toY).getPlayerColor(), toX, toY);
                     return true;
                 }
 
