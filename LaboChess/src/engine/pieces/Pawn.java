@@ -8,8 +8,8 @@ import java.util.LinkedList;
 
 public class Pawn extends Piece {
 
-    public Pawn(PlayerColor playerColor, int X, int Y) {
-        super(playerColor, X, Y);
+    public Pawn(PlayerColor playerColor) {
+        super(playerColor);
     }
 
     public boolean promotionAvailable() {
@@ -17,27 +17,29 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean move(Board board, int toX, int toY) {
+    public boolean move(Board board, int fromX, int fromY, int toX, int toY) {
         // Move only possible on a null dest
         if (board.getPiece(toX, toY) != null) {
             return false;
         }
 
         if (playerColor == PlayerColor.WHITE) {
-            if (toY - currentY == 1) {
+            if (toY - fromY == 1) {
                 return true;
             }
 
-            if (firstMove && toY - currentY == 2) {
-                return board.getPiece(currentX, currentY + 1) == null;
+            if (firstMove && toY - fromY == 2) {
+                firstMove = false;
+                return board.getPiece(fromX, fromY + 1) == null;
             }
         } else if (playerColor == PlayerColor.BLACK) {
-            if (currentY - toY == 1) {
+            if (fromY - toY == 1) {
                 return true;
             }
 
-            if (firstMove && currentY - toY == 2) {
-                return board.getPiece(currentX, currentY - 1) == null;
+            if (firstMove && fromY - toY == 2) {
+                firstMove = false;
+                return board.getPiece(fromX, fromY - 1) == null;
             }
         }
 
@@ -45,7 +47,7 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean attack(Board board, int toX, int toY) {
+    public boolean attack(Board board, int fromX, int fromY, int toX, int toY) {
         return false;
     }
 

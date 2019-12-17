@@ -7,31 +7,31 @@ public class Board {
     private final Piece[][] board = new Piece[8][8];
 
     public Board(){
-        board[0][0] = new Rook(PlayerColor.WHITE, 0, 0);
-        board[1][0] = new Knight(PlayerColor.WHITE, 1, 0);
-        board[2][0] = new Bishop(PlayerColor.WHITE, 2, 0);
-        board[3][0] = new Queen(PlayerColor.WHITE, 3, 0);
-        board[4][0] = new King(PlayerColor.WHITE, 4, 0);
-        board[5][0] = new Bishop(PlayerColor.WHITE, 5, 0);
-        board[6][0] = new Knight(PlayerColor.WHITE, 6, 0);
-        board[7][0] = new Rook(PlayerColor.WHITE, 7, 0);
+        board[0][0] = new Rook(PlayerColor.WHITE);
+        board[1][0] = new Knight(PlayerColor.WHITE);
+        board[2][0] = new Bishop(PlayerColor.WHITE);
+        board[3][0] = new Queen(PlayerColor.WHITE);
+        board[4][0] = new King(PlayerColor.WHITE);
+        board[5][0] = new Bishop(PlayerColor.WHITE);
+        board[6][0] = new Knight(PlayerColor.WHITE);
+        board[7][0] = new Rook(PlayerColor.WHITE);
 
         for(int i = 0; i < 8; i++){
-            board[i][1] = new Pawn(PlayerColor.WHITE, i, 1);
+            board[i][1] = new Pawn(PlayerColor.WHITE);
         }
 
 
-        board[0][7] = new Rook(PlayerColor.BLACK, 0, 7);
-        board[1][7] = new Knight(PlayerColor.BLACK, 1, 7);
-        board[2][7] = new Bishop(PlayerColor.BLACK, 2, 7);
-        board[3][7] = new Queen(PlayerColor.BLACK, 3, 7);
-        board[4][7] = new King(PlayerColor.BLACK, 4, 7);
-        board[5][7] = new Bishop(PlayerColor.BLACK, 5, 7);
-        board[6][7] = new Knight(PlayerColor.BLACK, 6, 7);
-        board[7][7] = new Rook(PlayerColor.BLACK, 7, 7);
+        board[0][7] = new Rook(PlayerColor.BLACK);
+        board[1][7] = new Knight(PlayerColor.BLACK);
+        board[2][7] = new Bishop(PlayerColor.BLACK);
+        board[3][7] = new Queen(PlayerColor.BLACK);
+        board[4][7] = new King(PlayerColor.BLACK);
+        board[5][7] = new Bishop(PlayerColor.BLACK);
+        board[6][7] = new Knight(PlayerColor.BLACK);
+        board[7][7] = new Rook(PlayerColor.BLACK);
 
         for(int i = 0; i < 8; i++){
-            board[i][6] = new Pawn(PlayerColor.BLACK, i, 6);
+            board[i][6] = new Pawn(PlayerColor.BLACK);
         }
     }
 
@@ -47,12 +47,20 @@ public class Board {
         if(board[oldX][oldY] == null)
             return false;
 
-        if (board[oldX][oldY].move(this, newX, newY)) {
+        if(board[newX][newY] != null){
+            if(board[oldX][oldY].attack(this, oldX, oldY, newX, newY)){
+                board[newX][newY] = board[oldX][oldY];
+                board[oldX][oldY] = null;
+                return true;
+            }
+            return false;
+        }
+
+        if (board[oldX][oldY].move(this, oldX, oldY, newX, newY)) {
             board[newX][newY] = board[oldX][oldY];
             board[oldX][oldY] = null;
             return true;
         }
-
         return false;
     }
 }
