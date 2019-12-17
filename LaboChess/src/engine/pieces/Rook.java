@@ -5,7 +5,7 @@ import engine.Square;
 
 public class Rook extends Piece {
 
-    public Rook(PlayerColor playerColor, Square position) {
-        super(playerColor);
+    public Rook(PlayerColor playerColor, int X, int Y) {
+        super(playerColor, X, Y);
     }
 }

@@ -7,8 +7,8 @@ import java.util.LinkedList;
 
 public class Pawn extends Piece {
 
-    public Pawn(PlayerColor playerColor) {
-        super(playerColor);
+    public Pawn(PlayerColor playerColor, int X, int Y) {
+        super(playerColor, X, Y);
     }
 
     public boolean promotionAvailable() {

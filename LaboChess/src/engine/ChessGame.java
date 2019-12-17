@@ -11,7 +11,7 @@ import engine.pieces.Piece;
 import java.util.LinkedList;
 
 public class ChessGame implements ChessController {
-    private final Piece[][] board = new Piece[8][8];
+    private Board board;
     private ChessView view;
 
     private void initBoardView(ChessView view, PlayerColor playerColor) {
@@ -25,7 +25,6 @@ public class ChessGame implements ChessController {
             secondLine = firstLine - 1;
         }
 
-        view.putPiece(PieceType.ROOK,   playerColor, 0, firstLine);
         view.putPiece(PieceType.ROOK,   playerColor, 0, firstLine);
         view.putPiece(PieceType.KNIGHT, playerColor, 1, firstLine);
         view.putPiece(PieceType.BISHOP, playerColor, 2, firstLine);
@@ -67,29 +66,13 @@ public class ChessGame implements ChessController {
      * @return true si le mouvement a pu avoir lieu, false dans le cas contraire.
      */
     public boolean move(int fromX, int fromY, int toX, int toY) {
-        //Check coordinates
+        //Check coordinate
 
-
-        //Trouver piece a la position fromX et fromY
-        Piece srcPiece = board[fromX][fromY];
-
-        if (srcPiece == null)
-            return false;
-
-        Square targetSquare = new Square(toX, toY);
-        LinkedList<Square> possibleMoves = srcPiece.validMoves(fromX, fromY);
-
-        for (Square s : possibleMoves) {
-            if (s.equals(targetSquare)) {
-                //Make move
-                view.removePiece(fromX, fromY);
-                view.putPiece(PieceType.PAWN, PlayerColor.WHITE, toX, toY);
-                board[toX][toY] = board[fromX][fromY];
-                board[fromX][fromY] = null;
-                srcPiece.setFirstMove(false);
-            return true;
-            }
-        }
+                if(board.movePiece(fromX, fromY, toX, toY)) {
+                    view.removePiece(fromX, fromY);
+                    view.putPiece(PieceType.PAWN, PlayerColor.WHITE, toX, toY);
+                    return true;
+                }
 
         return false;
     }
@@ -98,8 +81,7 @@ public class ChessGame implements ChessController {
      * Démarre une nouvelle partie. L'échiquier doit être remis dans sa position initiale.
      */
     public void newGame() {
-        board[0][1] = new Pawn(PlayerColor.WHITE);
-        board[0][6] = new Pawn(PlayerColor.BLACK);
+        board = new Board();
 
     }
 }

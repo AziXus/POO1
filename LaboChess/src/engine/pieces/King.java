@@ -4,7 +4,7 @@ import chess.PlayerColor;
 import engine.Square;
 
 public class King extends Piece {
-    public King(PlayerColor playerColor, Square position) {
-        super(playerColor);
+    public King(PlayerColor playerColor, int X, int Y) {
+        super(playerColor, X, Y);
     }
 }
