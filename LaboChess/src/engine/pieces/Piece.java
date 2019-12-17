@@ -1,6 +1,7 @@
 package engine.pieces;
 
 import chess.PlayerColor;
+import engine.Board;
 import engine.Square;
 
 import java.util.LinkedList;
@@ -15,12 +16,7 @@ public abstract class Piece {
         this.playerColor = playerColor;
     }
 
-    public void setFirstMove(boolean firstMove) {
-        this.firstMove = firstMove;
-    }
+    public abstract boolean move(Board board, int toX, int toY);
 
-    public LinkedList<Square> validMoves(int fromX, int fromY) {
-        // Eventuellement throws
-        return new LinkedList<>();
-    }
+    public abstract boolean attack(Board board, int toX, int toY);
 }
