@@ -12,6 +12,11 @@ public class Pawn extends Piece {
         super(playerColor);
     }
 
+    @Override
+    public boolean hasPieceOnMouvement(Board board, int toX, int toY) {
+        return false;
+    }
+
     public boolean promotionAvailable() {
         return true;
     }

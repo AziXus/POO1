@@ -12,6 +12,11 @@ public class Bishop extends Piece {
     }
 
     @Override
+    public boolean hasPieceOnMouvement(Board board, int toX, int toY) {
+        return false;
+    }
+
+    @Override
     public boolean move(Board board, int fromX, int fromY, int toX, int toY) {
         int moveX = fromX - toX;
         int moveY = fromY - toY;
@@ -23,6 +28,8 @@ public class Bishop extends Piece {
 
     @Override
     public boolean attack(Board board, int fromX, int fromY, int toX, int toY) {
+        if(move(board, fromX, fromY, toX, toY))
+            return true;
         return false;
     }
 }

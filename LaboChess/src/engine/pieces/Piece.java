@@ -14,6 +14,8 @@ public abstract class Piece {
         this.playerColor = playerColor;
     }
 
+    public abstract boolean hasPieceOnMouvement(Board board, int toX, int toY);
+
     public abstract boolean move(Board board, int fromX, int fromY, int toX, int toY);
 
     public abstract boolean attack(Board board, int fromX, int fromY, int toX, int toY);

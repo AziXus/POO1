@@ -48,6 +48,9 @@ public class Board {
             return false;
 
         if(board[newX][newY] != null){
+            //If the piece in the place desired is the same color as the one playing move invalid
+            if(board[newX][newY].getPlayerColor() == board[oldX][oldY].getPlayerColor())
+                return false;
             if(board[oldX][oldY].attack(this, oldX, oldY, newX, newY)){
                 board[newX][newY] = board[oldX][oldY];
                 board[oldX][oldY] = null;
