@@ -12,6 +12,12 @@ public class Rook extends Piece {
 
     @Override
     public boolean move(Board board, int fromX, int fromY, int toX, int toY) {
+        //Is move on the right or left same Y
+        if(fromY == toY)
+            return true;
+        //Is move up down X is still the same
+        if(fromX == toX)
+            return true;
         return false;
     }
 
