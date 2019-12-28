@@ -15,6 +15,7 @@ public class Bishop extends Piece {
     public boolean move(Board board, int fromX, int fromY, int toX, int toY) {
         int moveX = fromX - toX;
         int moveY = fromY - toY;
+        //To move in diagonal the difference between fromY and toY as to be the same as the difference between fromX and toX
         if(Math.abs(moveX) == Math.abs(moveY))
             return true;
         return false;
