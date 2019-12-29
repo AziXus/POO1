@@ -19,7 +19,7 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean hasPieceOnMouvement(Board board, int toX, int toY) {
+    public boolean hasPieceOnMouvement(Board board, int fromX, int fromY, int toX, int toY) {
         return false;
     }
 

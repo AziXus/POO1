@@ -17,7 +17,7 @@ public abstract class Piece {
 
     public abstract PieceType getPieceType();
 
-    public abstract boolean hasPieceOnMouvement(Board board, int toX, int toY);
+    public abstract boolean hasPieceOnMouvement(Board board, int fromX, int fromY, int toX, int toY);
 
     public abstract boolean move(Board board, int fromX, int fromY, int toX, int toY);
 

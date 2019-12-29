@@ -8,7 +8,6 @@ import java.util.Objects;
 public class Square {
     private int posX;
     private int posY;
-    private PieceType type;
     private Piece piece;
 
     public Square(int posX, int posY) {
@@ -16,14 +15,9 @@ public class Square {
         this.posY = posY;
     }
 
-    public Square(int posX, int posY, PieceType type, Piece piece) {
+    public Square(int posX, int posY, Piece piece) {
         this(posX, posY);
-        this.type = type;
         this.piece = piece;
-    }
-
-    public PieceType getPieceType(){
-        return type;
     }
 
     public int getPosX() {
