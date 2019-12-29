@@ -1,6 +1,7 @@
 package engine.pieces;
 
 
+import chess.PieceType;
 import chess.PlayerColor;
 import engine.Board;
 import engine.Square;
@@ -9,6 +10,11 @@ import java.lang.Math.*;
 public class Bishop extends Piece {
     public Bishop(PlayerColor playerColor) {
         super(playerColor);
+    }
+
+    @Override
+    public PieceType getPieceType() {
+        return PieceType.BISHOP;
     }
 
     @Override

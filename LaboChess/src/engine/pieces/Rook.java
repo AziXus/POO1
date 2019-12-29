@@ -1,5 +1,6 @@
 package engine.pieces;
 
+import chess.PieceType;
 import chess.PlayerColor;
 import engine.Board;
 import engine.Square;
@@ -8,6 +9,11 @@ public class Rook extends Piece {
 
     public Rook(PlayerColor playerColor) {
         super(playerColor);
+    }
+
+    @Override
+    public PieceType getPieceType() {
+        return PieceType.ROOK;
     }
 
     @Override

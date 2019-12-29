@@ -1,5 +1,6 @@
 package engine.pieces;
 
+import chess.PieceType;
 import chess.PlayerColor;
 import engine.Board;
 import engine.Square;
@@ -13,6 +14,8 @@ public abstract class Piece {
     public Piece(PlayerColor playerColor) {
         this.playerColor = playerColor;
     }
+
+    public abstract PieceType getPieceType();
 
     public abstract boolean hasPieceOnMouvement(Board board, int toX, int toY);
 

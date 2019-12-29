@@ -1,5 +1,6 @@
 package engine.pieces;
 
+import chess.PieceType;
 import chess.PlayerColor;
 import engine.Board;
 import engine.Square;
@@ -8,6 +9,12 @@ public class King extends Piece {
     public King(PlayerColor playerColor) {
         super(playerColor);
     }
+
+    @Override
+    public PieceType getPieceType() {
+        return PieceType.KING;
+    }
+
     @Override
     public boolean hasPieceOnMouvement(Board board, int toX, int toY) {
         return false;

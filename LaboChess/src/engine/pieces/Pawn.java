@@ -1,5 +1,6 @@
 package engine.pieces;
 
+import chess.PieceType;
 import chess.PlayerColor;
 import engine.Board;
 import engine.Square;
@@ -10,6 +11,11 @@ public class Pawn extends Piece {
 
     public Pawn(PlayerColor playerColor) {
         super(playerColor);
+    }
+
+    @Override
+    public PieceType getPieceType() {
+        return PieceType.PAWN;
     }
 
     @Override

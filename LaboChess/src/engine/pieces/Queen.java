@@ -1,5 +1,6 @@
 package engine.pieces;
 
+import chess.PieceType;
 import chess.PlayerColor;
 import engine.Board;
 import engine.Square;
@@ -8,6 +9,11 @@ import java.lang.Math.*;
 public class Queen extends Piece {
     private Piece rookMove = new Rook(this.playerColor);
     private Piece bishopMove = new Bishop(this.playerColor);
+
+    @Override
+    public PieceType getPieceType() {
+        return PieceType.QUEEN;
+    }
 
     @Override
     public boolean hasPieceOnMouvement(Board board, int toX, int toY) {
