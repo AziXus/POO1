@@ -33,6 +33,6 @@ public class Knight extends Piece {
 
     @Override
     public boolean attack(Board board, int fromX, int fromY, int toX, int toY) {
-        return false;
+        return move(board, fromX, fromY, toX, toY);
     }
 }
