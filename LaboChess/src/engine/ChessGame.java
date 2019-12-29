@@ -21,8 +21,6 @@ public class ChessGame implements ChessController {
      */
     public void start(ChessView view) {
         this.view = view;
-
-        newGame();
         view.startView();
     }
 
@@ -39,8 +37,9 @@ public class ChessGame implements ChessController {
         //Check coordinate
 
                 if(board.movePiece(fromX, fromY, toX, toY)) {
+                    Piece p = board.getPiece(toX, toY);
                     view.removePiece(fromX, fromY);
-                    view.putPiece(PieceType.PAWN, board.getPiece(toX, toY).getPlayerColor(), toX, toY);
+                    view.putPiece(p.getPieceType(), p.getPlayerColor(), toX, toY);
                     return true;
                 }
 
@@ -56,9 +55,8 @@ public class ChessGame implements ChessController {
         for (int x = 0; x < 8; ++x) {
             for (int y = 0; y < 8; ++y) {
                 Piece p = board.getPiece(x, y);
-                if (p != null) {
+                if (p != null)
                     view.putPiece(p.getPieceType(), p.getPlayerColor(), x, y);
-                }
             }
         }
     }
