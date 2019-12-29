@@ -12,7 +12,7 @@ public class Rook extends Piece {
     }
 
     public String textValue(){
-        return "Rook";
+        return toString();
     }
 
     @Override
@@ -49,5 +49,10 @@ public class Rook extends Piece {
     @Override
     public boolean attack(Board board, int fromX, int fromY, int toX, int toY) {
         return move(board, fromX, fromY, toX, toY);
+    }
+
+    @Override
+    public String toString() {
+        return "Rook";
     }
 }

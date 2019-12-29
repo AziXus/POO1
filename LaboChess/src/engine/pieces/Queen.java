@@ -11,7 +11,7 @@ public class Queen extends Piece {
     private Piece bishopMove = new Bishop(this.playerColor);
 
     public String textValue(){
-        return "Rook";
+        return toString();
     }
 
     @Override
@@ -41,5 +41,10 @@ public class Queen extends Piece {
         if(move(board, fromX, fromY, toX, toY))
             return true;
         return false;
+    }
+
+    @Override
+    public String toString() {
+        return "Queen";
     }
 }

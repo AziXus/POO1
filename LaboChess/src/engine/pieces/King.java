@@ -11,7 +11,7 @@ public class King extends Piece {
     }
 
     public String textValue(){
-        return "Rook";
+        return toString();
     }
 
     public boolean isInDanger(Board board, int posX, int posY) {
@@ -52,5 +52,10 @@ public class King extends Piece {
     @Override
     public boolean attack(Board board, int fromX, int fromY, int toX, int toY) {
         return move(board, fromX, fromY, toX, toY);
+    }
+
+    @Override
+    public String toString() {
+        return "King";
     }
 }

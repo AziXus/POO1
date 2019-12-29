@@ -5,9 +5,7 @@ import chess.ChessView;
 import chess.PieceType;
 import chess.PlayerColor;
 import chess.views.BaseView;
-import engine.pieces.Pawn;
-import engine.pieces.Piece;
-import engine.pieces.Rook;
+import engine.pieces.*;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -37,12 +35,17 @@ public class ChessGame implements ChessController {
      */
     public boolean move(int fromX, int fromY, int toX, int toY) {
         //Check coordinate
-        PieceType[] p2 = {PieceType.PAWN, PieceType.BISHOP};
                 if(board.movePiece(fromX, fromY, toX, toY)) {
                     Piece p = board.getPiece(toX, toY);
+                    if(p.getClass() == Pawn.class) {
+                        if(((Pawn)p).promotionAvailable(toX, toY)) {
+                            p = view.<Piece>askUser("Promotion", "Which promotion would you like", new Rook(p.getPlayerColor()), new Bishop(p.getPlayerColor()), new King(p.getPlayerColor()), new Queen(p.getPlayerColor()), new Knight(p.getPlayerColor()));
+                            //The piece has change the board has to be updated
+                            board.setPiece(p,toX,toY);
+                        }
+                    }
                     view.removePiece(fromX, fromY);
                     view.putPiece(p.getPieceType(), p.getPlayerColor(), toX, toY);
-                    Piece p3 = view.<Piece>askUser("Promotion", "Which promotion would you like", new Rook(PlayerColor.WHITE), new Pawn(PlayerColor.WHITE));
                     return true;
                 }
 

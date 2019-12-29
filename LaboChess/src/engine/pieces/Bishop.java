@@ -13,7 +13,7 @@ public class Bishop extends Piece {
     }
 
     public String textValue(){
-        return "Rook";
+        return toString();
     }
 
     @Override
@@ -72,5 +72,10 @@ public class Bishop extends Piece {
         if(move(board, fromX, fromY, toX, toY))
             return true;
         return false;
+    }
+
+    @Override
+    public String toString() {
+        return "Bishop";
     }
 }

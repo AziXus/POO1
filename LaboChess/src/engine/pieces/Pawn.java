@@ -13,7 +13,7 @@ public class Pawn extends Piece {
         super(playerColor);
     }
     public String textValue(){
-        return "Rook";
+        return toString();
     }
 
     @Override
@@ -26,8 +26,17 @@ public class Pawn extends Piece {
         return false;
     }
 
-    public boolean promotionAvailable() {
-        return true;
+    public boolean promotionAvailable(int toX, int toY) {
+        //If the color is white toY as to be at 7 that means that the piece is on the top of the board(promotion available)
+        if(playerColor == PlayerColor.WHITE){
+            if(toY == 7)
+                return true;
+        }
+        if(playerColor == PlayerColor.BLACK){
+            if(toY == 0)
+                return true;
+        }
+        return false;
     }
 
     @Override
@@ -69,5 +78,10 @@ public class Pawn extends Piece {
         }
 
         return false;
+    }
+
+    @Override
+    public String toString() {
+        return "Pawn";
     }
 }

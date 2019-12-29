@@ -1,5 +1,6 @@
 import chess.*;
 import chess.assets.*;
+import chess.views.console.ConsoleView;
 import chess.views.gui.*;
 import engine.ChessGame;
 
