@@ -10,6 +10,19 @@ public class King extends Piece {
         super(playerColor);
     }
 
+    public boolean isInDanger(Board board, int posX, int posY) {
+        for (int x = 0; x < 8; x++) {
+            for (int y = 0; y < 8; y++) {
+                Piece p = board.getPiece(x, y);
+
+                if (p != null && p.attack(board, x, y, posX, posY))
+                    return true;
+            }
+        }
+
+        return false;
+    }
+
     @Override
     public PieceType getPieceType() {
         return PieceType.KING;
@@ -22,11 +35,18 @@ public class King extends Piece {
 
     @Override
     public boolean move(Board board, int fromX, int fromY, int toX, int toY) {
+        int deltaX = Math.abs(toX - fromX);
+        int deltaY = Math.abs(toY - fromY);
+
+        if ((deltaX == 1 && deltaY == 0) || (deltaX == 0 && deltaY == 1) || (deltaX == 1 && deltaY == 1)) {
+            return true;
+        }
+
         return false;
     }
 
     @Override
     public boolean attack(Board board, int fromX, int fromY, int toX, int toY) {
-        return false;
+        return move(board, fromX, fromY, toX, toY);
     }
 }
