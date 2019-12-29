@@ -22,6 +22,12 @@ public class Knight extends Piece {
 
     @Override
     public boolean move(Board board, int fromX, int fromY, int toX, int toY) {
+        int deltaX = Math.abs(toX - fromX);
+        int deltaY = Math.abs(toY - fromY);
+
+        if ((deltaX == 2 && deltaY == 1) || (deltaX == 1 && deltaY == 2))
+            return true;
+
         return false;
     }
 
