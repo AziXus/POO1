@@ -59,25 +59,12 @@ public class Pawn extends Piece {
 
     @Override
     public boolean attack(Board board, int fromX, int fromY, int toX, int toY) {
+        if (playerColor == PlayerColor.WHITE) {
+            return Math.abs(toX - fromX) == 1 && toY - fromY == 1;
+        } else if (playerColor == PlayerColor.BLACK) {
+            return Math.abs(toX - fromX) == 1 && fromY - toY == 1;
+        }
+
         return false;
     }
-
-    //    @Override
-//    public LinkedList<Square> validMoves(int fromX, int fromY) {
-//        LinkedList<Square> moves = new LinkedList<>();
-//
-//        int direction = playerColor == PlayerColor.WHITE ? 1 : -1;
-//
-//        int newY = fromY + direction;
-//
-//        if (newY <= 7 && newY >= 0) {
-//            moves.add(new Square(fromX, newY));
-//        }
-//
-//        if (firstMove) {
-//            moves.add(new Square( fromX, newY + direction));
-//        }
-//
-//        return moves;
-//    }
 }
