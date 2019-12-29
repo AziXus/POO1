@@ -10,6 +10,10 @@ public class Queen extends Piece {
     private Piece rookMove = new Rook(this.playerColor);
     private Piece bishopMove = new Bishop(this.playerColor);
 
+    public String textValue(){
+        return "Rook";
+    }
+
     @Override
     public PieceType getPieceType() {
         return PieceType.QUEEN;

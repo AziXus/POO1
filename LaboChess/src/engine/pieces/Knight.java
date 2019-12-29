@@ -10,6 +10,10 @@ public class Knight extends Piece {
         super(playerColor);
     }
 
+    public String textValue(){
+        return "Rook";
+    }
+
     @Override
     public PieceType getPieceType() {
         return PieceType.KNIGHT;

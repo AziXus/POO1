@@ -12,6 +12,10 @@ public class Bishop extends Piece {
         super(playerColor);
     }
 
+    public String textValue(){
+        return "Rook";
+    }
+
     @Override
     public PieceType getPieceType() {
         return PieceType.BISHOP;

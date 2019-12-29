@@ -12,6 +12,9 @@ public class Pawn extends Piece {
     public Pawn(PlayerColor playerColor) {
         super(playerColor);
     }
+    public String textValue(){
+        return "Rook";
+    }
 
     @Override
     public PieceType getPieceType() {

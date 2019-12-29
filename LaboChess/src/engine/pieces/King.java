@@ -10,6 +10,10 @@ public class King extends Piece {
         super(playerColor);
     }
 
+    public String textValue(){
+        return "Rook";
+    }
+
     public boolean isInDanger(Board board, int posX, int posY) {
         for (int x = 0; x < 8; x++) {
             for (int y = 0; y < 8; y++) {

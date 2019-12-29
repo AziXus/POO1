@@ -11,6 +11,10 @@ public class Rook extends Piece {
         super(playerColor);
     }
 
+    public String textValue(){
+        return "Rook";
+    }
+
     @Override
     public PieceType getPieceType() {
         return PieceType.ROOK;
