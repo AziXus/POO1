@@ -47,20 +47,26 @@ public class Pawn extends Piece {
         }
 
         if (playerColor == PlayerColor.WHITE) {
-            if (toY - fromY == 1) {
+            if (toY - fromY == 1 && fromX == toX) {
+                if(firstMove) {
+                    firstMove = false;
+                }
                 return true;
             }
 
-            if (firstMove && toY - fromY == 2) {
+            if (firstMove && toY - fromY == 2 && fromX == toX) {
                 firstMove = false;
                 return board.getPiece(fromX, fromY + 1) == null;
             }
         } else if (playerColor == PlayerColor.BLACK) {
-            if (fromY - toY == 1) {
+            if (fromY - toY == 1 && fromX == toX) {
+                if(firstMove) {
+                    firstMove = false;
+                }
                 return true;
             }
 
-            if (firstMove && fromY - toY == 2) {
+            if (firstMove && fromY - toY == 2 && fromX == toX) {
                 firstMove = false;
                 return board.getPiece(fromX, fromY - 1) == null;
             }
@@ -72,8 +78,14 @@ public class Pawn extends Piece {
     @Override
     public boolean attack(Board board, int fromX, int fromY, int toX, int toY) {
         if (playerColor == PlayerColor.WHITE) {
+            if(firstMove) {
+                firstMove = false;
+            }
             return Math.abs(toX - fromX) == 1 && toY - fromY == 1;
         } else if (playerColor == PlayerColor.BLACK) {
+            if(firstMove) {
+                firstMove = false;
+            }
             return Math.abs(toX - fromX) == 1 && fromY - toY == 1;
         }
 
