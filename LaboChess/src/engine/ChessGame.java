@@ -13,6 +13,7 @@ import java.util.LinkedList;
 public class ChessGame implements ChessController {
     private Board board;
     private ChessView view;
+    PlayerColor currentPlayer;
 
     /**
      * Démarre la logique (contrôleur) du programme.
@@ -34,6 +35,9 @@ public class ChessGame implements ChessController {
      * @return true si le mouvement a pu avoir lieu, false dans le cas contraire.
      */
     public boolean move(int fromX, int fromY, int toX, int toY) {
+        if (board.getPiece(fromX, fromY).getPlayerColor() != currentPlayer)
+            return false;
+
         //Check coordinate
                 if(board.movePiece(fromX, fromY, toX, toY)) {
                     Piece p = board.getPiece(toX, toY);
@@ -46,6 +50,9 @@ public class ChessGame implements ChessController {
                     }
                     view.removePiece(fromX, fromY);
                     view.putPiece(p.getPieceType(), p.getPlayerColor(), toX, toY);
+
+                    nextTurn();
+
                     return true;
                 }
 
@@ -56,6 +63,7 @@ public class ChessGame implements ChessController {
      * Démarre une nouvelle partie. L'échiquier doit être remis dans sa position initiale.
      */
     public void newGame() {
+        currentPlayer = PlayerColor.WHITE;
         board = new Board();
 
         for (int x = 0; x < 8; ++x) {
@@ -65,5 +73,15 @@ public class ChessGame implements ChessController {
                     view.putPiece(p.getPieceType(), p.getPlayerColor(), x, y);
             }
         }
+    }
+
+    /**
+     * Passe au tour suivant en changeant le joueur courant.
+     */
+    public void nextTurn() {
+        if (currentPlayer == PlayerColor.WHITE)
+            currentPlayer = PlayerColor.BLACK;
+        else if (currentPlayer == PlayerColor.BLACK)
+            currentPlayer = PlayerColor.WHITE;
     }
 }
