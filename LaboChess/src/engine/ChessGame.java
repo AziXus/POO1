@@ -39,7 +39,7 @@ public class ChessGame implements ChessController {
                     Piece p = board.getPiece(toX, toY);
                     if(p.getClass() == Pawn.class) {
                         if(((Pawn)p).promotionAvailable(toX, toY)) {
-                            p = view.<Piece>askUser("Promotion", "Which promotion would you like", new Rook(p.getPlayerColor()), new Bishop(p.getPlayerColor()), new King(p.getPlayerColor()), new Queen(p.getPlayerColor()), new Knight(p.getPlayerColor()));
+                            p = view.<Piece>askUser("Promotion", "Which promotion would you like", new Rook(p.getPlayerColor()), new Bishop(p.getPlayerColor()), new Queen(p.getPlayerColor()), new Knight(p.getPlayerColor()));
                             //The piece has change the board has to be updated
                             board.setPiece(p,toX,toY);
                         }

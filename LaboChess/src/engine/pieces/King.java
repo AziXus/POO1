@@ -19,7 +19,11 @@ public class King extends Piece {
             for (int y = 0; y < 8; y++) {
                 Piece p = board.getPiece(x, y);
 
-                if (p != null && p.attack(board, x, y, posX, posY))
+                if(p != null && p.getClass() == King.class){
+                    continue;
+                }
+
+                if (p != null && p.attack(board, x, y, posX, posY) && p.getPlayerColor() != this.playerColor)
                     return true;
             }
         }
@@ -41,6 +45,10 @@ public class King extends Piece {
     public boolean move(Board board, int fromX, int fromY, int toX, int toY) {
         int deltaX = Math.abs(toX - fromX);
         int deltaY = Math.abs(toY - fromY);
+
+        if(isInDanger(board, toX, toY)){
+            return false;
+        }
 
         if ((deltaX == 1 && deltaY == 0) || (deltaX == 0 && deltaY == 1) || (deltaX == 1 && deltaY == 1)) {
             return true;
