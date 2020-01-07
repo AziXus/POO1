@@ -123,11 +123,11 @@ public class Board implements ChessController {
         int posYKing = 0;
             for (int x = 0; x < 8; x++) {
                 for (int y = 0; y < 8; y++) {
-                    if (color == PlayerColor.WHITE && board[x][y] == black) {
+                    if (color == PlayerColor.WHITE && board[x][y] == white) {
                         posXKing = x;
                         posYKing = y;
                     }
-                    if (color == PlayerColor.BLACK && board[x][y] == white) {
+                    if (color == PlayerColor.BLACK && board[x][y] == black) {
                         posXKing = x;
                         posYKing = y;
                     }
@@ -140,13 +140,15 @@ public class Board implements ChessController {
                     if(p != null) {
                         //TODO the flag of the différent pieces is update so after a king move impossible to move the pawn by 2 square
                         Move movePiece = p.move(this, x, y, posXKing, posYKing);
-                        if (movePiece != null && movePiece.getType().contains(MovementType.ATTACK) && p.getPlayerColor() != color)
+                        if (movePiece != null && movePiece.getType().contains(MovementType.ATTACK) && isPathClear(x, y, posXKing, posYKing) && p.getPlayerColor() != color)
                             return true;
                     }
                 }
             }
             return false;
     }
+
+    private boolean prisePassant(){ return false;}
 
     public boolean movePiece(int oldX, int oldY, int newX, int newY){
         if(board[oldX][oldY] == null)
@@ -165,19 +167,25 @@ public class Board implements ChessController {
             switch(t){
                 case MOVE: if(board[newX][newY] == null){
                     if(isPathClear(oldX, oldY, newX, newY) || movePiece.isCanJump()) {
+                        if(Check(p.getPlayerColor()) && p.getPieceType() != PieceType.KING){
+                            return false;
+                        }
                         board[newX][newY] = board[oldX][oldY];
                         board[oldX][oldY] = null;
                         //Save the lastMove
                         lastMove[0] = newX;
                         lastMove[1] = newY;
                         p.hasMoved();
-                        Check(p.getPlayerColor());
                         return true;
                     }
                     return false;
                 }
-                case ATTACK: if(board[newX][newY] != null){
+                break;
+                case ATTACK: if(oldX != newX && oldY != newY && board[newX][newY] != null){
                     if(isPathClear(oldX, oldY, newX, newY) || movePiece.isCanJump()) {
+                        if(Check(p.getPlayerColor())){
+                            return false;
+                        }
                         board[newX][newY] = board[oldX][oldY];
                         board[oldX][oldY] = null;
                         p.hasMoved();
@@ -185,6 +193,19 @@ public class Board implements ChessController {
                     }
                     return false;
                 }
+                break;
+                case PRISEPASSANT: if(lastMove[0] == newX && lastMove[1] - 1 == newY && board[lastMove[0]][lastMove[1]].getPieceType() == PieceType.PAWN){
+                    if(Check(p.getPlayerColor())){
+                        return false;
+                    }
+                    board[newX][newY] = board[oldX][oldY];
+                    board[oldX][oldY] = null;
+                    board[lastMove[0]][lastMove[1]] = null;
+                    view.removePiece(lastMove[0], lastMove[1]);
+                    p.hasMoved();
+                    return true;
+                }
+                break;
             }
         }
         return false;

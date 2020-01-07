@@ -66,6 +66,7 @@ public class Pawn extends Piece {
             if(Math.abs(toX - fromX) == 1 && toY - fromY == 1){
                 ArrayList<MovementType> move = new ArrayList<MovementType>();
                 move.add(MovementType.ATTACK);
+                move.add(MovementType.PRISEPASSANT);
                 return new Move(fromX, fromY, toX, toY, false, move);
             }
         } else if (playerColor == PlayerColor.BLACK) {
@@ -83,6 +84,7 @@ public class Pawn extends Piece {
             if(Math.abs(toX - fromX) == 1 && fromY - toY == 1){
                 ArrayList<MovementType> move = new ArrayList<MovementType>();
                 move.add(MovementType.ATTACK);
+                move.add(MovementType.PRISEPASSANT);
                 return new Move(fromX, fromY, toX, toY, false, move);
             }
         }
