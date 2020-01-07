@@ -3,7 +3,11 @@ package engine.pieces;
 import chess.PieceType;
 import chess.PlayerColor;
 import engine.Board;
+import engine.Move;
+import engine.MovementType;
 import engine.Square;
+
+import java.util.ArrayList;
 
 public class Knight extends Piece {
     public Knight(PlayerColor playerColor) {
@@ -25,20 +29,24 @@ public class Knight extends Piece {
     }
 
     @Override
-    public boolean move(Board board, int fromX, int fromY, int toX, int toY) {
+    public Move move(Board board, int fromX, int fromY, int toX, int toY) {
         int deltaX = Math.abs(toX - fromX);
         int deltaY = Math.abs(toY - fromY);
 
-        if ((deltaX == 2 && deltaY == 1) || (deltaX == 1 && deltaY == 2))
-            return true;
+        if ((deltaX == 2 && deltaY == 1) || (deltaX == 1 && deltaY == 2)) {
+            ArrayList<MovementType> move = new ArrayList<MovementType>();
+            move.add(MovementType.MOVE);
+            move.add(MovementType.ATTACK);
+            return new Move(fromX, fromY, toX, toY, true, move);
+        }
 
-        return false;
+        return null;
     }
 
-    @Override
-    public boolean attack(Board board, int fromX, int fromY, int toX, int toY) {
-        return move(board, fromX, fromY, toX, toY);
-    }
+//    @Override
+//    public boolean attack(Board board, int fromX, int fromY, int toX, int toY) {
+//        return move(board, fromX, fromY, toX, toY);
+//    }
 
     @Override
     public String toString() {

@@ -4,8 +4,11 @@ package engine.pieces;
 import chess.PieceType;
 import chess.PlayerColor;
 import engine.Board;
+import engine.Move;
+import engine.MovementType;
 import engine.Square;
 import java.lang.Math.*;
+import java.util.ArrayList;
 
 public class Bishop extends Piece {
     public Bishop(PlayerColor playerColor) {
@@ -57,22 +60,24 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public boolean move(Board board, int fromX, int fromY, int toX, int toY) {
+    public Move move(Board board, int fromX, int fromY, int toX, int toY) {
         int moveX = fromX - toX;
         int moveY = fromY - toY;
         //To move in diagonal the difference between fromY and toY as to be the same as the difference between fromX and toX
         if(Math.abs(moveX) == Math.abs(moveY)) {
-            return !hasPieceOnMouvement(board, fromX, fromY, toX, toY);
+            ArrayList<MovementType> move = new ArrayList<MovementType>();
+            move.add(MovementType.MOVE);
+            move.add(MovementType.ATTACK);
+            return new Move(fromX, fromY, toX, toY, false, move);
         }
-        return false;
+        return null;
     }
 
-    @Override
-    public boolean attack(Board board, int fromX, int fromY, int toX, int toY) {
-        if(move(board, fromX, fromY, toX, toY))
-            return true;
-        return false;
-    }
+//    public boolean attack(Board board, int fromX, int fromY, int toX, int toY) {
+//        if(move(board, fromX, fromY, toX, toY))
+//            return true;
+//        return false;
+//    }
 
     @Override
     public String toString() {

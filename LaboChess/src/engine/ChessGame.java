@@ -55,6 +55,20 @@ public class ChessGame implements ChessController {
 
                     return true;
                 }
+                //Check coordinate
+            if(board.movePiece(fromX, fromY, toX, toY)) {
+            Piece p = board.getPiece(toX, toY);
+            if(p.getPieceType() == PieceType.PAWN) {
+                if(((Pawn)p).promotionAvailable(toX, toY)) {
+                    p = view.<Piece>askUser("Promotion", "Which promotion would you like", new Rook(p.getPlayerColor()), new Bishop(p.getPlayerColor()), new Queen(p.getPlayerColor()), new Knight(p.getPlayerColor()));
+                    //The piece has change the board has to be updated
+                    board.setPiece(p,toX,toY);
+                }
+            }
+            view.removePiece(fromX, fromY);
+            view.putPiece(p.getPieceType(), p.getPlayerColor(), toX, toY);
+            return true;
+        }
 
         return false;
     }

@@ -3,11 +3,16 @@ package engine.pieces;
 import chess.PieceType;
 import chess.PlayerColor;
 import engine.Board;
+import engine.Move;
+import engine.MovementType;
 import engine.Square;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class Pawn extends Piece {
+
+
 
     public Pawn(PlayerColor playerColor) {
         super(playerColor);
@@ -40,57 +45,69 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean move(Board board, int fromX, int fromY, int toX, int toY) {
+    public Move move(Board board, int fromX, int fromY, int toX, int toY) {
         // Move only possible on a null dest
-        if (board.getPiece(toX, toY) != null) {
-            return false;
-        }
+        //if (board.getPiece(toX, toY) != null) {
+        //    return false;
+        //}
 
         if (playerColor == PlayerColor.WHITE) {
             if (toY - fromY == 1 && fromX == toX) {
-                if(firstMove) {
-                    firstMove = false;
-                }
-                return true;
+                ArrayList<MovementType> move = new ArrayList<MovementType>();
+                move.add(MovementType.MOVE);
+                return new Move(fromX, fromY, toX, toY, false, move);
             }
 
             if (firstMove && toY - fromY == 2 && fromX == toX) {
-                firstMove = false;
-                return board.getPiece(fromX, fromY + 1) == null;
+                ArrayList<MovementType> move = new ArrayList<MovementType>();
+                move.add(MovementType.MOVE);
+                return new Move(fromX, fromY, toX, toY, false, move);
+            }
+            if(Math.abs(toX - fromX) == 1 && toY - fromY == 1){
+                ArrayList<MovementType> move = new ArrayList<MovementType>();
+                move.add(MovementType.ATTACK);
+                return new Move(fromX, fromY, toX, toY, false, move);
             }
         } else if (playerColor == PlayerColor.BLACK) {
             if (fromY - toY == 1 && fromX == toX) {
-                if(firstMove) {
-                    firstMove = false;
-                }
-                return true;
+                ArrayList<MovementType> move = new ArrayList<MovementType>();
+                move.add(MovementType.MOVE);
+                return new Move(fromX, fromY, toX, toY, false, move);
             }
 
             if (firstMove && fromY - toY == 2 && fromX == toX) {
-                firstMove = false;
-                return board.getPiece(fromX, fromY - 1) == null;
+                ArrayList<MovementType> move = new ArrayList<MovementType>();
+                move.add(MovementType.MOVE);
+                return new Move(fromX, fromY, toX, toY, false, move);
+            }
+            if(Math.abs(toX - fromX) == 1 && fromY - toY == 1){
+                ArrayList<MovementType> move = new ArrayList<MovementType>();
+                move.add(MovementType.ATTACK);
+                return new Move(fromX, fromY, toX, toY, false, move);
             }
         }
 
-        return false;
+
+
+        return null;
     }
 
-    @Override
-    public boolean attack(Board board, int fromX, int fromY, int toX, int toY) {
-        if (playerColor == PlayerColor.WHITE) {
-            if(firstMove) {
-                firstMove = false;
-            }
-            return Math.abs(toX - fromX) == 1 && toY - fromY == 1;
-        } else if (playerColor == PlayerColor.BLACK) {
-            if(firstMove) {
-                firstMove = false;
-            }
-            return Math.abs(toX - fromX) == 1 && fromY - toY == 1;
-        }
-
-        return false;
-    }
+//    @Override
+//    public boolean attack(Board board, int fromX, int fromY, int toX, int toY) {
+//        if (playerColor == PlayerColor.WHITE) {
+//            if(firstMove) {
+//                firstMove = false;
+//            }
+//            return Math.abs(toX - fromX) == 1 && toY - fromY == 1;
+//        } else if (playerColor == PlayerColor.BLACK) {
+//            if(firstMove) {
+//                firstMove = false;
+//            }
+//            return Math.abs(toX - fromX) == 1 && fromY - toY == 1;
+//        }
+//
+//        return false;
+//    }
 
     @Override
     public String toString() {
