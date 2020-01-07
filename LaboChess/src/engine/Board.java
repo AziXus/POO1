@@ -10,7 +10,7 @@ import java.util.EnumMap;
 
 public class Board implements ChessController {
     private final Piece[][] board = new Piece[8][8];
-    private int lastMove[] = new int[2];
+    private int[] lastMove = new int[2];
     private King white;
     private King black;
     //private Move move;
@@ -150,6 +150,45 @@ public class Board implements ChessController {
 
     private boolean prisePassant(){ return false;}
 
+    private boolean simuleMovement(int oldX, int oldY, int newX, int newY, Piece p) {
+        Move movePiece = p.move(this, oldX, oldY, newX, newY);
+        if (movePiece == null) {
+            return false;
+        }
+        for (MovementType t : movePiece.getType()) {
+            switch (t) {
+                case MOVE:
+                    if (board[newX][newY] == null) {
+//                        if(Check(p.getPlayerColor()) && p.getPieceType() != PieceType.KING){
+//                            return false;
+//                        }
+                        board[newX][newY] = board[oldX][oldY];
+                        board[oldX][oldY] = null;
+                        //Save the lastMove
+
+                        return true;
+                    }
+                    break;
+                case ATTACK:
+                    if (oldX != newX && oldY != newY && board[newX][newY] != null) {
+//                        if(Check(p.getPlayerColor())){
+//                            return false;
+//                        }
+                        board[newX][newY] = board[oldX][oldY];
+                        board[oldX][oldY] = null;
+                        return true;
+                    }
+                    break;
+            }
+        }
+        return false;
+    }
+
+    private void revertMovement(int oldX, int oldY, int newX, int newY, Piece p){
+        board[oldX][oldY] = board[newX][newY];
+        board[newX][newY] = null;
+    }
+
     public boolean movePiece(int oldX, int oldY, int newX, int newY){
         if(board[oldX][oldY] == null)
             return false;
@@ -159,10 +198,25 @@ public class Board implements ChessController {
 //        }
         Piece p = board[oldX][oldY];
 
+        if(p.getPieceType() == PieceType.KING){
+            if(simuleMovement(oldX, oldY, newX, newY, p)){
+                if(Check(p.getPlayerColor())){
+                    revertMovement(oldX, oldY, newX, newY, p);
+                    return false;
+                }
+                lastMove[0] = newX;
+                lastMove[1] = newY;
+                p.hasMoved();
+                return true;
+            }
+            return false;
+        }
+
         Move movePiece = p.move(this, oldX, oldY, newX, newY);
         if(movePiece == null){
             return false;
         }
+
         for(MovementType t : movePiece.getType()){
             switch(t){
                 case MOVE: if(board[newX][newY] == null){
