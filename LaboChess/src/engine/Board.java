@@ -66,4 +66,33 @@ public class Board {
         }
         return false;
     }
+
+    private boolean isPathClear(int fromX, int fromY, int toX, int toY) {
+        int xInc = 0,
+            yInc = 0;
+
+        if (fromX > toX) {
+            xInc = -1;
+        } else if (fromX < toX) {
+            xInc = 1;
+        }
+        if (fromY > toY) {
+            yInc = -1;
+        } else if (fromY < toY) {
+            yInc = 1;
+        }
+
+        // Ignore first and last case
+        fromX += xInc;
+        fromY += yInc;
+        while(fromX != toX || fromY != toY) {
+            if (board[fromX][fromY] != null)
+                return false;
+
+            fromX += xInc;
+            fromY += yInc;
+        }
+
+        return true;
+    }
 }
