@@ -24,10 +24,10 @@ public class Pawn extends Piece {
         return PieceType.PAWN;
     }
 
-    @Override
-    public boolean hasPieceOnMouvement(Board board, int fromX, int fromY, int toX, int toY) {
-        return false;
-    }
+//    @Override
+//    public boolean hasPieceOnMouvement(Board board, int fromX, int fromY, int toX, int toY) {
+//        return false;
+//    }
 
     /**
      * Determine whether the pawn can be promoted
@@ -51,7 +51,7 @@ public class Pawn extends Piece {
         int directionY = playerColor == PlayerColor.WHITE ? 1 : -1;
 
         if (toY - fromY == directionY && fromX == toX) {
-            ArrayList<MovementType> move = new ArrayList<MovementType>();
+            ArrayList<MovementType> move = new ArrayList<>();
             move.add(MovementType.MOVE);
             if (promotionAvailable(toX, toY))
                 move.add(MovementType.PROMOTE);
@@ -59,13 +59,13 @@ public class Pawn extends Piece {
         }
 
         if (firstMove && toY - fromY == 2 * directionY && fromX == toX) {
-            ArrayList<MovementType> move = new ArrayList<MovementType>();
+            ArrayList<MovementType> move = new ArrayList<>();
             move.add(MovementType.MOVE);
             return new Move(fromX, fromY, toX, toY, false, move);
         }
 
         if(Math.abs(toX - fromX) == 1 && toY - fromY == directionY){
-            ArrayList<MovementType> move = new ArrayList<MovementType>();
+            ArrayList<MovementType> move = new ArrayList<>();
             move.add(MovementType.ATTACK);
             move.add(MovementType.ENPASSANT);
 

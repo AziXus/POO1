@@ -51,10 +51,10 @@ public class King extends Piece {
         return PieceType.KING;
     }
 
-    @Override
-    public boolean hasPieceOnMouvement(Board board, int fromX, int fromY, int toX, int toY) {
-        return false;
-    }
+//    @Override
+//    public boolean hasPieceOnMouvement(Board board, int fromX, int fromY, int toX, int toY) {
+//        return false;
+//    }
 
     @Override
     public Move move(int fromX, int fromY, int toX, int toY) {
@@ -62,20 +62,20 @@ public class King extends Piece {
         int deltaY = Math.abs(toY - fromY);
 
         if ((deltaX == 1 && deltaY == 0) || (deltaX == 0 && deltaY == 1) || (deltaX == 1 && deltaY == 1)) {
-            ArrayList<MovementType> move = new ArrayList<MovementType>();
+            ArrayList<MovementType> move = new ArrayList<>();
             move.add(MovementType.MOVE);
             move.add(MovementType.ATTACK);
             return new Move(fromX, fromY, toX, toY, false, move);
         }
 
         if ((toX - fromX == 3 && deltaY == 0)) {
-            ArrayList<MovementType> move = new ArrayList<MovementType>();
+            ArrayList<MovementType> move = new ArrayList<>();
             move.add(MovementType.SMALLCASTLING);
             return new Move(fromX, fromY, toX, toY, false, move);
         }
 
         if ((toX - fromX == -4 && deltaY == 0)) {
-            ArrayList<MovementType> move = new ArrayList<MovementType>();
+            ArrayList<MovementType> move = new ArrayList<>();
             move.add(MovementType.BIGCASTLING);
             return new Move(fromX, fromY, toX, toY, false, move);
         }

@@ -22,10 +22,10 @@ public class Knight extends Piece {
         return PieceType.KNIGHT;
     }
 
-    @Override
-    public boolean hasPieceOnMouvement(Board board, int fromX, int fromY, int toX, int toY) {
-        return false;
-    }
+//    @Override
+//    public boolean hasPieceOnMouvement(Board board, int fromX, int fromY, int toX, int toY) {
+//        return false;
+//    }
 
     @Override
     public Move move(int fromX, int fromY, int toX, int toY) {
@@ -33,7 +33,7 @@ public class Knight extends Piece {
         int deltaY = Math.abs(toY - fromY);
 
         if ((deltaX == 2 && deltaY == 1) || (deltaX == 1 && deltaY == 2)) {
-            ArrayList<MovementType> move = new ArrayList<MovementType>();
+            ArrayList<MovementType> move = new ArrayList<>();
             move.add(MovementType.MOVE);
             move.add(MovementType.ATTACK);
             return new Move(fromX, fromY, toX, toY, true, move);

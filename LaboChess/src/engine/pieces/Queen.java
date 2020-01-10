@@ -21,10 +21,10 @@ public class Queen extends Piece {
         return PieceType.QUEEN;
     }
 
-    @Override
-    public boolean hasPieceOnMouvement(Board board, int fromX, int fromY, int toX, int toY) {
-        return false;
-    }
+//    @Override
+//    public boolean hasPieceOnMouvement(Board board, int fromX, int fromY, int toX, int toY) {
+//        return false;
+//    }
 
     public Queen(PlayerColor playerColor) {
         super(playerColor);
@@ -34,7 +34,7 @@ public class Queen extends Piece {
     public Move move(int fromX, int fromY, int toX, int toY) {
         //Queen has the same move as the Bishop and the Rook
         if(rookMove.move(fromX, fromY, toX, toY) != null || bishopMove.move(fromX, fromY, toX, toY) != null) {
-            ArrayList<MovementType> move = new ArrayList<MovementType>();
+            ArrayList<MovementType> move = new ArrayList<>();
             move.add(MovementType.MOVE);
             move.add(MovementType.ATTACK);
             return new Move(fromX, fromY, toX, toY, false, move);
