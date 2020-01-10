@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class Board implements ChessController {
     private final Piece[][] board = new Piece[8][8];
-    private int lastMove[] = new int[2];
+    private int[] lastMove = new int[2];
     private King white;
     private King black;
     //private Move move;
@@ -220,10 +220,7 @@ public class Board implements ChessController {
         view.putPiece(p.getPieceType(), p.getPlayerColor(), m.getDestX(), m.getDestY());
 
         if (check(p.getPlayerColor())) {
-            movePiece2(m.getDestX(), m.getDestY(), m.getSrcX(), m.getSrcY());
-
-            view.removePiece(m.getDestX(), m.getDestY());
-            view.putPiece(p.getPieceType(), p.getPlayerColor(), m.getSrcX(), m.getSrcY());
+            revertMove(m);
             return false;
         }
 
@@ -244,25 +241,71 @@ public class Board implements ChessController {
 
     private boolean makeEnPassant(Move m) {
         if(lastMove[0] == m.getDestX() && lastMove[1] - 1 == m.getDestY() && board[lastMove[0]][lastMove[1]].getPieceType() == PieceType.PAWN) {
-            Piece p = board[m.getSrcX()][m.getSrcY()];
-
-            if (check(p.getPlayerColor())) {
-                return false;
+            int[] lastMoveTemp = new int[2];
+            //We have to create as temporary move because if the move of the pawn is valid(no check) the last move will be replaced
+            lastMoveTemp[0] = lastMove[0];
+            lastMoveTemp[1] = lastMove[1];
+            if(makeMove(m)) {
+                board[lastMoveTemp[0]][lastMoveTemp[1]] = null;
+                view.removePiece(lastMoveTemp[0] , lastMoveTemp[1]);
+                return true;
             }
-
-            movePiece2(m.getSrcX(), m.getSrcY(), m.getDestX(), m.getDestY());
-
-            board[lastMove[0]][lastMove[1]] = null;
-            view.removePiece(lastMove[0], lastMove[1]);
-            p.hasMoved();
-
-            return true;
         }
 
         return false;
     }
 
     private boolean makeSmallCastling(int oldX, int oldY, int newX, int newY) {
+        Piece p = board[oldX][oldY];
+        Piece rook = board[newX][newY];
+
+        if (rook == null || rook.getPieceType() != PieceType.ROOK)
+            return false;
+
+        if (!p.isFirstMove() || !rook.isFirstMove())
+            return false;
+
+        if (!isPathClear(oldX, oldY, newX, newY))
+            return false;
+
+        //TODO Change the makeMove
+        ArrayList<MovementType> m = new ArrayList<>();
+        m.add(MovementType.MOVE);
+
+        Move firstCase = new Move(oldX, oldY, oldX + 1, oldY, false, m);
+        Move secondCase = new Move(oldX + 1, oldY, oldX + 2, newY, false, m);
+        //We move the king in the different cases when he does a smallCastling if the king is on check on one of the cases
+        //the move will be invalid
+        if(makeMove(firstCase)){
+            if(makeMove(secondCase)) {
+                //The king is placed in the oldX + 2 after a smallCastling so the old place has to be set to null as the king is no longer there
+                board[oldX][oldY] = null;
+                //Move the rook to the right place after a smallCastling
+                board[oldX + 1][oldY] = board[newX][newY];
+                //The rook isn't in the last place anymore
+                board[newX][newY] = null;
+                //Remove the old place of the rook on the view
+                view.removePiece(newX, newY);
+                //Add the new place of the rook on the view
+                view.putPiece(PieceType.ROOK, p.getPlayerColor(), oldX + 1, oldY);
+                return true;
+            }
+            revertMove(firstCase);
+        }
+        return false;
+    }
+
+    private void revertMove(Move m) {
+        Piece p = board[m.getDestX()][m.getDestY()];
+        //If a move is invalid the move has to be reverted
+        //If a check append with the move of the piece the move is reverted
+        movePiece2(m.getDestX(), m.getDestY(), m.getSrcX(), m.getSrcY());
+
+        view.removePiece(m.getDestX(), m.getDestY());
+        view.putPiece(p.getPieceType(), p.getPlayerColor(), m.getSrcX(), m.getSrcY());
+    }
+
+    private boolean makeBigCastling(int oldX, int oldY, int newX, int newY) {
         Piece p = board[oldX][oldY];
         Piece rook = board[newX][newY];
 
