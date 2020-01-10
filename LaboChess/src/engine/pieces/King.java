@@ -69,13 +69,13 @@ public class King extends Piece {
             return new Move(fromX, fromY, toX, toY, false, move);
         }
 
-        if ((toX - fromX == 2 && deltaY == 0)) {
+        if ((toX - fromX == 3 && deltaY == 0)) {
             ArrayList<MovementType> move = new ArrayList<MovementType>();
             move.add(MovementType.SMALLCATSLING);
             return new Move(fromX, fromY, toX, toY, false, move);
         }
 
-        if ((toX - fromX == -2 && deltaY == 0)) {
+        if ((toX - fromX == -4 && deltaY == 0)) {
             ArrayList<MovementType> move = new ArrayList<MovementType>();
             move.add(MovementType.BIGCASTLING);
             return new Move(fromX, fromY, toX, toY, false, move);

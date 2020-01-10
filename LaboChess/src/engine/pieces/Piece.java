@@ -37,4 +37,8 @@ public abstract class Piece implements ChessView.UserChoice {
     public PlayerColor getPlayerColor() {
         return playerColor;
     }
+
+    public boolean isFirstMove(){
+        return firstMove;
+    }
 }

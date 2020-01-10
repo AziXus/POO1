@@ -39,6 +39,8 @@ public class Board implements ChessController {
     public boolean move(int fromX, int fromY, int toX, int toY) {
         //Check coordinate
         if(movePiece(fromX, fromY, toX, toY)) {
+            board[toX][toY] = board[fromX][fromY];
+            board[fromX][fromY] = null;
             Piece p = board[toX][toY];
             if(p.getPieceType() == PieceType.PAWN) {
                 if(((Pawn)p).promotionAvailable(toX, toY)) {
@@ -162,10 +164,9 @@ public class Board implements ChessController {
 //                        if(Check(p.getPlayerColor()) && p.getPieceType() != PieceType.KING){
 //                            return false;
 //                        }
+                        //Save the lastMove
                         board[newX][newY] = board[oldX][oldY];
                         board[oldX][oldY] = null;
-                        //Save the lastMove
-
                         return true;
                     }
                     break;
@@ -177,6 +178,26 @@ public class Board implements ChessController {
                         board[newX][newY] = board[oldX][oldY];
                         board[oldX][oldY] = null;
                         return true;
+                    }
+                    break;
+                case SMALLCATSLING:
+                    if (p.isFirstMove()) {
+                        if(board[0][7].isFirstMove()){
+                            if(movePiece(oldX, oldY, oldX + 1, oldY)){
+                                if(movePiece(oldX + 1, oldY, newX - 1, newY)) {
+                                    board[oldX][oldY] = board[newX - 1][newY];
+                                    board[oldX + 1][oldY] = new Rook(p.getPlayerColor());
+                                    view.putPiece(PieceType.ROOK, p.getPlayerColor(), oldX + 1, oldY);
+                                    return true;
+                                }
+                                return false;
+                            }
+                            return false;
+                        }
+                        return false;
+//                        if(Check(p.getPlayerColor())){
+//                            return false;
+//                        }
                     }
                     break;
             }
@@ -201,7 +222,7 @@ public class Board implements ChessController {
         if(p.getPieceType() == PieceType.KING){
             if(simuleMovement(oldX, oldY, newX, newY, p)){
                 if(Check(p.getPlayerColor())){
-                    revertMovement(oldX, oldY, newX, newY, p);
+                    //revertMovement(oldX, oldY, newX, newY, p);
                     return false;
                 }
                 lastMove[0] = newX;
@@ -221,11 +242,11 @@ public class Board implements ChessController {
             switch(t){
                 case MOVE: if(board[newX][newY] == null){
                     if(isPathClear(oldX, oldY, newX, newY) || movePiece.isCanJump()) {
-                        if(Check(p.getPlayerColor()) && p.getPieceType() != PieceType.KING){
+                        if(Check(p.getPlayerColor())){
                             return false;
                         }
-                        board[newX][newY] = board[oldX][oldY];
-                        board[oldX][oldY] = null;
+//                        board[newX][newY] = board[oldX][oldY];
+//                        board[oldX][oldY] = null;
                         //Save the lastMove
                         lastMove[0] = newX;
                         lastMove[1] = newY;
@@ -240,8 +261,8 @@ public class Board implements ChessController {
                         if(Check(p.getPlayerColor())){
                             return false;
                         }
-                        board[newX][newY] = board[oldX][oldY];
-                        board[oldX][oldY] = null;
+//                        board[newX][newY] = board[oldX][oldY];
+//                        board[oldX][oldY] = null;
                         p.hasMoved();
                         return true;
                     }
@@ -252,8 +273,8 @@ public class Board implements ChessController {
                     if(Check(p.getPlayerColor())){
                         return false;
                     }
-                    board[newX][newY] = board[oldX][oldY];
-                    board[oldX][oldY] = null;
+//                    board[newX][newY] = board[oldX][oldY];
+//                    board[oldX][oldY] = null;
                     board[lastMove[0]][lastMove[1]] = null;
                     view.removePiece(lastMove[0], lastMove[1]);
                     p.hasMoved();
