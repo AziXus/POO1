@@ -5,7 +5,6 @@ import chess.PlayerColor;
 import engine.Board;
 import engine.Move;
 import engine.MovementType;
-import engine.Square;
 
 import java.util.ArrayList;
 
@@ -58,7 +57,7 @@ public class King extends Piece {
     }
 
     @Override
-    public Move move(Board board, int fromX, int fromY, int toX, int toY) {
+    public Move move(int fromX, int fromY, int toX, int toY) {
         int deltaX = Math.abs(toX - fromX);
         int deltaY = Math.abs(toY - fromY);
 
@@ -71,7 +70,7 @@ public class King extends Piece {
 
         if ((toX - fromX == 3 && deltaY == 0)) {
             ArrayList<MovementType> move = new ArrayList<MovementType>();
-            move.add(MovementType.SMALLCATSLING);
+            move.add(MovementType.SMALLCASTLING);
             return new Move(fromX, fromY, toX, toY, false, move);
         }
 

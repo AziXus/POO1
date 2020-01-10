@@ -5,9 +5,6 @@ import chess.PieceType;
 import chess.PlayerColor;
 import engine.Board;
 import engine.Move;
-import engine.Square;
-
-import java.util.LinkedList;
 
 public abstract class Piece implements ChessView.UserChoice {
     final PlayerColor playerColor;
@@ -23,7 +20,7 @@ public abstract class Piece implements ChessView.UserChoice {
 
     public abstract boolean hasPieceOnMouvement(Board board, int fromX, int fromY, int toX, int toY);
 
-    public abstract Move move(Board board, int fromX, int fromY, int toX, int toY);
+    public abstract Move move(int fromX, int fromY, int toX, int toY);
 
 //    public abstract boolean attack(Board board, int fromX, int fromY, int toX, int toY);
 

@@ -5,8 +5,7 @@ import chess.PlayerColor;
 import engine.Board;
 import engine.Move;
 import engine.MovementType;
-import engine.Square;
-import java.lang.Math.*;
+
 import java.util.ArrayList;
 
 public class Queen extends Piece {
@@ -32,9 +31,9 @@ public class Queen extends Piece {
     }
 
     @Override
-    public Move move(Board board, int fromX, int fromY, int toX, int toY) {
+    public Move move(int fromX, int fromY, int toX, int toY) {
         //Queen has the same move as the Bishop and the Rook
-        if(rookMove.move(board, fromX, fromY, toX, toY) != null || bishopMove.move(board, fromX, fromY, toX, toY) != null) {
+        if(rookMove.move(fromX, fromY, toX, toY) != null || bishopMove.move(fromX, fromY, toX, toY) != null) {
             ArrayList<MovementType> move = new ArrayList<MovementType>();
             move.add(MovementType.MOVE);
             move.add(MovementType.ATTACK);

@@ -5,7 +5,6 @@ import chess.PlayerColor;
 import engine.Board;
 import engine.Move;
 import engine.MovementType;
-import engine.Square;
 
 import java.util.ArrayList;
 
@@ -29,8 +28,18 @@ public class Rook extends Piece {
         return false;
     }
 
+//    Move {
+//        //Peut sauter par dessus piece
+//        //Type de mouvements : Mouvement, Promotion, Prise
+//        //src
+//        //dst
+//    }
+
     @Override
-    public Move move(Board board, int fromX, int fromY, int toX, int toY) {
+    public Move move(int fromX, int fromY, int toX, int toY) {
+        if (fromX == toX && fromY == toY)
+            return null;
+
         //Is move on the right or left same Y
         if(fromY == toY) {
             ArrayList<MovementType> move = new ArrayList<MovementType>();

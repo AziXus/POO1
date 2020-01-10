@@ -6,8 +6,7 @@ import chess.PlayerColor;
 import engine.Board;
 import engine.Move;
 import engine.MovementType;
-import engine.Square;
-import java.lang.Math.*;
+
 import java.util.ArrayList;
 
 public class Bishop extends Piece {
@@ -60,7 +59,10 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public Move move(Board board, int fromX, int fromY, int toX, int toY) {
+    public Move move(int fromX, int fromY, int toX, int toY) {
+        if (fromX == toX && fromY == toY)
+            return null;
+
         int moveX = fromX - toX;
         int moveY = fromY - toY;
         //To move in diagonal the difference between fromY and toY as to be the same as the difference between fromX and toX

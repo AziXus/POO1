@@ -5,7 +5,6 @@ import chess.PlayerColor;
 import engine.Board;
 import engine.Move;
 import engine.MovementType;
-import engine.Square;
 
 import java.util.ArrayList;
 
@@ -29,7 +28,7 @@ public class Knight extends Piece {
     }
 
     @Override
-    public Move move(Board board, int fromX, int fromY, int toX, int toY) {
+    public Move move(int fromX, int fromY, int toX, int toY) {
         int deltaX = Math.abs(toX - fromX);
         int deltaY = Math.abs(toY - fromY);
 

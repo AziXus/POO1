@@ -6,11 +6,11 @@ import chess.PieceType;
 import chess.PlayerColor;
 import engine.pieces.*;
 
-import java.util.EnumMap;
+import java.util.ArrayList;
 
 public class Board implements ChessController {
     private final Piece[][] board = new Piece[8][8];
-    private int[] lastMove = new int[2];
+    private int lastMove[] = new int[2];
     private King white;
     private King black;
     //private Move move;
@@ -39,18 +39,9 @@ public class Board implements ChessController {
     public boolean move(int fromX, int fromY, int toX, int toY) {
         //Check coordinate
         if(movePiece(fromX, fromY, toX, toY)) {
-            board[toX][toY] = board[fromX][fromY];
-            board[fromX][fromY] = null;
             Piece p = board[toX][toY];
-            if(p.getPieceType() == PieceType.PAWN) {
-                if(((Pawn)p).promotionAvailable(toX, toY)) {
-                    p = view.<Piece>askUser("Promotion", "Which promotion would you like", new Rook(p.getPlayerColor()), new Bishop(p.getPlayerColor()), new Queen(p.getPlayerColor()), new Knight(p.getPlayerColor()));
-                    //The piece has change the board has to be updated
-                    board[toX][toY] = p;
-                }
-            }
-            view.removePiece(fromX, fromY);
-            view.putPiece(p.getPieceType(), p.getPlayerColor(), toX, toY);
+
+
             return true;
         }
 
@@ -61,6 +52,17 @@ public class Board implements ChessController {
      * Démarre une nouvelle partie. L'échiquier doit être remis dans sa position initiale.
      */
     public void newGame() {
+//        currentPlayer = PlayerColor.WHITE;
+
+        // Clean the board
+        for (int x = 0; x < 8; ++x) {
+            for (int y = 0; y < 8; ++y) {
+                board[x][y] = null;
+            }
+        }
+
+        initBoard();
+
         for (int x = 0; x < 8; ++x) {
             for (int y = 0; y < 8; ++y) {
                 Piece p = board[x][y];
@@ -69,7 +71,8 @@ public class Board implements ChessController {
             }
         }
     }
-    public Board(){
+
+    private void initBoard() {
         board[0][0] = new Rook(PlayerColor.WHITE);
         board[1][0] = new Knight(PlayerColor.WHITE);
         board[2][0] = new Bishop(PlayerColor.WHITE);
@@ -84,7 +87,6 @@ public class Board implements ChessController {
             board[i][1] = new Pawn(PlayerColor.WHITE);
         }
 
-
         board[0][7] = new Rook(PlayerColor.BLACK);
         board[1][7] = new Knight(PlayerColor.BLACK);
         board[2][7] = new Bishop(PlayerColor.BLACK);
@@ -98,6 +100,10 @@ public class Board implements ChessController {
         for(int i = 0; i < 8; i++){
             board[i][6] = new Pawn(PlayerColor.BLACK);
         }
+    }
+
+    public Board() {
+        initBoard();
     }
 
     public Piece getPiece(int x, int y) {
@@ -120,7 +126,7 @@ public class Board implements ChessController {
 //            }
 //            return true;
 //    }
-    private boolean Check(PlayerColor color) {
+    private boolean check(PlayerColor color) {
         int posXKing = 0;
         int posYKing = 0;
             for (int x = 0; x < 8; x++) {
@@ -139,10 +145,15 @@ public class Board implements ChessController {
             for (int x = 0; x < 8; x++) {
                 for (int y = 0; y < 8; y++) {
                     Piece p = board[x][y];
-                    if(p != null) {
-                        //TODO the flag of the différent pieces is update so after a king move impossible to move the pawn by 2 square
-                        Move movePiece = p.move(this, x, y, posXKing, posYKing);
-                        if (movePiece != null && movePiece.getType().contains(MovementType.ATTACK) && isPathClear(x, y, posXKing, posYKing) && p.getPlayerColor() != color)
+                    if(p != null && p.getPlayerColor() != color) {
+                        Move m = p.move(x, y, posXKing, posYKing);
+
+                        //Si l'attaque n'est pas possible ou le move est invalide
+                        if (m == null || !m.getType().contains(MovementType.ATTACK))
+                            continue;
+
+                        // Si la piece peut sauter ou que le chemin est libre
+                        if (m.isCanJump() || isPathClear(m.getSrcX(), m.getSrcY(), m.getDestX(), m.getDestY()))
                             return true;
                     }
                 }
@@ -152,155 +163,183 @@ public class Board implements ChessController {
 
     private boolean prisePassant(){ return false;}
 
-    private boolean simuleMovement(int oldX, int oldY, int newX, int newY, Piece p) {
-        Move movePiece = p.move(this, oldX, oldY, newX, newY);
-        if (movePiece == null) {
-            return false;
-        }
-        for (MovementType t : movePiece.getType()) {
-            switch (t) {
-                case MOVE:
-                    if (board[newX][newY] == null) {
-//                        if(Check(p.getPlayerColor()) && p.getPieceType() != PieceType.KING){
-//                            return false;
-//                        }
-                        //Save the lastMove
-                        board[newX][newY] = board[oldX][oldY];
-                        board[oldX][oldY] = null;
-                        return true;
-                    }
-                    break;
-                case ATTACK:
-                    if (oldX != newX && oldY != newY && board[newX][newY] != null) {
-//                        if(Check(p.getPlayerColor())){
-//                            return false;
-//                        }
-                        board[newX][newY] = board[oldX][oldY];
-                        board[oldX][oldY] = null;
-                        return true;
-                    }
-                    break;
-                case SMALLCATSLING:
-                    if (p.isFirstMove()) {
-                        if(board[0][7].isFirstMove()){
-                            if(movePiece(oldX, oldY, oldX + 1, oldY)){
-                                if(movePiece(oldX + 1, oldY, newX - 1, newY)) {
-                                    board[oldX][oldY] = board[newX - 1][newY];
-                                    board[oldX + 1][oldY] = new Rook(p.getPlayerColor());
-                                    view.putPiece(PieceType.ROOK, p.getPlayerColor(), oldX + 1, oldY);
-                                    return true;
-                                }
-                                return false;
-                            }
-                            return false;
-                        }
-                        return false;
-//                        if(Check(p.getPlayerColor())){
-//                            return false;
-//                        }
-                    }
-                    break;
-            }
-        }
-        return false;
-    }
+//    private boolean simuleMovement(int oldX, int oldY, int newX, int newY, Piece p) {
+//        Move movePiece = p.move(this, oldX, oldY, newX, newY);
+//        if (movePiece == null) {
+//            return false;
+//        }
+//        for (MovementType t : movePiece.getType()) {
+//            switch (t) {
+//                case MOVE:
+//                    if (board[newX][newY] == null) {
+////                        if(Check(p.getPlayerColor()) && p.getPieceType() != PieceType.KING){
+////                            return false;
+////                        }
+//                        //Save the lastMove
+//                        board[newX][newY] = board[oldX][oldY];
+//                        board[oldX][oldY] = null;
+//                        return true;
+//                    }
+//                    break;
+//                case ATTACK:
+//                    if (oldX != newX && oldY != newY && board[newX][newY] != null) {
+////                        if(Check(p.getPlayerColor())){
+////                            return false;
+////                        }
+//                        board[newX][newY] = board[oldX][oldY];
+//                        board[oldX][oldY] = null;
+//                        return true;
+//                    }
+//                    break;
+//                case SMALLCASTLING:
+//
+//            }
+//        }
+//        return false;
+//    }
 
     private void revertMovement(int oldX, int oldY, int newX, int newY, Piece p){
         board[oldX][oldY] = board[newX][newY];
         board[newX][newY] = null;
     }
 
+    private void movePiece2(int oldX, int oldY, int newX, int newY) {
+        board[newX][newY] = board[oldX][oldY];
+        board[oldX][oldY] = null;
+    }
+
+    private boolean makeMove(Move m) {
+        if (!m.isCanJump() && !isPathClear(m.getSrcX(), m.getSrcY(), m.getDestX(), m.getDestY()))
+            return false;
+
+        Piece p = board[m.getSrcX()][m.getSrcY()];
+
+        // Move the piece
+        movePiece2(m.getSrcX(), m.getSrcY(), m.getDestX(), m.getDestY());
+        view.removePiece(m.getSrcX(), m.getSrcY());
+        view.putPiece(p.getPieceType(), p.getPlayerColor(), m.getDestX(), m.getDestY());
+
+        if (check(p.getPlayerColor())) {
+            movePiece2(m.getDestX(), m.getDestY(), m.getSrcX(), m.getSrcY());
+
+            view.removePiece(m.getDestX(), m.getDestY());
+            view.putPiece(p.getPieceType(), p.getPlayerColor(), m.getSrcX(), m.getSrcY());
+            return false;
+        }
+
+        //Save the lastMove
+        lastMove[0] = m.getDestX();
+        lastMove[1] = m.getDestY();
+
+        p.hasMoved();
+
+        if (m.getType().contains(MovementType.PROMOTE)) {
+            p = view.<Piece>askUser("Promotion", "Which promotion would you like", new Rook(p.getPlayerColor()), new Bishop(p.getPlayerColor()), new Queen(p.getPlayerColor()), new Knight(p.getPlayerColor()));
+            //The piece has changed the board has to be updated
+            board[m.getDestX()][m.getDestY()] = p;
+        }
+
+        return true;
+    }
+
+    private boolean makeEnPassant(Move m) {
+        if(lastMove[0] == m.getDestX() && lastMove[1] - 1 == m.getDestY() && board[lastMove[0]][lastMove[1]].getPieceType() == PieceType.PAWN) {
+            Piece p = board[m.getSrcX()][m.getSrcY()];
+
+            if (check(p.getPlayerColor())) {
+                return false;
+            }
+
+            movePiece2(m.getSrcX(), m.getSrcY(), m.getDestX(), m.getDestY());
+
+            board[lastMove[0]][lastMove[1]] = null;
+            view.removePiece(lastMove[0], lastMove[1]);
+            p.hasMoved();
+
+            return true;
+        }
+
+        return false;
+    }
+
+    private boolean makeSmallCastling(int oldX, int oldY, int newX, int newY) {
+        Piece p = board[oldX][oldY];
+        Piece rook = board[newX][newY];
+
+        if (rook == null || rook.getPieceType() != PieceType.ROOK)
+            return false;
+
+        if (!p.isFirstMove() || !rook.isFirstMove())
+            return false;
+
+        if (!isPathClear(oldX, oldY, newX, newY))
+            return false;
+
+        //TODO Change the makeMove
+        ArrayList<MovementType> m = new ArrayList<>();
+        m.add(MovementType.MOVE);
+
+        if(makeMove(new Move(oldX, oldY, oldX + 1, oldY, false, m))){
+            if(makeMove(new Move(oldX + 1, oldY, oldX + 2, newY, false, m))) {
+                board[oldX][oldY] = board[newX - 1][newY];
+                board[oldX + 1][oldY] = new Rook(p.getPlayerColor());
+
+                view.removePiece(newX, newY);
+                view.putPiece(PieceType.ROOK, p.getPlayerColor(), oldX + 1, oldY);
+                return true;
+            }
+        }
+        return false;
+    }
+
     public boolean movePiece(int oldX, int oldY, int newX, int newY){
         if(board[oldX][oldY] == null)
             return false;
 
-//        if(lastMove[0] == newX && lastMove[1] - 1 == newY && board[oldX][oldY].getPieceType() == PieceType.PAWN){
-//            return prisePassant(oldX, oldY, newX, newY);
-//        }
         Piece p = board[oldX][oldY];
 
-        if(p.getPieceType() == PieceType.KING){
-            if(simuleMovement(oldX, oldY, newX, newY, p)){
-                if(Check(p.getPlayerColor())){
-                    //revertMovement(oldX, oldY, newX, newY, p);
-                    return false;
-                }
-                lastMove[0] = newX;
-                lastMove[1] = newY;
-                p.hasMoved();
-                return true;
-            }
-            return false;
-        }
-
-        Move movePiece = p.move(this, oldX, oldY, newX, newY);
+        Move movePiece = p.move(oldX, oldY, newX, newY);
         if(movePiece == null){
             return false;
         }
 
+        boolean validMove = false;
         for(MovementType t : movePiece.getType()){
             switch(t){
-                case MOVE: if(board[newX][newY] == null){
-                    if(isPathClear(oldX, oldY, newX, newY) || movePiece.isCanJump()) {
-                        if(Check(p.getPlayerColor())){
-                            return false;
-                        }
-//                        board[newX][newY] = board[oldX][oldY];
-//                        board[oldX][oldY] = null;
-                        //Save the lastMove
-                        lastMove[0] = newX;
-                        lastMove[1] = newY;
-                        p.hasMoved();
-                        return true;
-                    }
-                    return false;
-                }
-                break;
-                case ATTACK: if(oldX != newX && oldY != newY && board[newX][newY] != null){
-                    if(isPathClear(oldX, oldY, newX, newY) || movePiece.isCanJump()) {
-                        if(Check(p.getPlayerColor())){
-                            return false;
-                        }
-//                        board[newX][newY] = board[oldX][oldY];
-//                        board[oldX][oldY] = null;
-                        p.hasMoved();
-                        return true;
-                    }
-                    return false;
-                }
-                break;
-                case PRISEPASSANT: if(lastMove[0] == newX && lastMove[1] - 1 == newY && board[lastMove[0]][lastMove[1]].getPieceType() == PieceType.PAWN){
-                    if(Check(p.getPlayerColor())){
-                        return false;
-                    }
-//                    board[newX][newY] = board[oldX][oldY];
-//                    board[oldX][oldY] = null;
-                    board[lastMove[0]][lastMove[1]] = null;
-                    view.removePiece(lastMove[0], lastMove[1]);
-                    p.hasMoved();
-                    return true;
-                }
-                break;
+                case MOVE:
+                    if (board[movePiece.getDestX()][movePiece.getDestY()] == null)
+                        validMove = makeMove(movePiece);
+                    break;
+
+                case ATTACK:
+                    if (board[movePiece.getDestX()][movePiece.getDestY()] != null &&
+                        board[movePiece.getDestX()][movePiece.getDestY()].getPlayerColor() != p.getPlayerColor())
+                        validMove = makeMove(movePiece);
+                    break;
+
+                case ENPASSANT:
+                    validMove = makeEnPassant(movePiece);
+                    break;
+
+                case SMALLCASTLING:
+                    validMove = makeSmallCastling(oldX, oldY, newX, newY);
+                    break;
+
+                case BIGCASTLING:
+                    validMove = makeSmallCastling(oldX, oldY, newX, newY);
+                    break;
             }
+
+            if (validMove)
+                break;
         }
-        return false;
-//        if(board[newX][newY] != null){
-//            //If the piece in the place desired is the same color as the one playing move invalid
-//            if(board[newX][newY].getPlayerColor() == board[oldX][oldY].getPlayerColor())
-//                return false;
-//            if(board[oldX][oldY].attack(this, oldX, oldY, newX, newY)){
-//                board[newX][newY] = board[oldX][oldY];
-//                board[oldX][oldY] = null;
-//                return true;
-//            }
-//            return false;
-//        }
-//
-//        if(board[oldX][oldY].move(this, oldX, oldY, newX, newY)) {
-//
-//            return true;
-//        }
-//        return false;
+
+        if (validMove) {
+//            view.removePiece(oldX, oldY);
+//            view.putPiece(p.getPieceType(), p.getPlayerColor(), newX, newY);
+        }
+
+        return validMove;
     }
 
     private boolean isPathClear(int fromX, int fromY, int toX, int toY) {
