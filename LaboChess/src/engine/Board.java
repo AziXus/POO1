@@ -234,6 +234,8 @@ public class Board implements ChessController {
             p = view.<Piece>askUser("Promotion", "Which promotion would you like", new Rook(p.getPlayerColor()), new Bishop(p.getPlayerColor()), new Queen(p.getPlayerColor()), new Knight(p.getPlayerColor()));
             //The piece has changed the board has to be updated
             board[m.getDestX()][m.getDestY()] = p;
+            view.removePiece(m.getSrcX(), m.getSrcY());
+            view.putPiece(p.getPieceType(), p.getPlayerColor(), m.getDestX(), m.getDestY());
         }
 
         return true;
@@ -322,15 +324,28 @@ public class Board implements ChessController {
         ArrayList<MovementType> m = new ArrayList<>();
         m.add(MovementType.MOVE);
 
-        if(makeMove(new Move(oldX, oldY, oldX + 1, oldY, false, m))){
-            if(makeMove(new Move(oldX + 1, oldY, oldX + 2, newY, false, m))) {
-                board[oldX][oldY] = board[newX - 1][newY];
-                board[oldX + 1][oldY] = new Rook(p.getPlayerColor());
+        Move firstCase = new Move(oldX, oldY, oldX - 1, oldY, false, m);
+        Move secondCase = new Move(oldX - 1, oldY, oldX - 2, newY, false, m);
+        Move thirdCase = new Move(oldX - 2, oldY, oldX - 3, newY, false, m);
 
-                view.removePiece(newX, newY);
-                view.putPiece(PieceType.ROOK, p.getPlayerColor(), oldX + 1, oldY);
-                return true;
+        if(makeMove(firstCase)){
+            if(makeMove(secondCase)) {
+                if(makeMove(thirdCase)) {
+                    //The king is placed in the oldX + 2 after a smallCastling so the old place has to be set to null as the king is no longer there
+                    board[oldX][oldY] = null;
+                    //Move the rook to the right place after a smallCastling
+                    board[oldX + 1][oldY] = board[newX][newY];
+                    //The rook isn't in the last place anymore
+                    board[newX][newY] = null;
+                    //Remove the old place of the rook on the view
+                    view.removePiece(newX, newY);
+                    //Add the new place of the rook on the view
+                    view.putPiece(PieceType.ROOK, p.getPlayerColor(), oldX - 2, oldY);
+                    return true;
+                }
+                revertMove(secondCase);
             }
+            revertMove(firstCase);
         }
         return false;
     }
@@ -369,7 +384,7 @@ public class Board implements ChessController {
                     break;
 
                 case BIGCASTLING:
-                    validMove = makeSmallCastling(oldX, oldY, newX, newY);
+                    validMove = makeBigCastling(oldX, oldY, newX, newY);
                     break;
             }
 
