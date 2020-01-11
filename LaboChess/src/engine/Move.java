@@ -3,36 +3,42 @@ package engine;
 import java.util.ArrayList;
 
 public class Move {
-    private int srcX;
-    private int srcY;
-    private int destX;
-    private int destY;
+    private Square src;
+    private Square dest;
     private boolean canJump;
     private ArrayList<MovementType> type;
 
-    public Move(int srcX, int srcY, int destX, int destY, boolean canJump, ArrayList<MovementType> type){
-        this.srcX = srcX;
-        this.srcY = srcY;
-        this.destX = destX;
-        this.destY = destY;
+    public Move(Square src, Square dest, boolean canJump, ArrayList<MovementType> type){
+        this.src = src;
+        this.dest = dest;
         this.canJump = canJump;
         this.type = type;
     }
 
-    public int getSrcX() {
-        return srcX;
+    public Move(int srcX, int srcY, int destX, int destY, boolean canJump, ArrayList<MovementType> type){
+        this(new Square(srcX, srcY), new Square(destX, destY), canJump, type);
     }
 
-    public int getSrcY() {
-        return srcY;
+    public Square getSrc() {
+        return src;
     }
+
+    public Square getDest() {
+        return dest;
+    }
+
+    public int getSrcX() {
+        return src.getPosX();
+    }
+
+    public int getSrcY() { return src.getPosY(); }
 
     public int getDestX() {
-        return destX;
+        return dest.getPosX();
     }
 
     public int getDestY() {
-        return destY;
+        return dest.getPosY();
     }
 
     public boolean isCanJump() {

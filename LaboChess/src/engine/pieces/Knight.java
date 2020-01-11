@@ -2,9 +2,9 @@ package engine.pieces;
 
 import chess.PieceType;
 import chess.PlayerColor;
-import engine.Board;
 import engine.Move;
 import engine.MovementType;
+import engine.Square;
 
 import java.util.ArrayList;
 
@@ -22,30 +22,20 @@ public class Knight extends Piece {
         return PieceType.KNIGHT;
     }
 
-//    @Override
-//    public boolean hasPieceOnMouvement(Board board, int fromX, int fromY, int toX, int toY) {
-//        return false;
-//    }
-
     @Override
-    public Move move(int fromX, int fromY, int toX, int toY) {
-        int deltaX = Math.abs(toX - fromX);
-        int deltaY = Math.abs(toY - fromY);
+    public Move move(Square from, Square to) {
+        int deltaX = Math.abs(to.getPosX() - from.getPosX());
+        int deltaY = Math.abs(to.getPosY() - from.getPosY());
 
         if ((deltaX == 2 && deltaY == 1) || (deltaX == 1 && deltaY == 2)) {
             ArrayList<MovementType> move = new ArrayList<>();
             move.add(MovementType.MOVE);
             move.add(MovementType.ATTACK);
-            return new Move(fromX, fromY, toX, toY, true, move);
+            return new Move(from, to, true, move);
         }
 
         return null;
     }
-
-//    @Override
-//    public boolean attack(Board board, int fromX, int fromY, int toX, int toY) {
-//        return move(board, fromX, fromY, toX, toY);
-//    }
 
     @Override
     public String toString() {

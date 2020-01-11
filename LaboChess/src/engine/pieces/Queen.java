@@ -2,9 +2,9 @@ package engine.pieces;
 
 import chess.PieceType;
 import chess.PlayerColor;
-import engine.Board;
 import engine.Move;
 import engine.MovementType;
+import engine.Square;
 
 import java.util.ArrayList;
 
@@ -21,33 +21,21 @@ public class Queen extends Piece {
         return PieceType.QUEEN;
     }
 
-//    @Override
-//    public boolean hasPieceOnMouvement(Board board, int fromX, int fromY, int toX, int toY) {
-//        return false;
-//    }
-
     public Queen(PlayerColor playerColor) {
         super(playerColor);
     }
 
     @Override
-    public Move move(int fromX, int fromY, int toX, int toY) {
+    public Move move(Square from, Square to) {
         //Queen has the same move as the Bishop and the Rook
-        if(rookMove.move(fromX, fromY, toX, toY) != null || bishopMove.move(fromX, fromY, toX, toY) != null) {
+        if(rookMove.move(from, to) != null || bishopMove.move(from, to) != null) {
             ArrayList<MovementType> move = new ArrayList<>();
             move.add(MovementType.MOVE);
             move.add(MovementType.ATTACK);
-            return new Move(fromX, fromY, toX, toY, false, move);
+            return new Move(from, to, false, move);
         }
         return null;
     }
-
-//    @Override
-//    public boolean attack(Board board, int fromX, int fromY, int toX, int toY) {
-//        if(move(board, fromX, fromY, toX, toY))
-//            return true;
-//        return false;
-//    }
 
     @Override
     public String toString() {

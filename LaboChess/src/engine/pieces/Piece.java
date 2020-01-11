@@ -3,8 +3,8 @@ package engine.pieces;
 import chess.ChessView;
 import chess.PieceType;
 import chess.PlayerColor;
-import engine.Board;
 import engine.Move;
+import engine.Square;
 
 /**
  * Abstract class for the implementation of the diffrent pieces of a chess Game
@@ -23,7 +23,7 @@ public abstract class Piece implements ChessView.UserChoice {
 
 //    public abstract boolean hasPieceOnMouvement(Board board, int fromX, int fromY, int toX, int toY);
 
-    public abstract Move move(int fromX, int fromY, int toX, int toY);
+    public abstract Move move(Square from, Square to);
 
 //    public abstract boolean attack(Board board, int fromX, int fromY, int toX, int toY);
 
