@@ -1,13 +1,12 @@
 package engine;
-
-import engine.pieces.Piece;
-
 import java.util.Objects;
 
+/**
+ * Class representing a square on a board by his postion x and y
+ */
 public class Square {
     private int posX;
     private int posY;
-//    private Piece piece;
 
     /**
      * Constructor with the coordinate of the Square
@@ -17,20 +16,6 @@ public class Square {
     public Square(int posX, int posY) {
         this.posX = posX;
         this.posY = posY;
-    }
-
-    /**
-     * Constructor with another Square
-     * @param s reference square
-     */
-    public Square(Square s) {
-        this.posX = s.getPosX();
-        this.posY = s.getPosY();
-    }
-
-    public Square(int posX, int posY, Piece piece) {
-        this(posX, posY);
-//        this.piece = piece;
     }
 
     /**
@@ -49,20 +34,21 @@ public class Square {
         return posY;
     }
 
-//    public Piece getPiece(){
-//        return piece;
-//    }
-//
-//    public void setPiece(Piece p){
-//        this.piece = p;
-//    }
-
+    /**
+     * Check if two squares are equal
+     * @param o the object that as to be compared
+     * @return true if equal false otherwise
+     */
     @Override
     public boolean equals(Object o) {
         return o == this || o != null && getClass() == o.getClass()
                 && ((Square)o).posX == posX && ((Square)o).posY == posY;
     }
 
+    /**
+     * Hash a square
+     * @return the hash of the square
+     */
     @Override
     public int hashCode() {
         return Objects.hash(posX, posY);

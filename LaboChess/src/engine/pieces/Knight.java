@@ -33,7 +33,6 @@ public class Knight extends Piece {
             move.add(MovementType.ATTACK);
             return new Move(from, to, true, move);
         }
-
         return null;
     }
 

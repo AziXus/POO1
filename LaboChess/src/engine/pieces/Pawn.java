@@ -10,8 +10,6 @@ import java.util.ArrayList;
 
 public class Pawn extends Piece {
 
-
-
     public Pawn(PlayerColor playerColor) {
         super(playerColor);
     }

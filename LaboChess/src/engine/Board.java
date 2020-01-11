@@ -13,7 +13,7 @@ import java.util.ArrayList;
  */
 public class Board implements ChessController {
     private final Piece[][] board = new Piece[8][8];
-    private Square lastMove = new Square(-1, -1);
+    private Move lastMove = new Move(new Square(-1,-1), new Square(-1,-1), false, null);
     private King white;
     private King black;
     //private Move move;
@@ -253,12 +253,12 @@ public class Board implements ChessController {
             return false;
         }
 
-        //Save the coordinates of the lastMove
-        lastMove = m.getDest();
+        //Save the last move
+        lastMove = m;
         //The piece has moved so the boolean that indicates of a piece is on her first move has to be set at false
         p.hasMoved();
         //If in the list of moves that the piece has return the movementType PROMOTE is in ask for a promotion
-        if (m.getType().contains(MovementType.PROMOTE)) {
+        if (m.getType() != null && m.getType().contains(MovementType.PROMOTE)) {
             p = view.askUser("Promotion", "Which promotion would you like", new Rook(p.getPlayerColor()), new Bishop(p.getPlayerColor()), new Queen(p.getPlayerColor()), new Knight(p.getPlayerColor()));
             //The piece has changed the board has to be updated
             board[m.getDestX()][m.getDestY()] = p;
@@ -279,14 +279,14 @@ public class Board implements ChessController {
         int directionY = board[m.getSrcX()][m.getSrcY()].getPlayerColor() == PlayerColor.WHITE ? 1 : -1;
         //Check that the destination of the pawn is on the same x axis has the last move and on the Y axis + 1 has it is an enPassant
         //Check that the last move has been done by pawn beauces if not the move enPassant is invalid
-        if(lastMove.getPosX() == m.getDestX() && lastMove.getPosY() + directionY == m.getDestY() &&
-                getPiece(lastMove).getPieceType() == PieceType.PAWN) {
+        if(lastMove.getDestX() == m.getDestX() && lastMove.getDestY() + directionY == m.getDestY() &&
+                getPiece(lastMove.getDest()).getPieceType() == PieceType.PAWN) {
             //We have to create as temporary move because if the move of the pawn is valid(no check) the last move will be replaced
-            Square lastMoveTemp = new Square(lastMove);
+            Move lastMoveTemp = lastMove;
             if(makeMove(m)) {
                 //Update the view by removing the piece that has been eaten
-                setPiece(lastMoveTemp, null);
-                view.removePiece(lastMoveTemp.getPosX() , lastMoveTemp.getPosY());
+                setPiece(lastMoveTemp.getDest(), null);
+                view.removePiece(lastMoveTemp.getDestX() , lastMoveTemp.getDestY());
                 return true;
             }
         }
@@ -296,10 +296,8 @@ public class Board implements ChessController {
 
     /**
      * Function that implements the smallCastling move
-     * @param oldX
-     * @param oldY
-     * @param newX
-     * @param newY
+     * @param from object of type square that represents the square where the piece start to move
+     * @param to object of type square that reprents the square where the piece wants to go
      * @return true if the move is valid, false otherwise
      */
     private boolean makeSmallCastling(Square from, Square to) {
@@ -316,11 +314,11 @@ public class Board implements ChessController {
             return false;
 
         //TODO Change the makeMove
-        ArrayList<MovementType> m = new ArrayList<>();
-        m.add(MovementType.MOVE);
+//        ArrayList<MovementType> m = new ArrayList<>();
+//        m.add(MovementType.MOVE);
 
-        Move firstCase = new Move(from.getPosX(), from.getPosY(), from.getPosX() + 1, from.getPosY(), false, m);
-        Move secondCase = new Move(from.getPosX() + 1, from.getPosY(), from.getPosX() + 2, from.getPosY(), false, m);
+        Move firstCase = new Move(from.getPosX(), from.getPosY(), from.getPosX() + 1, from.getPosY(), false, null);
+        Move secondCase = new Move(from.getPosX() + 1, from.getPosY(), from.getPosX() + 2, from.getPosY(), false, null);
         //We move the king in the different cases when he does a smallCastling if the king is on check on one of the cases
         //the move will be invalid
         if(makeMove(firstCase)){
@@ -343,23 +341,9 @@ public class Board implements ChessController {
     }
 
     /**
-     * Function that will revert the move passed by parameter
-     * @param m object of type move that represents the move done by a piece
-     */
-    private void revertMove(Move m) {
-        Piece p = board[m.getDestX()][m.getDestY()];
-        //Move the piece to is old position again
-        movePiece(m.getDest(), m.getSrc());
-        view.removePiece(m.getDestX(), m.getDestY());
-        view.putPiece(p.getPieceType(), p.getPlayerColor(), m.getSrcX(), m.getSrcY());
-    }
-
-    /**
      * Function that will make the bigCastling move
-     * @param oldX
-     * @param oldY
-     * @param newX
-     * @param newY
+     * @param from object of type square that represents the square where the piece start to move
+     * @param to object of type square that reprents the square where the piece wants to go
      * @return true if the move is valid, false otherwise
      */
     private boolean makeBigCastling(Square from, Square to) {
@@ -376,33 +360,42 @@ public class Board implements ChessController {
             return false;
 
         //TODO Change the oldY makeMove
-        ArrayList<MovementType> m = new ArrayList<>();
-        m.add(MovementType.MOVE);
+//        ArrayList<MovementType> m = new ArrayList<>();
+//        m.add(MovementType.MOVE);
 
-        Move firstCase = new Move(from.getPosX(), from.getPosY(), from.getPosX() - 1, from.getPosY(), false, m);
-        Move secondCase = new Move(from.getPosX() - 1, from.getPosY(), from.getPosX() - 2, from.getPosY(), false, m);
-        Move thirdCase = new Move(from.getPosX() - 2, from.getPosY(), from.getPosX() - 3, from.getPosY(), false, m);
+        Move firstCase = new Move(from.getPosX(), from.getPosY(), from.getPosX() - 1, from.getPosY(), false, null);
+        Move secondCase = new Move(from.getPosX() - 1, from.getPosY(), from.getPosX() - 2, from.getPosY(), false, null);
 
         if(makeMove(firstCase)){
             if(makeMove(secondCase)) {
-                if(makeMove(thirdCase)) {
-                    //The king is placed in the case oldX - 3 after a bigCastling so the old place has to be set to null as the king is no longer there
-                    setPiece(from, null);
-                    //Move the rook to the right place after a smallCastling
-                    board[from.getPosX() + 1][from.getPosY()] = getPiece(to);
-                    //The rook isn't in the last place anymore
-                    setPiece(to, null);
-                    //Remove the old place of the rook on the view
-                    view.removePiece(to.getPosX(), to.getPosY());
-                    //Add the new place of the rook on the view
-                    view.putPiece(PieceType.ROOK, p.getPlayerColor(), from.getPosX() - 2, from.getPosY());
-                    return true;
-                }
-                revertMove(secondCase);
+                //The king is placed in the case oldX - 3 after a bigCastling so the old place has to be set to null as the king is no longer there
+                setPiece(from, null);
+                //Move the rook to the right place after a smallCastling
+                board[from.getPosX() - 1][from.getPosY()] = getPiece(to);
+                //The rook isn't in the last place anymore
+                setPiece(to, null);
+                //Remove the old place of the rook on the view
+                view.removePiece(to.getPosX(), to.getPosY());
+                //Add the new place of the rook on the view
+                view.putPiece(PieceType.ROOK, p.getPlayerColor(), from.getPosX() - 1, from.getPosY());
+                return true;
             }
             revertMove(firstCase);
         }
+
         return false;
+    }
+
+    /**
+     * Function that will revert the move passed by parameter
+     * @param m object of type move that represents the move done by a piece
+     */
+    private void revertMove(Move m) {
+        Piece p = board[m.getDestX()][m.getDestY()];
+        //Move the piece to is old position again
+        movePiece(m.getDest(), m.getSrc());
+        view.removePiece(m.getDestX(), m.getDestY());
+        view.putPiece(p.getPieceType(), p.getPlayerColor(), m.getSrcX(), m.getSrcY());
     }
 
     /**
