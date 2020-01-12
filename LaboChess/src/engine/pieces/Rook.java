@@ -10,19 +10,29 @@ import java.util.ArrayList;
 
 public class Rook extends Piece {
 
+    /**
+     * Constructor of the Rook
+     * @param playerColor color of the player that owns the piece
+     */
     public Rook(PlayerColor playerColor) {
         super(playerColor);
     }
 
-    public String textValue(){
-        return toString();
-    }
-
+    /**
+     * Override that returns a ROOK;
+     * @return type of the piece
+     */
     @Override
     public PieceType getPieceType() {
         return PieceType.ROOK;
     }
 
+    /**
+     * Generate a valid Move for a Rook
+     * @param from source Square
+     * @param to destination Square
+     * @return a Move if possible, false otherwise.
+     */
     @Override
     public Move move(Square from, Square to) {
         if (from == to)
@@ -45,6 +55,10 @@ public class Rook extends Piece {
         return null;
     }
 
+    /**
+     * Return the name of the piece
+     * @return String containing the name
+     */
     @Override
     public String toString() {
         return "Rook";

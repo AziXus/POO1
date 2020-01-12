@@ -9,19 +9,29 @@ import engine.Square;
 import java.util.ArrayList;
 
 public class King extends Piece {
+    /**
+     * Constructor of the King
+     * @param playerColor color of the player that owns the piece
+     */
     public King(PlayerColor playerColor) {
         super(playerColor);
     }
 
-    public String textValue(){
-        return toString();
-    }
-
+    /**
+     * Override that returns a KING;
+     * @return type of the piece
+     */
     @Override
     public PieceType getPieceType() {
         return PieceType.KING;
     }
 
+    /**
+     * Generate a valid Move for a King
+     * @param from source Square
+     * @param to destination Square
+     * @return a Move if possible, false otherwise.
+     */
     @Override
     public Move move(Square from, Square to) {
         int deltaX = Math.abs(to.getPosX() - from.getPosX());
@@ -48,6 +58,10 @@ public class King extends Piece {
         return null;
     }
 
+    /**
+     * Return the name of the piece
+     * @return String containing the name
+     */
     @Override
     public String toString() {
         return "King";

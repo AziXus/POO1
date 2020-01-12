@@ -261,7 +261,7 @@ public class Board implements ChessController {
         if (m.getType() != null && m.getType().contains(MovementType.PROMOTE)) {
             p = view.askUser("Promotion", "Which promotion would you like", new Rook(p.getPlayerColor()), new Bishop(p.getPlayerColor()), new Queen(p.getPlayerColor()), new Knight(p.getPlayerColor()));
             //The piece has changed the board has to be updated
-            board[m.getDestX()][m.getDestY()] = p;
+            setPiece(m.getDest(), p);
             view.removePiece(m.getSrcX(), m.getSrcY());
             view.putPiece(p.getPieceType(), p.getPlayerColor(), m.getDestX(), m.getDestY());
         }

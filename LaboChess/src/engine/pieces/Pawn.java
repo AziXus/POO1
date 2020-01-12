@@ -10,13 +10,18 @@ import java.util.ArrayList;
 
 public class Pawn extends Piece {
 
+    /**
+     * Constructor of the Pawn
+     * @param playerColor color of the player that owns the piece
+     */
     public Pawn(PlayerColor playerColor) {
         super(playerColor);
     }
-    public String textValue(){
-        return toString();
-    }
 
+    /**
+     * Override that returns a PAWN;
+     * @return type of the piece
+     */
     @Override
     public PieceType getPieceType() {
         return PieceType.PAWN;
@@ -24,7 +29,7 @@ public class Pawn extends Piece {
 
     /**
      * Determine whether the pawn can be promoted
-     * @param s
+     * @param s Square to check
      * @return true if the pawn can be promoted, false otherwise
      */
     private boolean promotionAvailable(Square s) {
@@ -38,6 +43,12 @@ public class Pawn extends Piece {
         return false;
     }
 
+    /**
+     * Generate a valid Move for a Pawn
+     * @param from source Square
+     * @param to destination Square
+     * @return a Move if possible, false otherwise.
+     */
     @Override
     public Move move(Square from, Square to) {
         int directionY = playerColor == PlayerColor.WHITE ? 1 : -1;
@@ -72,6 +83,10 @@ public class Pawn extends Piece {
         return null;
     }
 
+    /**
+     * Return the name of the piece
+     * @return String containing the name
+     */
     @Override
     public String toString() {
         return "Pawn";

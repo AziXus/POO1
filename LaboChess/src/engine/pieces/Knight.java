@@ -9,19 +9,30 @@ import engine.Square;
 import java.util.ArrayList;
 
 public class Knight extends Piece {
+
+    /**
+     * Constructor of the Knight
+     * @param playerColor color of the player that owns the piece
+     */
     public Knight(PlayerColor playerColor) {
         super(playerColor);
     }
 
-    public String textValue(){
-        return toString();
-    }
-
+    /**
+     * Override that returns a KNIGHT;
+     * @return type of the piece
+     */
     @Override
     public PieceType getPieceType() {
         return PieceType.KNIGHT;
     }
 
+    /**
+     * Generate a valid Move for a Knight
+     * @param from source Square
+     * @param to destination Square
+     * @return a Move if possible, false otherwise.
+     */
     @Override
     public Move move(Square from, Square to) {
         int deltaX = Math.abs(to.getPosX() - from.getPosX());
@@ -36,6 +47,10 @@ public class Knight extends Piece {
         return null;
     }
 
+    /**
+     * Return the name of the piece
+     * @return String containing the name
+     */
     @Override
     public String toString() {
         return "Knight";

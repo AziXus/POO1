@@ -10,19 +10,30 @@ import engine.Square;
 import java.util.ArrayList;
 
 public class Bishop extends Piece {
+
+    /**
+     * Constructor of the Bishop
+     * @param playerColor color of the player that owns the piece
+     */
     public Bishop(PlayerColor playerColor) {
         super(playerColor);
     }
 
-    public String textValue(){
-        return toString();
-    }
-
+    /**
+     * Override that returns a BISHOP;
+     * @return type of the piece
+     */
     @Override
     public PieceType getPieceType() {
         return PieceType.BISHOP;
     }
 
+    /**
+     * Generate a valid Move for a Bishop
+     * @param from source Square
+     * @param to destination Square
+     * @return a Move if possible, false otherwise.
+     */
     @Override
     public Move move(Square from, Square to) {
         if (from == to)
@@ -40,6 +51,10 @@ public class Bishop extends Piece {
         return null;
     }
 
+    /**
+     * Return the name of the piece
+     * @return String containing the name
+     */
     @Override
     public String toString() {
         return "Bishop";
