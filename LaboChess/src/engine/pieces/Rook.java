@@ -37,22 +37,21 @@ public class Rook extends Piece {
     public Move move(Square from, Square to) {
         if (from == to)
             return null;
-
+        ArrayList<MovementType> move = new ArrayList<>();
         //Is move on the right or left same Y
         if(from.getPosY() == to.getPosY()) {
-            ArrayList<MovementType> move = new ArrayList<>();
             move.add(MovementType.MOVE);
             move.add(MovementType.ATTACK);
-            return new Move(from, to, false, move);
         }
         //Is move up down X is still the same
-        if(from.getPosX() == to.getPosX()) {
-            ArrayList<MovementType> move = new ArrayList<>();
+        else if(from.getPosX() == to.getPosX()) {
             move.add(MovementType.MOVE);
             move.add(MovementType.ATTACK);
-            return new Move(from, to, false, move);
+
+        } else {
+            move.add(MovementType.NONE);
         }
-        return null;
+        return new Move(from, to, false, move);
     }
 
     /**

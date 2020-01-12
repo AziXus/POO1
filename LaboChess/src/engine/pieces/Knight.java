@@ -38,13 +38,15 @@ public class Knight extends Piece {
         int deltaX = Math.abs(to.getPosX() - from.getPosX());
         int deltaY = Math.abs(to.getPosY() - from.getPosY());
 
+        ArrayList<MovementType> move = new ArrayList<>();
+
         if ((deltaX == 2 && deltaY == 1) || (deltaX == 1 && deltaY == 2)) {
-            ArrayList<MovementType> move = new ArrayList<>();
             move.add(MovementType.MOVE);
             move.add(MovementType.ATTACK);
-            return new Move(from, to, true, move);
+        } else {
+            move.add(MovementType.NONE);
         }
-        return null;
+        return new Move(from, to, true, move);
     }
 
     /**

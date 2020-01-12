@@ -13,7 +13,7 @@ import java.util.ArrayList;
  */
 public class Board implements ChessController {
     private final Piece[][] board = new Piece[8][8];
-    private Move lastMove = new Move(new Square(-1,-1), new Square(-1,-1), false, null);
+    private Move lastMove = new Move(new Square(-1,-1), new Square(-1,-1), false);
     private King white;
     private King black;
     private PlayerColor currentPlayer;
@@ -103,7 +103,7 @@ public class Board implements ChessController {
         //Ask to a piece if the move is valid
         Move movePiece = p.move(from, to);
         //if the piece doesn't return a move that makes him invalid
-        if(movePiece == null){
+        if(movePiece.getType().contains(MovementType.NONE)){
             return false;
         }
 
@@ -220,11 +220,11 @@ public class Board implements ChessController {
                     //Move of the piece to the position of the king
                     Move m = p.move(new Square(x, y), new Square(posXKing, posYKing));
                     //If the attack is not one of the moves return or if the move is impossible continuation of the loop
-                    if (m == null || !m.getType().contains(MovementType.ATTACK))
+                    if (m.getType().contains(MovementType.NONE) || !m.getType().contains(MovementType.ATTACK))
                         continue;
                     //If the piece can jump(Knight) the function is true with a knight the path don't has to be checked
                     //If the piece cannot jump check if the path is clear that means the path don't have any pieces on it
-                    if (m.isCanJump() || isPathClear(m.getDest(), m.getSrc()))
+                    if (m.isCanJump() || isPathClear(m.getSrc(), m.getDest()))
                         return true;
                 }
             }
@@ -333,8 +333,8 @@ public class Board implements ChessController {
 //        ArrayList<MovementType> m = new ArrayList<>();
 //        m.add(MovementType.MOVE);
 
-        Move firstCase = new Move(from.getPosX(), from.getPosY(), from.getPosX() + 1, from.getPosY(), false, null);
-        Move secondCase = new Move(from.getPosX() + 1, from.getPosY(), from.getPosX() + 2, from.getPosY(), false, null);
+        Move firstCase = new Move(from.getPosX(), from.getPosY(), from.getPosX() + 1, from.getPosY(), false);
+        Move secondCase = new Move(from.getPosX() + 1, from.getPosY(), from.getPosX() + 2, from.getPosY(), false);
         //We move the king in the different cases when he does a smallCastling if the king is on check on one of the cases
         //the move will be invalid
         if(makeMove(firstCase)){
@@ -379,8 +379,8 @@ public class Board implements ChessController {
 //        ArrayList<MovementType> m = new ArrayList<>();
 //        m.add(MovementType.MOVE);
 
-        Move firstCase = new Move(from.getPosX(), from.getPosY(), from.getPosX() - 1, from.getPosY(), false, null);
-        Move secondCase = new Move(from.getPosX() - 1, from.getPosY(), from.getPosX() - 2, from.getPosY(), false, null);
+        Move firstCase = new Move(from.getPosX(), from.getPosY(), from.getPosX() - 1, from.getPosY(), false);
+        Move secondCase = new Move(from.getPosX() - 1, from.getPosY(), from.getPosX() - 2, from.getPosY(), false);
 
         if(makeMove(firstCase)){
             if(makeMove(secondCase)) {

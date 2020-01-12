@@ -36,26 +36,22 @@ public class King extends Piece {
     public Move move(Square from, Square to) {
         int deltaX = Math.abs(to.getPosX() - from.getPosX());
         int deltaY = Math.abs(to.getPosY() - from.getPosY());
+        //Instantiation of the ArrayList that will contain the moves available
+        ArrayList<MovementType> move = new ArrayList<>();
 
         if ((deltaX == 1 && deltaY == 0) || (deltaX == 0 && deltaY == 1) || (deltaX == 1 && deltaY == 1)) {
-            ArrayList<MovementType> move = new ArrayList<>();
             move.add(MovementType.MOVE);
             move.add(MovementType.ATTACK);
-            return new Move(from, to, false, move);
-        }
-
-        if ((to.getPosX() - from.getPosX() == 3 && deltaY == 0)) {
-            ArrayList<MovementType> move = new ArrayList<>();
+        } else if ((to.getPosX() - from.getPosX() == 3 && deltaY == 0)) {
             move.add(MovementType.SMALLCASTLING);
-            return new Move(from, to, false, move);
-        }
-
-        if ((to.getPosX() - from.getPosX() == -4 && deltaY == 0)) {
-            ArrayList<MovementType> move = new ArrayList<>();
+        } else if ((to.getPosX() - from.getPosX() == -4 && deltaY == 0)) {
             move.add(MovementType.BIGCASTLING);
-            return new Move(from, to, false, move);
+        } else {
+            move.add(MovementType.NONE);
         }
-        return null;
+        return new Move(from, to, false, move);
+
+
     }
 
     /**

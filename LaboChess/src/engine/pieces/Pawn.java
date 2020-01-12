@@ -55,32 +55,23 @@ public class Pawn extends Piece {
         int deltaX = to.getPosX() - from.getPosX();
         int deltaY = to.getPosY() - from.getPosY();
 
+        ArrayList<MovementType> move = new ArrayList<>();
+
         if (deltaY == directionY && deltaX == 0) {
-            ArrayList<MovementType> move = new ArrayList<>();
             move.add(MovementType.MOVE);
             if (promotionAvailable(to))
                 move.add(MovementType.PROMOTE);
-            return new Move(from, to, false, move);
-        }
-
-        if (firstMove && deltaY == 2 * directionY && deltaX == 0) {
-            ArrayList<MovementType> move = new ArrayList<>();
+        } else if (firstMove && deltaY == 2 * directionY && deltaX == 0) {
             move.add(MovementType.MOVE);
-            return new Move(from, to, false, move);
-        }
-
-        if(Math.abs(deltaX) == 1 && deltaY == directionY){
-            ArrayList<MovementType> move = new ArrayList<>();
+        } else if(Math.abs(deltaX) == 1 && deltaY == directionY){
             move.add(MovementType.ATTACK);
             move.add(MovementType.ENPASSANT);
-
             if (promotionAvailable(to))
                 move.add(MovementType.PROMOTE);
-
-            return new Move(from, to, false, move);
+        } else {
+            move.add(MovementType.NONE);
         }
-
-        return null;
+        return new Move(from, to, false, move);
     }
 
     /**
