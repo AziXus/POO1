@@ -6,8 +6,6 @@ import chess.PieceType;
 import chess.PlayerColor;
 import engine.pieces.*;
 
-import java.util.ArrayList;
-
 /**
  * class Board that will control the view and verify the mouvement asked by the user
  */
