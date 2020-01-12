@@ -16,14 +16,14 @@ public class Board implements ChessController {
     private Move lastMove = new Move(new Square(-1,-1), new Square(-1,-1), false, null);
     private King white;
     private King black;
-    //private Move move;
-
+    private PlayerColor currentPlayer;
     private ChessView view;
 
     /**
      * Constructor by default of the classe Board will initiate the view and the variable board
      */
     public Board() {
+        currentPlayer = PlayerColor.WHITE;
         initBoard();
     }
 
@@ -59,6 +59,7 @@ public class Board implements ChessController {
      * Démarre une nouvelle partie. L'échiquier doit être remis dans sa position initiale.
      */
     public void newGame() {
+        currentPlayer = PlayerColor.WHITE;
         // Clean the board
         for (int x = 0; x < 8; ++x) {
             for (int y = 0; y < 8; ++y) {
@@ -94,6 +95,9 @@ public class Board implements ChessController {
         Piece p = getPiece(from);
 
         if(p == null)
+            return false;
+
+        if (p.getPlayerColor() != currentPlayer)
             return false;
 
         //Ask to a piece if the move is valid
@@ -134,12 +138,21 @@ public class Board implements ChessController {
             if (validMove)
                 break;
         }
-        if (check(p.getPlayerColor())) {
-            view.displayMessage("Check");
-        }
+
+        if (validMove)
+            nextTurn();
 
         return validMove;
+    }
 
+    /**
+    * Passe au tour suivant en changeant le joueur courant.
+    */
+    public void nextTurn() {
+        if (currentPlayer == PlayerColor.WHITE)
+            currentPlayer = PlayerColor.BLACK;
+        else if (currentPlayer == PlayerColor.BLACK)
+            currentPlayer = PlayerColor.WHITE;
     }
 
     /**
@@ -241,6 +254,8 @@ public class Board implements ChessController {
 
         //Get the piece that has to be moved
         Piece p = getPiece(m.getSrc());
+        //Save the destination Piece
+        Piece pDest = getPiece(m.getDest());
         //Move the piece on the board
         movePiece(m.getSrc(), m.getDest());
         //Update the view
@@ -249,7 +264,8 @@ public class Board implements ChessController {
 
         //If with the new movement the king of the same color is in a check the move is revert
         if (check(p.getPlayerColor())) {
-            revertMove(m);
+            view.displayMessage("Check");
+            revertMove(m, pDest);
             return false;
         }
 
@@ -396,6 +412,20 @@ public class Board implements ChessController {
         movePiece(m.getDest(), m.getSrc());
         view.removePiece(m.getDestX(), m.getDestY());
         view.putPiece(p.getPieceType(), p.getPlayerColor(), m.getSrcX(), m.getSrcY());
+    }
+
+    /**
+     * Function that will revert the move passed by parameter and replace the old Piece
+     * @param m object of type move that represents the move done by a piece
+     * @param dest Piece of destination to replace
+     */
+    private void revertMove(Move m, Piece dest) {
+        revertMove(m);
+
+        if (dest != null) {
+            setPiece(m.getDest(), dest);
+            view.putPiece(dest.getPieceType(), dest.getPlayerColor(), m.getDestX(), m.getDestY());
+        }
     }
 
     /**
