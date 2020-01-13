@@ -46,15 +46,15 @@ public class Move {
      * @param dest object of type square that represents the final position
      * @param canJump boolean that indicates if the move is done by a piece that jumps
      * @param type Arraylist containing the moves that can by done by moving from src to dest
-     * @throws InvalidParameterException if ArrayList of typeMovements is null
+     * @throws InvalidParameterException if ArrayList of typeMovements is null or if one of the squares is null
      */
     public Move(Square src, Square dest, boolean canJump, ArrayList<MovementType> type){
+        if(type == null || src == null || dest == null){
+            throw new InvalidParameterException(MessageFormat.format("Un mouvement doit être entrée ! Valeur = {0}", type));
+        }
         this.src = src;
         this.dest = dest;
         this.canJump = canJump;
-        if(type == null){
-            throw new InvalidParameterException(MessageFormat.format("Un mouvement doit être entrée ! Valeur = {0}", type));
-        }
         this.type = type;
     }
 
