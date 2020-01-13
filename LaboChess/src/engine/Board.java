@@ -301,6 +301,10 @@ public class Board implements ChessController {
         //If in the list of moves that the piece has return the movementType PROMOTE is in ask for a promotion
         if (m.getType() != null && m.getType().contains(MovementType.PROMOTE)) {
             p = view.askUser("Promotion", "Which promotion would you like", new Rook(p.getPlayerColor()), new Bishop(p.getPlayerColor()), new Queen(p.getPlayerColor()), new Knight(p.getPlayerColor()));
+            if(p == null) {
+                revertMove(m);
+                return false;
+            }
             //The piece has changed the board has to be updated
             setPiece(m.getDest(), p);
             view.removePiece(m.getSrcX(), m.getSrcY());
