@@ -75,6 +75,9 @@ public class StudentChess {
         //Black pawn eat white pawn
         System.out.println("Eat a white Pawn with a black Pawn : " + controller.move(4, 6, 5, 5));
 
+        //Move pawn to make the black player move to change turn
+        controller.move(5, 2, 5, 3);
+
         //Try to move the queen to eat the king but pawn on the way
         System.out.println("Try to move the queen to eat the king but pawn on the way : " + controller.move(0, 2, 4, 2));
     }

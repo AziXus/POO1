@@ -110,13 +110,17 @@ public class Board implements ChessController {
         if(p == null)
             return false;
 
-        if (p.getPlayerColor() != currentPlayer)
+        if (p.getPlayerColor() != currentPlayer) {
+            //If the color of the piece is not the color of the current player a message is shown
+            view.displayMessage("It is the " + currentPlayer.name() + " player turn");
             return false;
+        }
 
         //Ask to a piece if the move is valid
         Move movePiece = p.move(from, to);
         //if the piece doesn't return a move that makes him invalid
         if(movePiece.getType().contains(MovementType.NONE)){
+            view.displayMessage("Move invalid");
             return false;
         }
 
