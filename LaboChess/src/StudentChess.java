@@ -8,10 +8,10 @@ public class StudentChess {
         ChessView view = new GUIView(controller);
         controller.start(view);
 
-        Test(controller);
+        test(controller);
     }
 
-    private static void Test(ChessController controller) {
+    private static void test(ChessController controller) {
         controller.newGame();
 
         // Move white Rook when blocked by a piece
