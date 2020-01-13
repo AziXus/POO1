@@ -435,6 +435,9 @@ public class Board implements ChessController {
      * @return true if no piece on the path, false otherwise
      */
     private boolean isPathClear(Square from, Square to) {
+        if (from == to)
+            return true;
+
         int xInc = 0,
             yInc = 0;
         int fromX = from.getPosX(),
@@ -442,20 +445,28 @@ public class Board implements ChessController {
             toX   = to.getPosX(),
             toY   = to.getPosY();
 
-        if (fromX > toX) {
+        // Verify that from and to is a diagonal, vertical or horizontal move
+        if (fromX != toX && fromY != toY && Math.abs(fromX - toX) != Math.abs(fromY - toY))
+            throw new RuntimeException("hoy");
+
+        // Calculate the x increment
+        if (fromX > toX) { // Decrement the coordinate to reach toX
             xInc = -1;
-        } else if (fromX < toX) {
+        } else if (fromX < toX) { // Increment the coordinate to reach toX
             xInc = 1;
         }
-        if (fromY > toY) {
+        // Calculate the y increment
+        if (fromY > toY) { // Decrement the coordinate to reach toY
             yInc = -1;
-        } else if (fromY < toY) {
+        } else if (fromY < toY) { // Increment the coordinate to reach toY
             yInc = 1;
         }
 
         // Ignore first and last case
         fromX += xInc;
         fromY += yInc;
+
+        // Go through each square and check the case is empty
         while(fromX != toX || fromY != toY) {
             if (board[fromX][fromY] != null)
                 return false;
