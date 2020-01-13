@@ -445,7 +445,7 @@ public class Board implements ChessController {
 
         // Verify that from and to is a diagonal, vertical or horizontal move
         if (fromX != toX && fromY != toY && Math.abs(fromX - toX) != Math.abs(fromY - toY))
-            throw new RuntimeException("hoy");
+            throw new RuntimeException("from and to must be diagonal, horizontal or vertical");
 
         // Calculate the x increment
         if (fromX > toX) { // Decrement the coordinate to reach toX
