@@ -73,7 +73,7 @@ public class Board implements ChessController {
 
         initBoard();
 
-        //Initialse the different pieces on the view
+        //Initialize the different pieces on the view
         for (int x = 0; x < 8; ++x) {
             for (int y = 0; y < 8; ++y) {
                 Piece p = board[x][y];
@@ -102,11 +102,13 @@ public class Board implements ChessController {
             System.out.println("Square of finish invalid please enter an x between 0 and 7 and a y between 0 and 7");
             throw new InvalidParameterException();
         }
+        //Initialize the squares from(case of start) and to(case of end)
         Square from = new Square(fromX, fromY);
         Square to = new Square(toX, toY);
 
         Piece p = getPiece(from);
 
+        //If any piece is return from the getPiece function the move is invalid
         if(p == null)
             return false;
 
@@ -151,14 +153,19 @@ public class Board implements ChessController {
                     validMove = makeBigCastling(movePiece);
                     break;
             }
-
+            //If one of the moves is valid the loop is breaked
             if (validMove)
                 break;
         }
 
-        if (validMove)
+        //If a move has been done next turn
+        if (validMove) {
+            //The piece has moved so the boolean that indicates that a piece is on her first move has to be set to false
+            p.hasMoved();
             nextTurn();
+        }
 
+        //After the change of color check if the king is on check to show the message to the user
         if (check(currentPlayer)) {
             view.displayMessage("Check");
         }
@@ -167,8 +174,8 @@ public class Board implements ChessController {
     }
 
     /**
-    * Passe au tour suivant en changeant le joueur courant.
-    */
+     * Go to the next turn by changing the current player
+     */
     private void nextTurn() {
         if (currentPlayer == PlayerColor.WHITE)
             currentPlayer = PlayerColor.BLACK;
@@ -211,12 +218,12 @@ public class Board implements ChessController {
     }
 
     /**
-     * Function that can check if a king is a check position
+     * Function that can check if a king is in a check position
      * @param color variable of type playercolor that will choose the color of the king that has to be verified
      * @return true if the king is in a check position, false otherwise
      */
     private boolean check(PlayerColor color) {
-        //Variables that will have the postion of the king on the board
+        //Variables that will have the position of the king on the board
         int posXKing = 0;
         int posYKing = 0;
         //Loop allowing to find the king that we are searching for on the board
@@ -244,7 +251,7 @@ public class Board implements ChessController {
                     if (m.getType().contains(MovementType.NONE) || !m.getType().contains(MovementType.ATTACK))
                         continue;
                     //If the piece can jump(Knight) the function is true with a knight the path don't has to be checked
-                    //If the piece cannot jump check if the path is clear that means the path don't have any pieces on it
+                    //If the piece cannot jump check if the path is clear move ok
                     if (m.canJump() || isPathClear(m.getSrc(), m.getDest()))
                         return true;
                 }
@@ -266,7 +273,7 @@ public class Board implements ChessController {
     /**
      * Function that will make a piece move
      * @param m object of type move that represents the move done by a piece
-     * @return true of the move is valid, false otherwise
+     * @return true if move is valid, false otherwise
      */
     private boolean makeMove(Move m) {
         //If the path is not clear the move is invalid
@@ -283,7 +290,7 @@ public class Board implements ChessController {
         view.removePiece(m.getSrcX(), m.getSrcY());
         view.putPiece(p.getPieceType(), p.getPlayerColor(), m.getDestX(), m.getDestY());
 
-        //If with the new movement the king of the same color is in a check the move is revert
+        //If with the new movement the king of the same color is in a check the move is revert and the move is invalid
         if (check(p.getPlayerColor())) {
             revertMove(m, pDest);
             return false;
@@ -291,8 +298,6 @@ public class Board implements ChessController {
 
         //Save the last move
         lastMove = m;
-        //The piece has moved so the boolean that indicates of a piece is on her first move has to be set at false
-        p.hasMoved();
         //If in the list of moves that the piece has return the movementType PROMOTE is in ask for a promotion
         if (m.getType() != null && m.getType().contains(MovementType.PROMOTE)) {
             p = view.askUser("Promotion", "Which promotion would you like", new Rook(p.getPlayerColor()), new Bishop(p.getPlayerColor()), new Queen(p.getPlayerColor()), new Knight(p.getPlayerColor()));
@@ -314,10 +319,10 @@ public class Board implements ChessController {
         //By the color of the pawn we get the direction that has to be used on the Y axis
         int directionY = board[m.getSrcX()][m.getSrcY()].getPlayerColor() == PlayerColor.WHITE ? 1 : -1;
         //Check that the destination of the pawn is on the same x axis has the last move and on the Y axis + 1 has it is an enPassant
-        //Check that the last move has been done by pawn beauces if not the move enPassant is invalid
+        //Check that the last move has been done by pawn because if not the move enPassant is invalid
         if(lastMove.getDestX() == m.getDestX() && lastMove.getDestY() + directionY == m.getDestY() &&
                 getPiece(lastMove.getDest()).getPieceType() == PieceType.PAWN) {
-            //We have to create as temporary move because if the move of the pawn is valid(no check) the last move will be replaced
+            //We have to create a temporary move because if the move of the pawn is valid(no check) the last move will be replaced
             Move lastMoveTemp = lastMove;
             if(makeMove(m)) {
                 //Update the view by removing the piece that has been eaten
@@ -339,6 +344,7 @@ public class Board implements ChessController {
         Square from = m.getSrc();
         Square to = m.getDest();
 
+        //Get the piece that are on the square of start and end
         Piece king = getPiece(from);
         Piece rook = getPiece(to);
 
@@ -351,10 +357,11 @@ public class Board implements ChessController {
         if (!isPathClear(from, to))
             return false;
 
+        //Set the two moves that the king has to do
         Move firstCase = new Move(from.getPosX(), from.getPosY(), from.getPosX() + 1, from.getPosY(), false);
         Move secondCase = new Move(from.getPosX() + 1, from.getPosY(), from.getPosX() + 2, from.getPosY(), false);
-        //We move the king in the different cases when he does a smallCastling if the king is on check on one of the cases
-        //the move will be invalid
+        //We move the king in the different cases when he does a smallCastling
+        //if the king is on check on one of the cases the move will be invalid
         if(makeMove(firstCase)){
             if(makeMove(secondCase)) {
                 //The king is placed in the oldX + 2 after a smallCastling so the old place has to be set to null as the king is no longer there
@@ -427,15 +434,14 @@ public class Board implements ChessController {
      */
     private void revertMove(Move m) {
         Piece p = board[m.getDestX()][m.getDestY()];
-        p.revertFirstMove();
-        //Move the piece to is old position again
+        //Move the piece to his old position again
         movePiece(m.getDest(), m.getSrc());
         view.removePiece(m.getDestX(), m.getDestY());
         view.putPiece(p.getPieceType(), p.getPlayerColor(), m.getSrcX(), m.getSrcY());
     }
 
     /**
-     * Function that will revert the move passed by parameter and replace the old Piece
+     * Function that will revert the move passed by parameter and replace the old Piece on the view
      * @param m object of type move that represents the move done by a piece
      * @param dest Piece of destination to replace
      */
