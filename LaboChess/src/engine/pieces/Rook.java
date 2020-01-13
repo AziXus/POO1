@@ -9,7 +9,7 @@ import engine.move.Square;
 import java.util.ArrayList;
 
 /**
- *
+ * Class implementing a Rook that extends Piece
  * @author Müller Robin, Teixeira Carvalho Stéphane
  */
 public class Rook extends Piece {

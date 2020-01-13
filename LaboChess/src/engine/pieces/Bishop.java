@@ -10,7 +10,7 @@ import engine.move.Square;
 import java.util.ArrayList;
 
 /**
- *
+ * Class implementing a Bishop that extends Piece
  * @author Müller Robin, Teixeira Carvalho Stéphane
  */
 public class Bishop extends Piece {

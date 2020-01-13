@@ -9,7 +9,7 @@ import engine.move.Square;
 import java.util.ArrayList;
 
 /**
- *
+ * Class implementing a King that extends Piece
  * @author Müller Robin, Teixeira Carvalho Stéphane
  */
 public class King extends Piece {
