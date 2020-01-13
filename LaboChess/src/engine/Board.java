@@ -354,8 +354,10 @@ public class Board implements ChessController {
         if (!king.isFirstMove() || !rook.isFirstMove())
             return false;
 
-        if (!isPathClear(from, to))
+        if (!isPathClear(from, to)) {
+            view.displayMessage("Piece is in the move!");
             return false;
+        }
 
         //Set the two moves that the king has to do
         Move firstCase = new Move(from.getPosX(), from.getPosY(), from.getPosX() + 1, from.getPosY(), false);
@@ -401,8 +403,10 @@ public class Board implements ChessController {
         if (!p.isFirstMove() || !rook.isFirstMove())
             return false;
 
-        if (!isPathClear(from, to))
+        if (!isPathClear(from, to)) {
+            view.displayMessage("Piece is in the move!");
             return false;
+        }
 
         Move firstCase = new Move(from.getPosX(), from.getPosY(), from.getPosX() - 1, from.getPosY(), false);
         Move secondCase = new Move(from.getPosX() - 1, from.getPosY(), from.getPosX() - 2, from.getPosY(), false);
