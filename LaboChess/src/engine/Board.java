@@ -7,7 +7,7 @@ import chess.PlayerColor;
 import engine.pieces.*;
 
 /**
- * class Board that will control the view and verify the mouvement asked by the user
+ * class Board that will control the view and verify the movement asked by the user
  */
 public class Board implements ChessController {
     private final Piece[][] board = new Piece[8][8];
@@ -18,7 +18,7 @@ public class Board implements ChessController {
     private ChessView view;
 
     /**
-     * Constructor by default of the classe Board will initiate the view and the variable board
+     * Constructor by default of the class Board will initiate the view and the variable board
      */
     public Board() {
         currentPlayer = PlayerColor.WHITE;
@@ -199,11 +199,11 @@ public class Board implements ChessController {
         //Loop allowing to find the king that we are searching for on the board
         for (int x = 0; x < 8; x++) {
             for (int y = 0; y < 8; y++) {
-                if (color == PlayerColor.WHITE && board[x][y] == white) {
+                if (board[x][y] == white) {
                     posXKing = x;
                     posYKing = y;
                 }
-                if (color == PlayerColor.BLACK && board[x][y] == black) {
+                if (board[x][y] == black) {
                     posXKing = x;
                     posYKing = y;
                 }
