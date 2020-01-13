@@ -125,11 +125,11 @@ public class Board implements ChessController {
                     break;
 
                 case SMALLCASTLING:
-                    validMove = makeSmallCastling(from, to);
+                    validMove = makeSmallCastling(movePiece);
                     break;
 
                 case BIGCASTLING:
-                    validMove = makeBigCastling(from, to);
+                    validMove = makeBigCastling(movePiece);
                     break;
             }
 
@@ -140,13 +140,17 @@ public class Board implements ChessController {
         if (validMove)
             nextTurn();
 
+        if (check(currentPlayer)) {
+            view.displayMessage("Check");
+        }
+
         return validMove;
     }
 
     /**
     * Passe au tour suivant en changeant le joueur courant.
     */
-    public void nextTurn() {
+    private void nextTurn() {
         if (currentPlayer == PlayerColor.WHITE)
             currentPlayer = PlayerColor.BLACK;
         else if (currentPlayer == PlayerColor.BLACK)
@@ -199,11 +203,11 @@ public class Board implements ChessController {
         //Loop allowing to find the king that we are searching for on the board
         for (int x = 0; x < 8; x++) {
             for (int y = 0; y < 8; y++) {
-                if (board[x][y] == white) {
+                if (color == PlayerColor.WHITE && board[x][y] == white) {
                     posXKing = x;
                     posYKing = y;
                 }
-                if (board[x][y] == black) {
+                if (color == PlayerColor.BLACK && board[x][y] == black) {
                     posXKing = x;
                     posYKing = y;
                 }
@@ -222,7 +226,7 @@ public class Board implements ChessController {
                         continue;
                     //If the piece can jump(Knight) the function is true with a knight the path don't has to be checked
                     //If the piece cannot jump check if the path is clear that means the path don't have any pieces on it
-                    if (m.isCanJump() || isPathClear(m.getSrc(), m.getDest()))
+                    if (m.canJump() || isPathClear(m.getSrc(), m.getDest()))
                         return true;
                 }
             }
@@ -247,7 +251,7 @@ public class Board implements ChessController {
      */
     private boolean makeMove(Move m) {
         //If the path is not clear the move is invalid
-        if (!m.isCanJump() && !isPathClear(m.getSrc(), m.getDest()))
+        if (!m.canJump() && !isPathClear(m.getSrc(), m.getDest()))
             return false;
 
         //Get the piece that has to be moved
@@ -262,7 +266,6 @@ public class Board implements ChessController {
 
         //If with the new movement the king of the same color is in a check the move is revert
         if (check(p.getPlayerColor())) {
-            view.displayMessage("Check");
             revertMove(m, pDest);
             return false;
         }
@@ -310,11 +313,13 @@ public class Board implements ChessController {
 
     /**
      * Function that implements the smallCastling move
-     * @param from object of type square that represents the square where the piece start to move
-     * @param to object of type square that reprents the square where the piece wants to go
+     * @param m object of type move that represents the move done by a piece
      * @return true if the move is valid, false otherwise
      */
-    private boolean makeSmallCastling(Square from, Square to) {
+    private boolean makeSmallCastling(Move m) {
+        Square from = m.getSrc();
+        Square to = m.getDest();
+
         Piece king = getPiece(from);
         Piece rook = getPiece(to);
 
@@ -326,10 +331,6 @@ public class Board implements ChessController {
 
         if (!isPathClear(from, to))
             return false;
-
-        //TODO Change the makeMove
-//        ArrayList<MovementType> m = new ArrayList<>();
-//        m.add(MovementType.MOVE);
 
         Move firstCase = new Move(from.getPosX(), from.getPosY(), from.getPosX() + 1, from.getPosY(), false);
         Move secondCase = new Move(from.getPosX() + 1, from.getPosY(), from.getPosX() + 2, from.getPosY(), false);
@@ -356,11 +357,13 @@ public class Board implements ChessController {
 
     /**
      * Function that will make the bigCastling move
-     * @param from object of type square that represents the square where the piece start to move
-     * @param to object of type square that reprents the square where the piece wants to go
+     * @param m object of type move that represents the move done by a piece
      * @return true if the move is valid, false otherwise
      */
-    private boolean makeBigCastling(Square from, Square to) {
+    private boolean makeBigCastling(Move m) {
+        Square from = m.getSrc();
+        Square to = m.getDest();
+
         Piece p = getPiece(from);
         Piece rook = getPiece(to);
 
@@ -372,10 +375,6 @@ public class Board implements ChessController {
 
         if (!isPathClear(from, to))
             return false;
-
-        //TODO Change the oldY makeMove
-//        ArrayList<MovementType> m = new ArrayList<>();
-//        m.add(MovementType.MOVE);
 
         Move firstCase = new Move(from.getPosX(), from.getPosY(), from.getPosX() - 1, from.getPosY(), false);
         Move secondCase = new Move(from.getPosX() - 1, from.getPosY(), from.getPosX() - 2, from.getPosY(), false);

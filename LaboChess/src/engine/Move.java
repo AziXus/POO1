@@ -123,7 +123,7 @@ public class Move {
      * Get the boolean that indicates if the move was done by a piece that can jump
      * @return true if the piece could jump false otherwise
      */
-    public boolean isCanJump() {
+    public boolean canJump() {
         return canJump;
     }
 
