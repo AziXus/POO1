@@ -41,14 +41,15 @@ public class Bishop extends Piece {
 
         int moveX = from.getPosX() - to.getPosX();
         int moveY = from.getPosY() - to.getPosY();
+        ArrayList<MovementType> move = new ArrayList<>();
         //To move in diagonal the difference between fromY and toY as to be the same as the difference between fromX and toX
         if(Math.abs(moveX) == Math.abs(moveY)) {
-            ArrayList<MovementType> move = new ArrayList<>();
             move.add(MovementType.MOVE);
             move.add(MovementType.ATTACK);
-            return new Move(from, to, false, move);
+        } else {
+            move.add(MovementType.NONE);
         }
-        return null;
+        return new Move(from, to, false, move);
     }
 
     /**

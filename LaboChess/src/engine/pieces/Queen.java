@@ -38,14 +38,17 @@ public class Queen extends Piece {
      */
     @Override
     public Move move(Square from, Square to) {
+        ArrayList<MovementType> move = new ArrayList<>();
         //Queen has the same move as the Bishop and the Rook
-        if(rookMove.move(from, to) != null || bishopMove.move(from, to) != null) {
-            ArrayList<MovementType> move = new ArrayList<>();
+        if(!rookMove.move(from, to).getType().contains(MovementType.NONE) || !bishopMove.move(from, to).getType().contains(MovementType.NONE)) {
             move.add(MovementType.MOVE);
             move.add(MovementType.ATTACK);
-            return new Move(from, to, false, move);
+
+        } else {
+            move.add(MovementType.NONE);
         }
-        return null;
+
+        return new Move(from, to, false, move);
     }
 
     /**

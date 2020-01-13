@@ -67,4 +67,7 @@ public abstract class Piece implements ChessView.UserChoice {
     public boolean isFirstMove() {
         return firstMove;
     }
+
+    @Override
+    public abstract String toString();
 }
