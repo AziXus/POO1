@@ -43,6 +43,7 @@ public class King extends Piece {
         //Instantiation of the ArrayList that will contain the moves available
         ArrayList<MovementType> move = new ArrayList<>();
 
+        //Verify that the king make a move by one case
         if ((deltaX == 1 && deltaY == 0) || (deltaX == 0 && deltaY == 1) || (deltaX == 1 && deltaY == 1)) {
             move.add(MovementType.MOVE);
             move.add(MovementType.ATTACK);
@@ -53,9 +54,8 @@ public class King extends Piece {
         } else {
             move.add(MovementType.NONE);
         }
+
         return new Move(from, to, false, move);
-
-
     }
 
     /**
