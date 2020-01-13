@@ -8,6 +8,7 @@ import engine.move.Square;
 
 /**
  * Abstract class for the implementation of the different pieces of a chess Game
+ * @author Müller Robin, Teixeira Carvalho Stéphane
  */
 public abstract class Piece implements ChessView.UserChoice {
     final PlayerColor playerColor;

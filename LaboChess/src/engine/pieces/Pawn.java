@@ -8,6 +8,10 @@ import engine.move.Square;
 
 import java.util.ArrayList;
 
+/**
+ *
+ * @author Müller Robin, Teixeira Carvalho Stéphane
+ */
 public class Pawn extends Piece {
 
     /**

@@ -3,6 +3,7 @@ import java.util.Objects;
 
 /**
  * Class representing a square on a board by his postion x and y
+ * @author Müller Robin, Teixeira Carvalho Stéphane
  */
 public class Square {
     private int posX;

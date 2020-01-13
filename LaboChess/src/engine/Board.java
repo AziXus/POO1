@@ -9,8 +9,11 @@ import engine.move.MovementType;
 import engine.move.Square;
 import engine.pieces.*;
 
+import java.security.InvalidParameterException;
+
 /**
  * class Board that will control the view and verify the movement asked by the user
+ * @author Müller Robin, Teixeira Carvalho Stéphane
  */
 public class Board implements ChessController {
     private final Piece[][] board = new Piece[8][8];
@@ -87,9 +90,18 @@ public class Board implements ChessController {
      * @param fromY entier étant la position de départ de la pièce en ordonnée
      * @param toX entier étant la postion d'arrivée de la pièce en abscisse
      * @param toY entier étant la postion d'arrivée de la pièce en ordonnée
+     * @throws InvalidParameterException si un des paramètres fromX, fromY, toX et toY est inférieur à 0 ou supérieur à 7
      * @return true si le mouvement a pu avoir lieu, false dans le cas contraire.
      */
     public boolean move(int fromX, int fromY, int toX, int toY) {
+        if(fromX < 0 || fromX > 7 || fromY < 0 || fromY > 7){
+            System.out.println("Square of start invalid please enter an x between 0 and 7 and a y between 0 and 7");
+            throw new InvalidParameterException();
+        }
+        if(toX < 0 || toX > 7 || toY < 0 || toY > 7){
+            System.out.println("Square of finish invalid please enter an x between 0 and 7 and a y between 0 and 7");
+            throw new InvalidParameterException();
+        }
         Square from = new Square(fromX, fromY);
         Square to = new Square(toX, toY);
 

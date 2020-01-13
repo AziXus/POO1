@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 /**
  * Class that will contain the different informations of the move from a piece
+ * @author Müller Robin, Teixeira Carvalho Stéphane
  */
 public class Move {
     private Square src;
