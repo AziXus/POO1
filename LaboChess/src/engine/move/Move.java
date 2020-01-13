@@ -1,4 +1,4 @@
-package engine;
+package engine.move;
 
 import java.security.InvalidParameterException;
 import java.text.MessageFormat;

@@ -4,6 +4,9 @@ import chess.ChessController;
 import chess.ChessView;
 import chess.PieceType;
 import chess.PlayerColor;
+import engine.move.Move;
+import engine.move.MovementType;
+import engine.move.Square;
 import engine.pieces.*;
 
 /**

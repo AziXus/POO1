@@ -3,8 +3,8 @@ package engine.pieces;
 import chess.ChessView;
 import chess.PieceType;
 import chess.PlayerColor;
-import engine.Move;
-import engine.Square;
+import engine.move.Move;
+import engine.move.Square;
 
 /**
  * Abstract class for the implementation of the different pieces of a chess Game

@@ -3,9 +3,9 @@ package engine.pieces;
 
 import chess.PieceType;
 import chess.PlayerColor;
-import engine.Move;
-import engine.MovementType;
-import engine.Square;
+import engine.move.Move;
+import engine.move.MovementType;
+import engine.move.Square;
 
 import java.util.ArrayList;
 

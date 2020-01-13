@@ -1,4 +1,4 @@
-package engine;
+package engine.move;
 import java.util.Objects;
 
 /**
