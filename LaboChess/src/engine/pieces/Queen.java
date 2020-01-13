@@ -13,7 +13,7 @@ import java.util.ArrayList;
  * @author Müller Robin, Teixeira Carvalho Stéphane
  */
 public class Queen extends Piece {
-    // A queen is a combination of a rook and a bishop
+    //A queen is a combination of a rook and a bishop
     private Piece rookMove = new Rook(this.playerColor);
     private Piece bishopMove = new Bishop(this.playerColor);
 
