@@ -54,6 +54,15 @@ public abstract class Piece implements ChessView.UserChoice {
     }
 
     /**
+     * Revert the firstMove boolean to true
+     */
+    public void revertFirstMove() {
+        if(!firstMove) {
+            this.firstMove = true;
+        }
+    }
+
+    /**
      * Return the color of the piece
      * @return PlayerColor that represents the color of the piece
      */

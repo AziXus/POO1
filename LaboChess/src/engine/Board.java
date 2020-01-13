@@ -367,6 +367,8 @@ public class Board implements ChessController {
             }
             revertMove(firstCase);
         }
+        //If the move is invalid the message that indicates that the move is invalid is shown
+        view.displayMessage("Small Castling impossible case controlled by an enemy");
         return false;
     }
 
@@ -410,7 +412,8 @@ public class Board implements ChessController {
             }
             revertMove(firstCase);
         }
-
+        //If the move is invalid the message that indicates that the move is invalid is shown
+        view.displayMessage("Big Castling impossible case controlled by an enemy");
         return false;
     }
 
@@ -420,6 +423,7 @@ public class Board implements ChessController {
      */
     private void revertMove(Move m) {
         Piece p = board[m.getDestX()][m.getDestY()];
+        p.revertFirstMove();
         //Move the piece to is old position again
         movePiece(m.getDest(), m.getSrc());
         view.removePiece(m.getDestX(), m.getDestY());
